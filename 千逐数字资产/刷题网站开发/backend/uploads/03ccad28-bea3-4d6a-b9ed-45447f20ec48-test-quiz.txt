@@ -1,0 +1,27 @@
+# JavaScript基础题库
+
+## 选择题
+
+1. JavaScript是什么类型的语言？
+A. 编译型语言
+B. 解释型语言
+C. 汇编语言
+D. 机器语言
+
+答案：B
+
+2. 以下哪个不是JavaScript的数据类型？
+A. string
+B. number
+C. char
+D. boolean
+
+答案：C
+
+## 填空题
+
+1. JavaScript中声明变量使用关键字 _____ 或 _____。
+答案：var, let
+
+2. 函数的关键字是 _____。
+答案：function

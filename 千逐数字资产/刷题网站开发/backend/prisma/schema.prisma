@@ -1,0 +1,73 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+  output   = "../src/generated/prisma"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+// 用户模型
+model User {
+  id        String   @id @default(cuid())
+  email     String   @unique
+  password  String
+  name      String?
+  avatar    String?
+  isActive  Boolean  @default(true)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  // 关联关系
+  quizzes Quiz[]
+  jobs    Job[]
+
+  @@map("users")
+}
+
+// 题库模型
+model Quiz {
+  id          String    @id @default(cuid())
+  title       String
+  description String?
+  orderMode   String    // "顺序" 或 "随机"
+  status      String    @default("pending") // "pending", "processing", "completed", "failed"
+  html        String?   // 生成的HTML内容
+  filePath    String?   // 原始文件路径
+  errorMsg    String?   // 错误信息
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+
+  // 关联关系
+  userId String
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  jobs   Job[]
+
+  @@map("quizzes")
+}
+
+// 任务模型
+model Job {
+  id        String   @id @default(cuid())
+  type      String   // "parse", "generate", etc.
+  status    String   @default("queued") // "queued", "active", "completed", "failed"
+  progress  Int      @default(0) // 0-100
+  data      String?  // JSON数据
+  result    String?  // 结果数据
+  error     String?  // 错误信息
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  // 关联关系
+  userId String
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  quizId String?
+  quiz   Quiz?   @relation(fields: [quizId], references: [id], onDelete: Cascade)
+
+  @@map("jobs")
+}

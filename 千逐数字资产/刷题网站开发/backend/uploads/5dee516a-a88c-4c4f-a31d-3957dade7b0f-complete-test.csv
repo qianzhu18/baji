@@ -1,0 +1,4 @@
+题目类型,题目内容,选项A,选项B,选项C,选项D,正确答案,解析
+选择题,数据库的ACID特性中A代表什么？,原子性,一致性,隔离性,持久性,A,ACID中A代表Atomicity原子性
+选择题,以下哪个不是HTTP方法？,GET,POST,SEND,DELETE,C,SEND不是标准的HTTP方法
+填空题,SQL中用于查询数据的关键字是 _____。,,,,,SELECT,SELECT是SQL中最基本的查询语句

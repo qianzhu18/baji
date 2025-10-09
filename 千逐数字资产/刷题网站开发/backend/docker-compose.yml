@@ -1,0 +1,168 @@
+version: '3.8'
+
+services:
+  # 主应用服务
+  quiz-backend:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      target: runner
+    container_name: quiz-backend
+    restart: unless-stopped
+    ports:
+      - "3001:3001"
+    environment:
+      - NODE_ENV=production
+      - PORT=3001
+      - HOST=0.0.0.0
+      - DATABASE_URL=postgresql://quiz_user:quiz_password@postgres:5432/quiz_system
+      - REDIS_URL=redis://redis:6379
+      - JWT_SECRET=${JWT_SECRET:-your-super-secret-jwt-key-change-in-production}
+      - GEMINI_API_KEY=${GEMINI_API_KEY}
+      - AI_PROVIDER=gemini
+      - AI_MODEL=gemini-pro
+      - MAX_FILE_SIZE=10485760
+      - UPLOAD_DIR=/app/uploads
+      - LOG_LEVEL=info
+    volumes:
+      - quiz_uploads:/app/uploads
+      - quiz_logs:/app/logs
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    networks:
+      - quiz-network
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:3001/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 60s
+
+  # PostgreSQL 数据库
+  postgres:
+    image: postgres:15-alpine
+    container_name: quiz-postgres
+    restart: unless-stopped
+    environment:
+      - POSTGRES_DB=quiz_system
+      - POSTGRES_USER=quiz_user
+      - POSTGRES_PASSWORD=quiz_password
+      - POSTGRES_INITDB_ARGS=--encoding=UTF-8 --lc-collate=C --lc-ctype=C
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      - ./scripts/init-db.sql:/docker-entrypoint-initdb.d/init-db.sql:ro
+    ports:
+      - "5432:5432"
+    networks:
+      - quiz-network
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U quiz_user -d quiz_system"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  # Redis 缓存和队列
+  redis:
+    image: redis:7-alpine
+    container_name: quiz-redis
+    restart: unless-stopped
+    command: redis-server --appendonly yes --requirepass ${REDIS_PASSWORD:-}
+    volumes:
+      - redis_data:/data
+    ports:
+      - "6379:6379"
+    networks:
+      - quiz-network
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  # Nginx 反向代理（可选）
+  nginx:
+    image: nginx:alpine
+    container_name: quiz-nginx
+    restart: unless-stopped
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./nginx/nginx.conf:/etc/nginx/nginx.conf:ro
+      - ./nginx/ssl:/etc/nginx/ssl:ro
+      - quiz_logs:/var/log/nginx
+    depends_on:
+      - quiz-backend
+    networks:
+      - quiz-network
+    profiles:
+      - production
+
+  # 监控服务 - Prometheus（可选）
+  prometheus:
+    image: prom/prometheus:latest
+    container_name: quiz-prometheus
+    restart: unless-stopped
+    ports:
+      - "9090:9090"
+    volumes:
+      - ./monitoring/prometheus.yml:/etc/prometheus/prometheus.yml:ro
+      - prometheus_data:/prometheus
+    command:
+      - '--config.file=/etc/prometheus/prometheus.yml'
+      - '--storage.tsdb.path=/prometheus'
+      - '--web.console.libraries=/etc/prometheus/console_libraries'
+      - '--web.console.templates=/etc/prometheus/consoles'
+      - '--storage.tsdb.retention.time=200h'
+      - '--web.enable-lifecycle'
+    networks:
+      - quiz-network
+    profiles:
+      - monitoring
+
+  # 监控服务 - Grafana（可选）
+  grafana:
+    image: grafana/grafana:latest
+    container_name: quiz-grafana
+    restart: unless-stopped
+    ports:
+      - "3000:3000"
+    environment:
+      - GF_SECURITY_ADMIN_PASSWORD=${GRAFANA_PASSWORD:-admin}
+      - GF_USERS_ALLOW_SIGN_UP=false
+    volumes:
+      - grafana_data:/var/lib/grafana
+      - ./monitoring/grafana/dashboards:/etc/grafana/provisioning/dashboards:ro
+      - ./monitoring/grafana/datasources:/etc/grafana/provisioning/datasources:ro
+    depends_on:
+      - prometheus
+    networks:
+      - quiz-network
+    profiles:
+      - monitoring
+
+# 网络配置
+networks:
+  quiz-network:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 172.20.0.0/16
+
+# 数据卷
+volumes:
+  postgres_data:
+    driver: local
+  redis_data:
+    driver: local
+  quiz_uploads:
+    driver: local
+  quiz_logs:
+    driver: local
+  prometheus_data:
+    driver: local
+  grafana_data:
+    driver: local

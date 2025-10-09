@@ -1,0 +1,71 @@
+JavaScript基础知识题库
+
+1. JavaScript是什么类型的编程语言？
+A. 编译型语言
+B. 解释型语言
+C. 汇编语言
+D. 机器语言
+答案：B
+
+2. 以下哪个是JavaScript的数据类型？
+A. string
+B. number
+C. boolean
+D. 以上都是
+答案：D
+
+3. 如何在JavaScript中声明一个变量？
+A. var name;
+B. let name;
+C. const name;
+D. 以上都可以
+答案：D
+
+4. JavaScript中的null和undefined有什么区别？
+A. 没有区别
+B. null表示空值，undefined表示未定义
+C. undefined表示空值，null表示未定义
+D. 都表示0
+答案：B
+
+5. 以下哪个方法可以将字符串转换为数字？
+A. parseInt()
+B. parseFloat()
+C. Number()
+D. 以上都可以
+答案：D
+
+6. JavaScript中的数组是什么？
+A. 一种数据类型
+B. 一种对象
+C. 一种函数
+D. 一种变量
+答案：B
+
+7. 如何获取数组的长度？
+A. array.size
+B. array.length
+C. array.count
+D. array.num
+答案：B
+
+8. JavaScript中的函数如何定义？
+A. function name() {}
+B. def name() {}
+C. func name() {}
+D. method name() {}
+答案：A
+
+9. 以下哪个是JavaScript的循环语句？
+A. for
+B. while
+C. do-while
+D. 以上都是
+答案：D
+
+10. JavaScript中如何添加注释？
+A. // 单行注释
+B. /* 多行注释 */
+C. # 注释
+D. A和B都对
+答案：D

@@ -1,0 +1,91 @@
+# 前端开发基础题库
+
+## 选择题
+
+1. HTML5中新增的语义化标签不包括以下哪个？
+A. <header>
+B. <nav>
+C. <section>
+D. <div>
+
+答案：D
+
+解析：<div>是HTML4就存在的标签，不是HTML5新增的语义化标签。
+
+2. CSS中用于设置元素浮动的属性是？
+A. position
+B. float
+C. display
+D. clear
+
+答案：B
+
+解析：float属性用于设置元素的浮动方向。
+
+3. JavaScript中用于声明变量的关键字有哪些？
+A. var, let
+B. var, let, const
+C. let, const
+D. var, const
+
+答案：B
+
+解析：JavaScript中可以使用var、let、const三个关键字声明变量。
+
+4. 以下哪个不是Vue.js的生命周期钩子？
+A. created
+B. mounted
+C. updated
+D. rendered
+
+答案：D
+
+解析：Vue.js没有rendered生命周期钩子，正确的是render函数。
+
+5. React中用于管理组件状态的Hook是？
+A. useState
+B. useEffect
+C. useContext
+D. useReducer
+
+答案：A
+
+解析：useState是React中最基本的状态管理Hook。
+
+## 填空题
+
+1. CSS中的盒模型包括内容区、_____ 、_____ 和 _____。
+答案：内边距, 边框, 外边距
+
+2. JavaScript中的事件冒泡是指事件从 _____ 元素向 _____ 元素传播。
+答案：子, 父
+
+3. HTTP状态码 _____ 表示请求成功，_____ 表示资源未找到。
+答案：200, 404
+
+4. 响应式设计中，常用的CSS媒体查询关键字是 _____。
+答案：@media
+
+5. Git中用于提交代码的命令是 _____，用于推送到远程仓库的命令是 _____。
+答案：git commit, git push
+
+## 简答题
+
+1. 请简述什么是闭包，并举一个简单的例子。
+答案：闭包是指有权访问另一个函数作用域中变量的函数。例如：
+function outer() {
+  var x = 10;
+  return function inner() {
+    console.log(x);
+  };
+}
+var closure = outer();
+closure(); // 输出 10
+
+2. 解释CSS中position属性的不同取值及其作用。
+答案：
+- static：默认值，元素按正常文档流定位
+- relative：相对定位，相对于元素原来位置定位
+- absolute：绝对定位，相对于最近的已定位祖先元素定位
+- fixed：固定定位，相对于浏览器窗口定位
+- sticky：粘性定位，结合relative和fixed的特点

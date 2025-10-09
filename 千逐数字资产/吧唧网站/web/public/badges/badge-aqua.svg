@@ -1,0 +1,49 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="320" height="320" viewBox="0 0 320 320">
+  <defs>
+    <radialGradient id="bg" cx="50%" cy="45%" r="60%">
+      <stop offset="0%" stop-color="#4ad8ff" stop-opacity="0.95" />
+      <stop offset="55%" stop-color="#3187ff" stop-opacity="0.9" />
+      <stop offset="100%" stop-color="#101728" stop-opacity="0.55" />
+    </radialGradient>
+    <linearGradient id="strokeGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#6be9ff" />
+      <stop offset="35%" stop-color="#7cc4ff" />
+      <stop offset="100%" stop-color="#326dff" />
+    </linearGradient>
+    <linearGradient id="shine" x1="15%" y1="20%" x2="85%" y2="80%">
+      <stop offset="0%" stop-color="#ffffff" stop-opacity="0.88" />
+      <stop offset="12%" stop-color="#ffffff" stop-opacity="0.48" />
+      <stop offset="45%" stop-color="#ffffff" stop-opacity="0.08" />
+      <stop offset="100%" stop-color="#ffffff" stop-opacity="0" />
+    </linearGradient>
+    <filter id="shadow" x="-25%" y="-15%" width="150%" height="150%">
+      <feDropShadow dx="0" dy="16" stdDeviation="18" flood-color="#021024" flood-opacity="0.48" />
+    </filter>
+    <clipPath id="clip">
+      <circle cx="160" cy="160" r="118" />
+    </clipPath>
+  </defs>
+
+  <rect width="320" height="320" rx="48" fill="#05070c" />
+
+  <g filter="url(#shadow)">
+    <circle cx="160" cy="160" r="126" fill="#151C31" />
+    <circle cx="160" cy="160" r="121" fill="#0C121F" stroke="url(#strokeGrad)" stroke-width="5" />
+    <circle cx="160" cy="160" r="118" fill="url(#bg)" />
+
+    <g clip-path="url(#clip)">
+      <path d="M158 88c26-22 63-22 86 7 24 30 22 72-4 100-38 39-100 74-112 72-7-1-5-6 3-18 5-8 4-11 0-12-32-9-62-44-36-102 17-37 44-51 63-47z" fill="#f4fbff" fill-opacity="0.16" />
+      <path d="M92 190c16 26 60 42 90 39 28-2 60-20 75-44" fill="none" stroke="#8df7ff" stroke-width="6" stroke-linecap="round" stroke-opacity="0.35" />
+      <path d="M104 140c18-30 52-46 86-42" fill="none" stroke="#ffffff" stroke-width="4.5" stroke-linecap="round" stroke-opacity="0.18" />
+      <path d="M132 232c10-12 26-22 40-18 17 6 19 24 14 40-10 34-43 42-48 42-6 1-10-43-6-64z" fill="#fff3f8" fill-opacity="0.08" />
+      <path d="M212 122c6 4 10 16 7 24-6 14-26 18-36 7-5-6-6-17-2-25 7-14 27-16 31-6z" fill="#ffffff" fill-opacity="0.35" />
+      <path d="M110 148c-8 6-7 21 2 26 10 6 22-1 28-9 5-7 6-21-6-25-8-3-18 2-24 8z" fill="#7ce1ff" fill-opacity="0.55" />
+    </g>
+
+    <circle cx="160" cy="160" r="118" fill="url(#shine)" opacity="0.85" />
+  </g>
+
+  <g fill="#c9e9ff" fill-opacity="0.86" font-family="'Poppins', 'Source Han Sans', sans-serif" letter-spacing="0.12em" text-anchor="middle">
+    <text x="160" y="292" font-size="18">CAMPUS BADGE LAB</text>
+  </g>
+</svg>

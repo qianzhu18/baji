@@ -1,0 +1,27 @@
+# E2E测试题库
+
+## 选择题
+
+1. 什么是端到端测试？
+A. 单元测试
+B. 集成测试
+C. 完整流程测试
+D. 性能测试
+
+答案：C
+
+2. API的全称是什么？
+A. Application Programming Interface
+B. Advanced Programming Interface
+C. Automated Programming Interface
+D. Application Process Interface
+
+答案：A
+
+## 填空题
+
+1. HTTP状态码200表示 _____。
+答案：成功
+
+2. RESTful API的核心原则是 _____。
+答案：无状态

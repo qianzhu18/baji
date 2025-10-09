@@ -1,0 +1,58 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="320" height="320" viewBox="0 0 320 320">
+  <defs>
+    <radialGradient id="bg" cx="50%" cy="50%" r="60%">
+      <stop offset="0%" stop-color="#ffd2ff" />
+      <stop offset="45%" stop-color="#b681ff" />
+      <stop offset="88%" stop-color="#2a103b" />
+      <stop offset="100%" stop-color="#1a0c27" />
+    </radialGradient>
+    <linearGradient id="rim" x1="0%" x2="100%" y1="0%" y2="100%">
+      <stop offset="0%" stop-color="#ffe7ff" />
+      <stop offset="30%" stop-color="#9c82ff" />
+      <stop offset="70%" stop-color="#67a5ff" />
+      <stop offset="100%" stop-color="#2ecfff" />
+    </linearGradient>
+    <filter id="shadow" x="-25%" y="-15%" width="150%" height="150%">
+      <feDropShadow dx="0" dy="18" stdDeviation="19" flood-color="#030214" flood-opacity="0.55" />
+    </filter>
+    <linearGradient id="shine" x1="20%" y1="18%" x2="75%" y2="75%">
+      <stop offset="0%" stop-color="#ffffff" stop-opacity="0.95" />
+      <stop offset="15%" stop-color="#ffffff" stop-opacity="0.5" />
+      <stop offset="45%" stop-color="#ffffff" stop-opacity="0.13" />
+      <stop offset="100%" stop-color="#ffffff" stop-opacity="0" />
+    </linearGradient>
+    <clipPath id="badgeClip">
+      <circle cx="160" cy="160" r="118" />
+    </clipPath>
+  </defs>
+
+  <rect width="320" height="320" rx="48" fill="#06030c" />
+
+  <g filter="url(#shadow)">
+    <circle cx="160" cy="160" r="128" fill="#120d1d" />
+    <circle cx="160" cy="160" r="121" fill="#0c0810" stroke="url(#rim)" stroke-width="6" />
+    <circle cx="160" cy="160" r="118" fill="url(#bg)" />
+
+    <g clip-path="url(#badgeClip)">
+      <path d="M118 216c24 14 56 14 78-7 18-17 26-46 20-76-5-26-24-43-56-46-30-3-58 11-72 37-13 23-14 50 2 72 7 10 18 17 28 20z" fill="#fffeff" fill-opacity="0.14" />
+      <path d="M212 206c-9 17-27 30-48 32" fill="none" stroke="#ffe9ff" stroke-width="5" stroke-linecap="round" stroke-opacity="0.25" />
+      <path d="M132 126c14-11 36-16 56-12" fill="none" stroke="#fffbea" stroke-width="5" stroke-linecap="round" stroke-opacity="0.28" />
+      <path d="M164 224c8-4 17-4 22 2 6 6 5 16 1 24-7 16-26 28-52 30-8 1-14-1-14-4 0-9 24-43 43-52z" fill="#ffe2ff" fill-opacity="0.18" />
+      <path d="M216 148c10 4 18 19 16 33-2 14-14 27-34 27-18 0-31-11-32-32-1-20 20-40 50-28z" fill="#fff7ff" fill-opacity="0.35" />
+      <path d="M110 170c-7 6-9 18-4 26 5 7 16 9 25 6 9-4 16-13 16-24 0-18-23-24-37-8z" fill="#ffc6ff" fill-opacity="0.48" />
+      <path d="M132 92l12-22 16 28" fill="none" stroke="#ffe7ff" stroke-width="5" stroke-linecap="round" stroke-opacity="0.4" />
+      <path d="M206 248 194 230 230 216" fill="none" stroke="#aaf0ff" stroke-width="5" stroke-linecap="round" stroke-opacity="0.35" />
+      <circle cx="109" cy="118" r="14" fill="#fff9ff" fill-opacity="0.35" />
+      <circle cx="226" cy="196" r="10" fill="#9df0ff" fill-opacity="0.4" />
+      <circle cx="141" cy="176" r="6" fill="#fff" fill-opacity="0.6" />
+    </g>
+
+    <circle cx="160" cy="160" r="118" fill="url(#shine)" opacity="0.9" />
+  </g>
+
+  <g font-family="'Poppins', 'Source Han Sans', sans-serif" text-anchor="middle">
+    <text x="160" y="292" font-size="18" letter-spacing="0.28em" fill="#f4f0ff" fill-opacity="0.8">
+      ST★RLIGHT
+    </text>
+  </g>
+</svg>
