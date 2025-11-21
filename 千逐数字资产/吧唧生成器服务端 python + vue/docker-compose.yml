@@ -1,0 +1,42 @@
+services:
+  baji:
+    image: odinluo/baji:latest
+    ports:
+      - 7168:5000
+    deploy:
+      resources:
+        limits:
+          memory: 1000m
+    environment:
+      # Flask配置
+      - SECRET_KEY=your-secret-key-change-in-production
+      - FLASK_ENV=development
+
+      # 数据库配置
+      - DATABASE_URL=sqlite:///baji_simple.db
+      #DATABASE_URL=mysql+pymysql://username:password@localhost:3306/baji_simple?charset=utf8mb4
+
+      # 管理员配置
+      - ADMIN_PASSWORD=admin123
+
+      # 业务配置
+      - DEFAULT_PRICE=15.00
+
+      # 文件上传配置
+      - UPLOAD_FOLDER=static/uploads
+      - EXPORT_FOLDER=static/exports
+      - MAX_CONTENT_LENGTH=5242880
+
+      # 允许的文件格式
+      - ALLOWED_EXTENSIONS=png,jpg,jpeg,webp
+
+    volumes:
+      # 用户上传文件目录
+      - /www/wwwroot/baji.qiangtu.com_data/static/uploads:/app/static/uploads
+      # 导出文件目录
+      - /www/wwwroot/baji.qiangtu.com_data/static/exports:/app/static/exports
+      # 日志文件目录
+      - /www/wwwroot/baji.qiangtu.com_data/static/logs:/app/static/logs
+      # 数据库目录
+      - /www/wwwroot/baji.qiangtu.com_data/instance:/app/instance
+    restart: unless-stopped
