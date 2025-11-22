@@ -1,0 +1,426 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>错误页面 - 吧唧生成器</title>
+    <link rel="stylesheet" href="[[ url_for('static', filename='css/design.css')  ]]">
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <h1>吧唧生成器</h1>
+            <nav>
+                <a href="/">首页</a>
+                <a href="/design">制作吧唧</a>
+                <a href="/gallery">作品展示</a>
+            </nav>
+        </header>
+
+        <main class="main-content">
+            <div class="error-section">
+                <div class="error-content">
+                    <div class="error-icon">
+                        <i class="icon-warning"></i>
+                    </div>
+                    
+                    <h2 id="errorTitle">页面出错了</h2>
+                    <p id="errorMessage">抱歉，您访问的页面出现了问题。</p>
+                    
+                    <div class="error-details" id="errorDetails" style="display: none;">
+                        <h3>错误详情</h3>
+                        <pre id="errorCode"></pre>
+                    </div>
+                    
+                    <div class="error-actions">
+                        <button class="btn btn-primary" onclick="goHome()">
+                            <i class="icon-home"></i> 返回首页
+                        </button>
+                        <button class="btn btn-secondary" onclick="goBack()">
+                            <i class="icon-arrow-left"></i> 返回上页
+                        </button>
+                        <button class="btn btn-outline" onclick="reloadPage()">
+                            <i class="icon-refresh"></i> 刷新页面
+                        </button>
+                    </div>
+                    
+                    <div class="error-help">
+                        <h3>需要帮助？</h3>
+                        <div class="help-options">
+                            <div class="help-item">
+                                <i class="icon-phone"></i>
+                                <div>
+                                    <h4>联系客服</h4>
+                                    <p>400-123-4567</p>
+                                </div>
+                            </div>
+                            <div class="help-item">
+                                <i class="icon-mail"></i>
+                                <div>
+                                    <h4>发送邮件</h4>
+                                    <p>service@baji.com</p>
+                                </div>
+                            </div>
+                            <div class="help-item">
+                                <i class="icon-chat"></i>
+                                <div>
+                                    <h4>在线客服</h4>
+                                    <p>工作日 9:00-18:00</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <footer class="footer">
+            <p>&copy; 2024 吧唧生成器. All rights reserved.</p>
+        </footer>
+    </div>
+
+    <script>
+        class ErrorPage {
+            constructor() {
+                this.init();
+            }
+
+            init() {
+                this.parseErrorFromURL();
+                this.bindEvents();
+            }
+
+            parseErrorFromURL() {
+                const urlParams = new URLSearchParams(window.location.search);
+                const errorCode = urlParams.get('code');
+                const errorMessage = urlParams.get('message');
+                const showDetails = urlParams.get('details') === 'true';
+
+                if (errorCode) {
+                    this.setErrorInfo(errorCode, errorMessage, showDetails);
+                }
+            }
+
+            setErrorInfo(code, message, showDetails = false) {
+                const errorTitle = document.getElementById('errorTitle');
+                const errorMessage = document.getElementById('errorMessage');
+                const errorCode = document.getElementById('errorCode');
+                const errorDetails = document.getElementById('errorDetails');
+
+                // 设置错误标题
+                const errorTitles = {
+                    '404': '页面未找到',
+                    '500': '服务器错误',
+                    '403': '访问被拒绝',
+                    '400': '请求错误',
+                    'timeout': '请求超时',
+                    'network': '网络错误'
+                };
+                
+                errorTitle.textContent = errorTitles[code] || '页面出错了';
+
+                // 设置错误信息
+                if (message) {
+                    errorMessage.textContent = message;
+                } else {
+                    const errorMessages = {
+                        '404': '抱歉，您访问的页面不存在。',
+                        '500': '服务器遇到了一个错误，请稍后再试。',
+                        '403': '您没有权限访问此页面。',
+                        '400': '请求参数有误，请检查后重试。',
+                        'timeout': '请求超时，请检查网络连接后重试。',
+                        'network': '网络连接异常，请检查网络设置。'
+                    };
+                    errorMessage.textContent = errorMessages[code] || '抱歉，您访问的页面出现了问题。';
+                }
+
+                // 显示错误详情
+                if (showDetails && code) {
+                    errorCode.textContent = `错误代码: ${code}`;
+                    errorDetails.style.display = 'block';
+                }
+            }
+
+            bindEvents() {
+                // 监听页面错误
+                window.addEventListener('error', (event) => {
+                    console.error('页面错误:', event.error);
+                });
+
+                // 监听未处理的Promise拒绝
+                window.addEventListener('unhandledrejection', (event) => {
+                    console.error('未处理的Promise拒绝:', event.reason);
+                });
+            }
+        }
+
+        function goHome() {
+            window.location.href = '/';
+        }
+
+        function goBack() {
+            if (window.history.length > 1) {
+                window.history.back();
+            } else {
+                window.location.href = '/';
+            }
+        }
+
+        function reloadPage() {
+            window.location.reload();
+        }
+
+        // 页面加载完成后初始化
+        document.addEventListener('DOMContentLoaded', () => {
+            new ErrorPage();
+        });
+    </script>
+
+    <style>
+        .error-section {
+            min-height: 60vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 40px 20px;
+        }
+
+        .error-content {
+            text-align: center;
+            width: 100%;
+            margin: 0 auto;
+            padding: 0 1rem;
+        }
+
+        /* 响应式宽度控制 */
+        @media (min-width: 640px) {
+            .error-content {
+                padding: 0 1.5rem;
+            }
+        }
+
+        @media (min-width: 768px) {
+            .error-content {
+                padding: 0 2rem;
+            }
+        }
+
+        @media (min-width: 1024px) {
+            .error-content {
+                max-width: 37.5rem; /* 600px */
+                padding: 0 2rem;
+            }
+        }
+
+        @media (min-width: 1280px) {
+            .error-content {
+                max-width: 45rem; /* 720px */
+                padding: 0 2rem;
+            }
+        }
+
+        @media (min-width: 1536px) {
+            .error-content {
+                max-width: 52.5rem; /* 840px */
+                padding: 0 2rem;
+            }
+        }
+
+        .error-icon {
+            font-size: 80px;
+            color: #dc3545;
+            margin-bottom: 30px;
+        }
+
+        .error-icon i {
+            display: block;
+        }
+
+        .error-content h2 {
+            color: #333;
+            margin-bottom: 15px;
+            font-size: 2em;
+        }
+
+        .error-content p {
+            color: #666;
+            font-size: 1.1em;
+            margin-bottom: 30px;
+            line-height: 1.6;
+        }
+
+        .error-details {
+            background: #f8f9fa;
+            border: 1px solid #dee2e6;
+            border-radius: 8px;
+            padding: 20px;
+            margin: 30px 0;
+            text-align: left;
+        }
+
+        .error-details h3 {
+            color: #333;
+            margin-bottom: 15px;
+        }
+
+        .error-details pre {
+            background: #fff;
+            border: 1px solid #dee2e6;
+            border-radius: 4px;
+            padding: 15px;
+            margin: 0;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9em;
+            color: #dc3545;
+            overflow-x: auto;
+        }
+
+        .error-actions {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-bottom: 40px;
+            flex-wrap: wrap;
+        }
+
+        .error-help {
+            background: #f8f9fa;
+            border-radius: 8px;
+            padding: 30px;
+            text-align: left;
+        }
+
+        .error-help h3 {
+            color: #333;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .help-options {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+        }
+
+        .help-item {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            padding: 15px;
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .help-item i {
+            font-size: 24px;
+            color: #007bff;
+            width: 30px;
+            text-align: center;
+        }
+
+        .help-item h4 {
+            margin: 0 0 5px 0;
+            color: #333;
+            font-size: 1em;
+        }
+
+        .help-item p {
+            margin: 0;
+            color: #666;
+            font-size: 0.9em;
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 12px 24px;
+            border: none;
+            border-radius: 6px;
+            font-size: 1em;
+            font-weight: 500;
+            text-decoration: none;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .btn-primary {
+            background: #007bff;
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: #0056b3;
+        }
+
+        .btn-secondary {
+            background: #6c757d;
+            color: white;
+        }
+
+        .btn-secondary:hover {
+            background: #545b62;
+        }
+
+        .btn-outline {
+            background: transparent;
+            color: #007bff;
+            border: 2px solid #007bff;
+        }
+
+        .btn-outline:hover {
+            background: #007bff;
+            color: white;
+        }
+
+        @media (max-width: 768px) {
+            .error-icon {
+                font-size: 60px;
+            }
+            
+            .error-content h2 {
+                font-size: 1.5em;
+            }
+            
+            .error-actions {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .help-options {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* 图标样式 */
+        .icon-warning::before {
+            content: "⚠️";
+        }
+
+        .icon-home::before {
+            content: "🏠";
+        }
+
+        .icon-arrow-left::before {
+            content: "←";
+        }
+
+        .icon-refresh::before {
+            content: "🔄";
+        }
+
+        .icon-phone::before {
+            content: "📞";
+        }
+
+        .icon-mail::before {
+            content: "📧";
+        }
+
+        .icon-chat::before {
+            content: "💬";
+        }
+    </style>
+</body>
+</html>

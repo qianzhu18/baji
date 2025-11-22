@@ -1,0 +1,655 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>作品详情 - 吧唧生成器</title>
+    <link rel="stylesheet" href="[[ url_for('static', filename='css/design.css')  ]]">
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <h1>作品详情</h1>
+            <nav>
+                <a href="/">首页</a>
+                <a href="/gallery">作品展示</a>
+                <a href="/design">制作吧唧</a>
+            </nav>
+        </header>
+
+        <main class="main-content">
+            <div class="baji-view-section">
+                <div class="baji-header">
+                    <div class="baji-info">
+                        <h2>定制吧唧</h2>
+                        <div class="baji-meta">
+                            <span class="order-no">订单号: [[ order.order_no ]]</span>
+                            <span class="create-date">[[ order.created_at ]]</span>
+                        </div>
+                    </div>
+                    <div class="baji-actions">
+                        <button class="btn btn-primary" onclick="likeBaji()">
+                            <i class="icon-heart"></i> 点赞 (<span id="likeCount">[[ order.like_count or 0 ]]</span>)
+                        </button>
+                        <button class="btn btn-secondary" onclick="makeSame()">
+                            <i class="icon-copy"></i> 制作同款
+                        </button>
+                        <button class="btn btn-outline" onclick="shareBaji()">
+                            <i class="icon-share"></i> 分享
+                        </button>
+                    </div>
+                </div>
+
+                <div class="baji-content">
+                    <div class="baji-image-container">
+                        <div class="baji-image">
+                            <img src="/api/v1/image/[[ order.processed_image_path.split('/')[-1] ]]" 
+                                 alt="吧唧作品" 
+                                 id="bajiImage"
+                                 onerror="this.src='/static/images/placeholder.png'">
+                        </div>
+                        <div class="image-controls">
+                            <button class="btn btn-sm" onclick="zoomIn()">
+                                <i class="icon-zoom-in"></i> 放大
+                            </button>
+                            <button class="btn btn-sm" onclick="zoomOut()">
+                                <i class="icon-zoom-out"></i> 缩小
+                            </button>
+                            <button class="btn btn-sm" onclick="resetZoom()">
+                                <i class="icon-refresh"></i> 重置
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="baji-details">
+                        <div class="detail-section">
+                            <h3>作品信息</h3>
+                            <div class="detail-grid">
+                                <div class="detail-item">
+                                    <label>订单号:</label>
+                                    <span>[[ order.order_no ]]</span>
+                                </div>
+                                <div class="detail-item">
+                                    <label>制作时间:</label>
+                                    <span>[[ order.created_at ]]</span>
+                                </div>
+                                <div class="detail-item">
+                                    <label>数量:</label>
+                                    <span>[[ order.quantity ]] 个</span>
+                                </div>
+                                <div class="detail-item">
+                                    <label>总价:</label>
+                                    <span class="price">¥[[ order.total_price ]]</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="detail-section">
+                            <h3>制作参数</h3>
+                            <div class="detail-grid">
+                                <div class="detail-item">
+                                    <label>尺寸:</label>
+                                    <span>68mm × 68mm</span>
+                                </div>
+                                <div class="detail-item">
+                                    <label>分辨率:</label>
+                                    <span>300 DPI</span>
+                                </div>
+                                <div class="detail-item">
+                                    <label>格式:</label>
+                                    <span>PNG</span>
+                                </div>
+                                <div class="detail-item">
+                                    <label>质量:</label>
+                                    <span>高清</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        [% if order.tags  %]
+                        <div class="detail-section">
+                            <h3>标签</h3>
+                            <div class="tags">
+                                [% for tag in order.tags.split(',')  %]
+                                <span class="tag">[[ tag.strip() ]]</span>
+                                [% endfor  %]
+                            </div>
+                        </div>
+                        [% endif  %]
+
+                        <div class="detail-section">
+                            <h3>操作记录</h3>
+                            <div class="action-log">
+                                <div class="log-item">
+                                    <span class="log-time">[[ order.created_at ]]</span>
+                                    <span class="log-action">作品设计完成</span>
+                                </div>
+                                [% if order.payment_time  %]
+                                <div class="log-item">
+                                    <span class="log-time">[[ order.payment_time ]]</span>
+                                    <span class="log-action">支付完成</span>
+                                </div>
+                                [% endif  %]
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="related-section">
+                    <h3>相关作品</h3>
+                    <div class="related-bajis" id="relatedBajis">
+                        <!-- 相关作品将通过JavaScript动态加载 -->
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <footer class="footer">
+            <p>&copy; 2024 吧唧生成器. All rights reserved.</p>
+        </footer>
+    </div>
+
+    <!-- 图片预览模态框 -->
+    <div class="image-modal" id="imageModal" onclick="closeImageModal()">
+        <div class="modal-content" onclick="event.stopPropagation()">
+            <button class="close-btn" onclick="closeImageModal()">&times;</button>
+            <img id="modalImage" src="" alt="作品预览">
+        </div>
+    </div>
+
+    <script src="[[ url_for('static', filename='js/device-manager.js') ]]"></script>
+    <script src="[[ url_for('static', filename='js/api.js') ]]"></script>
+    <script>
+        class BajiViewPage {
+            constructor() {
+                this.bajiId = [[ baji_id ]];
+                this.currentZoom = 1;
+                this.maxZoom = 3;
+                this.minZoom = 0.5;
+                this.init();
+            }
+
+            init() {
+                this.bindEvents();
+                this.loadRelatedBajis();
+            }
+
+            bindEvents() {
+                // 图片点击放大
+                document.getElementById('bajiImage').addEventListener('click', () => {
+                    this.showImageModal();
+                });
+            }
+
+            async likeBaji() {
+                try {
+                    const response = await fetch(`/api/v1/gallery/${this.bajiId}/like`, {
+                        method: 'POST'
+                    });
+                    const data = await response.json();
+
+                    if (data.success) {
+                        document.getElementById('likeCount').textContent = data.like_count;
+                        this.showMessage('点赞成功！', 'success');
+                    } else {
+                        this.showMessage('点赞失败', 'error');
+                    }
+                } catch (error) {
+                    console.error('点赞失败:', error);
+                    this.showMessage('点赞失败', 'error');
+                }
+            }
+
+            async makeSame() {
+                try {
+                    const response = await fetch(`/api/v1/gallery/${this.bajiId}/make`, {
+                        method: 'POST'
+                    });
+                    const data = await response.json();
+
+                    if (data.success) {
+                        window.location.href = data.redirect_url;
+                    } else {
+                        this.showMessage('制作同款失败', 'error');
+                    }
+                } catch (error) {
+                    console.error('制作同款失败:', error);
+                    this.showMessage('制作同款失败', 'error');
+                }
+            }
+
+            shareBaji() {
+                const url = window.location.href;
+                const title = '定制吧唧作品';
+                
+                if (navigator.share) {
+                    navigator.share({
+                        title: title,
+                        url: url
+                    });
+                } else {
+                    // 复制链接到剪贴板
+                    navigator.clipboard.writeText(url).then(() => {
+                        this.showMessage('链接已复制到剪贴板', 'success');
+                    }).catch(() => {
+                        this.showMessage('复制失败，请手动复制链接', 'error');
+                    });
+                }
+            }
+
+            async loadRelatedBajis() {
+                try {
+                    const response = await fetch('/api/v1/gallery?limit=4');
+                    const data = await response.json();
+
+                    if (data.success) {
+                        this.renderRelatedBajis(data.items.filter(item => item.id !== this.bajiId));
+                    }
+                } catch (error) {
+                    console.error('加载相关作品失败:', error);
+                }
+            }
+
+            renderRelatedBajis(bajis) {
+                const relatedBajis = document.getElementById('relatedBajis');
+                
+                if (bajis.length === 0) {
+                    relatedBajis.innerHTML = '<p class="no-related">暂无相关作品</p>';
+                    return;
+                }
+
+                relatedBajis.innerHTML = bajis.map(baji => `
+                    <div class="related-item" onclick="window.location.href='/view/${baji.id}'">
+                        <div class="related-image">
+                            <img src="/api/v1/image/${baji.image_path.split('/').pop()}" 
+                                 alt="相关作品" 
+                                 onerror="this.src='/static/images/placeholder.png'">
+                        </div>
+                        <div class="related-info">
+                            <h4>订单 ${baji.order_no}</h4>
+                            <p>${new Date(baji.created_at).toLocaleDateString()}</p>
+                        </div>
+                    </div>
+                `).join('');
+            }
+
+            showImageModal() {
+                const modal = document.getElementById('imageModal');
+                const modalImage = document.getElementById('modalImage');
+                const originalImage = document.getElementById('bajiImage');
+                
+                modalImage.src = originalImage.src;
+                modal.style.display = 'flex';
+            }
+
+            showMessage(message, type) {
+                const messageDiv = document.createElement('div');
+                messageDiv.className = `message message-${type}`;
+                messageDiv.textContent = message;
+                
+                document.body.appendChild(messageDiv);
+                
+                setTimeout(() => {
+                    document.body.removeChild(messageDiv);
+                }, 3000);
+            }
+        }
+
+        function zoomIn() {
+            const page = window.bajiViewPage;
+            if (page.currentZoom < page.maxZoom) {
+                page.currentZoom += 0.2;
+                page.updateZoom();
+            }
+        }
+
+        function zoomOut() {
+            const page = window.bajiViewPage;
+            if (page.currentZoom > page.minZoom) {
+                page.currentZoom -= 0.2;
+                page.updateZoom();
+            }
+        }
+
+        function resetZoom() {
+            const page = window.bajiViewPage;
+            page.currentZoom = 1;
+            page.updateZoom();
+        }
+
+        function closeImageModal() {
+            document.getElementById('imageModal').style.display = 'none';
+        }
+
+        // 页面加载完成后初始化
+        document.addEventListener('DOMContentLoaded', () => {
+            window.bajiViewPage = new BajiViewPage();
+        });
+    </script>
+
+    <style>
+        .baji-view-section {
+            width: 100%;
+            margin: 0 auto;
+            padding: 0 1rem;
+        }
+
+        /* 响应式宽度控制 */
+        @media (min-width: 640px) {
+            .baji-view-section {
+                padding: 0 1.5rem;
+            }
+        }
+
+        @media (min-width: 768px) {
+            .baji-view-section {
+                padding: 0 2rem;
+            }
+        }
+
+        @media (min-width: 1024px) {
+            .baji-view-section {
+                max-width: 80rem; /* 1280px */
+                padding: 0 2rem;
+            }
+        }
+
+        @media (min-width: 1280px) {
+            .baji-view-section {
+                max-width: 90rem; /* 1440px */
+                padding: 0 2rem;
+            }
+        }
+
+        @media (min-width: 1536px) {
+            .baji-view-section {
+                max-width: 100rem; /* 1600px */
+                padding: 0 3rem;
+            }
+        }
+
+        @media (min-width: 1920px) {
+            .baji-view-section {
+                max-width: 120rem; /* 1920px */
+                padding: 0 4rem;
+            }
+        }
+
+        @media (min-width: 2560px) {
+            .baji-view-section {
+                max-width: 140rem; /* 2240px */
+                padding: 0 5rem;
+            }
+        }
+
+        .baji-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+            padding: 20px;
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        .baji-info h2 {
+            margin: 0 0 10px 0;
+            color: #333;
+        }
+
+        .baji-meta {
+            display: flex;
+            gap: 20px;
+            color: #666;
+            font-size: 0.9em;
+        }
+
+        .baji-actions {
+            display: flex;
+            gap: 10px;
+        }
+
+        .baji-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+
+        .baji-image-container {
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            overflow: hidden;
+        }
+
+        .baji-image {
+            text-align: center;
+            padding: 30px;
+            cursor: pointer;
+        }
+
+        .baji-image img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 8px;
+            transition: transform 0.3s ease;
+        }
+
+        .image-controls {
+            padding: 15px;
+            background: #f8f9fa;
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .baji-details {
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            padding: 30px;
+        }
+
+        .detail-section {
+            margin-bottom: 30px;
+        }
+
+        .detail-section h3 {
+            color: #333;
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #007bff;
+        }
+
+        .detail-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+        }
+
+        .detail-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 10px 0;
+            border-bottom: 1px solid #eee;
+        }
+
+        .detail-item label {
+            font-weight: bold;
+            color: #666;
+        }
+
+        .price {
+            color: #007bff;
+            font-weight: bold;
+        }
+
+        .tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+
+        .tag {
+            background: #e9ecef;
+            color: #495057;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 0.8em;
+        }
+
+        .action-log {
+            max-height: 200px;
+            overflow-y: auto;
+        }
+
+        .log-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 8px 0;
+            border-bottom: 1px solid #eee;
+        }
+
+        .log-time {
+            color: #666;
+            font-size: 0.9em;
+        }
+
+        .log-action {
+            color: #333;
+        }
+
+        .related-section {
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            padding: 30px;
+        }
+
+        .related-section h3 {
+            margin: 0 0 20px 0;
+            color: #333;
+        }
+
+        .related-bajis {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+        }
+
+        .related-item {
+            cursor: pointer;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease;
+        }
+
+        .related-item:hover {
+            transform: translateY(-5px);
+        }
+
+        .related-image {
+            width: 100%;
+            height: 150px;
+            overflow: hidden;
+        }
+
+        .related-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .related-info {
+            padding: 15px;
+        }
+
+        .related-info h4 {
+            margin: 0 0 5px 0;
+            color: #333;
+            font-size: 0.9em;
+        }
+
+        .related-info p {
+            margin: 0;
+            color: #666;
+            font-size: 0.8em;
+        }
+
+        .image-modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.8);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+        }
+
+        .modal-content {
+            position: relative;
+            max-width: 90%;
+            max-height: 90%;
+        }
+
+        .modal-content img {
+            max-width: 100%;
+            max-height: 100%;
+            border-radius: 8px;
+        }
+
+        .close-btn {
+            position: absolute;
+            top: -40px;
+            right: 0;
+            background: none;
+            border: none;
+            color: white;
+            font-size: 30px;
+            cursor: pointer;
+        }
+
+        .message {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            padding: 15px 20px;
+            border-radius: 4px;
+            color: white;
+            font-weight: bold;
+            z-index: 1001;
+        }
+
+        .message-success {
+            background: #28a745;
+        }
+
+        .message-error {
+            background: #dc3545;
+        }
+
+        @media (max-width: 768px) {
+            .baji-content {
+                grid-template-columns: 1fr;
+            }
+            
+            .baji-header {
+                flex-direction: column;
+                gap: 20px;
+                text-align: center;
+            }
+            
+            .baji-actions {
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+        }
+    </style>
+</body>
+</html>

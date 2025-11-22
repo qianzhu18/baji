@@ -1,0 +1,63 @@
+# 多阶段构建 - 构建阶段
+FROM python:3.9-slim AS builder
+
+# 添加镜像标签信息
+LABEL maintainer="odinluo"
+LABEL description="Baji Simple - 吧唧生成器应用"
+LABEL version="1.0.0"
+LABEL repository="https://github.com/odinluo/baji"
+
+# 设置工作目录
+WORKDIR /app
+
+# 安装构建依赖（仅在构建阶段需要）
+RUN apt-get update && apt-get install -y \
+    gcc \
+    g++ \
+    libffi-dev \
+    libssl-dev \
+    && rm -rf /var/lib/apt/lists/*
+
+# 复制依赖文件
+COPY requirements.txt .
+
+# 创建虚拟环境并安装依赖
+RUN python -m venv /opt/venv
+ENV PATH="/opt/venv/bin:$PATH"
+
+# 升级pip并安装依赖
+RUN pip install --no-cache-dir --upgrade pip && \
+    pip install --no-cache-dir -r requirements.txt
+
+# 生产阶段
+FROM python:3.9-slim AS production
+
+# 设置工作目录
+WORKDIR /app
+
+# 从构建阶段复制虚拟环境
+COPY --from=builder /opt/venv /opt/venv
+ENV PATH="/opt/venv/bin:$PATH"
+
+# 复制应用代码
+COPY . .
+
+# 创建非root用户并设置权限
+RUN groupadd -r appuser && useradd -r -g appuser appuser
+
+# 创建必要的目录结构并设置权限
+RUN mkdir -p static/uploads static/exports/pdf static/exports/images static/exports/temp static/logs/error static/logs/access static/logs/archive instance && \
+    chown -R appuser:appuser /app && \
+    chmod -R 755 static/uploads static/exports static/logs instance
+
+USER appuser
+
+# 设置环境变量
+ENV FLASK_APP=main.py
+ENV FLASK_ENV=production
+
+# 暴露端口
+EXPOSE 5000
+
+# 启动命令
+CMD ["python", "main.py"]

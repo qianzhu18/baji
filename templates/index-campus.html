@@ -1,0 +1,707 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🎨 校园创意工坊 - 吧唧生成器</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    <script src="/static/js/device-manager.js"></script>
+    <script src="/static/js/navigation.js"></script>
+
+    <!-- 🎓 校园风格样式文件 -->
+    <link rel="stylesheet" href="/static/css/campus-style.css">
+    <link rel="stylesheet" href="/static/css/campus-animations.css">
+    <link rel="stylesheet" href="/static/css/campus-mobile.css">
+
+    <style>
+        /* 🎨 校园风格覆盖样式 */
+        .hero-section {
+            background: var(--primary-gradient);
+            position: relative;
+        }
+
+        .hero-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-image:
+                radial-gradient(circle at 20% 20%, rgba(255, 255, 255, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 80% 80%, rgba(255, 255, 255, 0.1) 0%, transparent 50%);
+            animation: floatBackground 6s ease-in-out infinite;
+        }
+
+        .magic-button {
+            background: var(--success-gradient);
+            font-size: 1.2rem;
+            padding: 16px 32px;
+            border-radius: 30px;
+            box-shadow: 0 8px 25px rgba(79, 172, 254, 0.3);
+        }
+
+        .magic-button:hover {
+            transform: translateY(-4px) scale(1.08);
+            box-shadow: 0 15px 35px rgba(79, 172, 254, 0.4);
+        }
+
+        /* 🎨 案例卡片校园风格 */
+        .case-card {
+            background: white;
+            border-radius: 20px;
+            box-shadow: var(--card-shadow);
+            transition: all 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+            overflow: hidden;
+            position: relative;
+        }
+
+        .case-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: var(--primary-gradient);
+            transform: scaleX(0);
+            transition: transform 0.3s ease;
+        }
+
+        .case-card:hover::before {
+            transform: scaleX(1);
+        }
+
+        .case-card:hover {
+            transform: translateY(-8px) scale(1.02);
+            box-shadow: var(--hover-shadow);
+        }
+
+        /* 🏷️ 标签校园风格 */
+        .filter-btn {
+            background: white;
+            border: 2px solid #e5e7eb;
+            border-radius: 20px;
+            padding: 8px 20px;
+            font-weight: 600;
+            transition: all 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+        }
+
+        .filter-btn.active {
+            background: var(--primary-gradient);
+            border-color: transparent;
+            color: white;
+            transform: scale(1.1);
+            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
+        }
+
+        /* 🎯 操作按钮 */
+        .action-btn {
+            background: white;
+            border: none;
+            border-radius: 20px;
+            padding: 8px 16px;
+            font-weight: 600;
+            transition: all 0.2s ease;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .action-btn.primary {
+            background: var(--campus-blue);
+            color: white;
+        }
+
+        .action-btn.secondary {
+            background: var(--youth-orange);
+            color: white;
+        }
+
+        .action-btn:hover {
+            transform: translateY(-2px) scale(1.05);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+        }
+
+        /* 🏅 徽章样式 */
+        .badge {
+            display: inline-block;
+            padding: 4px 12px;
+            border-radius: 15px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            color: white;
+        }
+
+        .badge-featured {
+            background: var(--accent-gradient);
+            box-shadow: 0 2px 8px rgba(240, 147, 251, 0.3);
+        }
+
+        .badge-hot {
+            background: linear-gradient(135deg, #ff6b6b 0%, #ff8e53 100%);
+            animation: pulse 2s ease-in-out infinite;
+        }
+
+        /* 🎨 统计数字样式 */
+        .stat-number {
+            font-size: 2.5rem;
+            font-weight: bold;
+            background: var(--primary-gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        /* 移动端优化 */
+        @media (max-width: 768px) {
+            .hero-section {
+                min-height: 100vh;
+                padding: 2rem 1rem;
+            }
+
+            .hero-section h1 {
+                font-size: 3rem;
+            }
+
+            .hero-section h2 {
+                font-size: 2rem;
+            }
+
+            .magic-button {
+                font-size: 1.1rem;
+                padding: 14px 28px;
+                min-height: 44px;
+            }
+
+            .stat-number {
+                font-size: 2rem;
+            }
+        }
+
+        /* 🎪 导航栏样式 */
+        .user-menu-dropdown {
+            transition: all 0.2s ease-out;
+            transform-origin: top right;
+        }
+
+        .menu-open {
+            opacity: 1;
+            transform: translateY(0) scale(1);
+            visibility: visible;
+        }
+
+        .menu-closed {
+            opacity: 0;
+            transform: translateY(-10px) scale(0.95);
+            visibility: hidden;
+        }
+
+        .user-menu-btn {
+            transition: all 0.2s ease-out;
+        }
+
+        .user-menu-btn:hover {
+            transform: translateY(-1px);
+        }
+    </style>
+</head>
+
+<body>
+    <div id="app">
+        <!-- 🎨 Hero Section - 校园创意工坊 -->
+        <section class="hero-section min-h-screen flex items-center justify-center relative overflow-hidden">
+            <!-- 装饰性背景元素 -->
+            <div class="absolute top-10 left-10 text-6xl opacity-20 floating">🎓</div>
+            <div class="absolute top-20 right-20 text-4xl opacity-15 floating floating-delay-1">📚</div>
+            <div class="absolute bottom-20 left-20 text-5xl opacity-20 floating floating-delay-2">🎨</div>
+            <div class="absolute bottom-10 right-10 text-4xl opacity-15 floating floating-delay-3">✨</div>
+
+            <div class="text-center text-white px-8 relative z-10">
+                <div class="floating mb-8">
+                    <div class="mb-4">
+                        <span class="text-8xl bounce-in inline-block">🎨</span>
+                    </div>
+                    <h1 class="text-5xl md:text-6xl font-bold mb-2 fun-font">校园创意工坊</h1>
+                    <p class="text-xl md:text-2xl opacity-90 mb-4">让每个想法都闪闪发光 ⭐</p>
+                    <p class="text-lg opacity-80 handwritten">简单拖拽 → 创意设计 → 专属吧唧</p>
+                </div>
+
+                <div class="mb-8">
+                    <p class="text-lg opacity-80 mb-4">🎓 专为学生党打造的创意平台</p>
+                    <div class="flex flex-wrap justify-center gap-4 text-sm">
+                        <span class="campus-tag">🚀 极速出图</span>
+                        <span class="campus-tag campus-tag-success">🎨 创意无限</span>
+                        <span class="campus-tag campus-tag-warning">💰 价格美丽</span>
+                        <span class="campus-tag campus-tag-hot">🔥 超人气</span>
+                    </div>
+                </div>
+
+                <a href="/design"
+                   class="magic-button campus-btn campus-btn-success inline-block ripple-effect">
+                    ✨ 开启创意之旅
+                </a>
+
+                <div class="mt-12 text-sm opacity-60">
+                    <p class="handwritten">"青春不散场，创意不打烊" 🎪</p>
+                </div>
+
+                <!-- 📊 统计数据展示 -->
+                <div class="mt-16 grid grid-cols-2 md:grid-cols-4 gap-8 max-w-4xl mx-auto mobile-stats">
+                    <div class="text-center">
+                        <div class="stat-number count-up" data-target="10000">0</div>
+                        <div class="text-sm opacity-80 mobile-stat-label">创意作品</div>
+                    </div>
+                    <div class="text-center">
+                        <div class="stat-number count-up" data-target="5000">0</div>
+                        <div class="text-sm opacity-80 mobile-stat-label">活跃用户</div>
+                    </div>
+                    <div class="text-center">
+                        <div class="stat-number count-up" data-target="98">0</div>
+                        <div class="text-sm opacity-80 mobile-stat-label">好评率%</div>
+                    </div>
+                    <div class="text-center">
+                        <div class="stat-number count-up" data-target="24">0</div>
+                        <div class="text-sm opacity-80 mobile-stat-label">小时出图</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 🎪 统一导航栏 -->
+        <nav class="navbar bg-white shadow-sm border-b border-gray-200">
+            <div class="container mx-auto px-4">
+                <div class="flex items-center justify-between h-16">
+                    <!-- Logo和标题 -->
+                    <div class="flex items-center space-x-4">
+                        <a href="/" class="flex items-center space-x-2 text-blue-600 hover:text-blue-700 transition-colors">
+                            <span class="text-2xl">🎨</span>
+                            <span class="text-xl font-bold campus-blue">校园工坊</span>
+                        </a>
+                    </div>
+
+                    <!-- 导航菜单 -->
+                    <div class="hidden md:flex items-center space-x-6">
+                        <a href="/" class="nav-link text-gray-600 hover:text-blue-600 transition-colors">
+                            首页
+                        </a>
+                        <a href="/gallery" class="nav-link text-gray-600 hover:text-blue-600 transition-colors">
+                            作品画廊
+                        </a>
+                        <a href="/design" class="nav-link text-gray-600 hover:text-blue-600 transition-colors">
+                            开始设计
+                        </a>
+                        <a href="/history" class="nav-link text-gray-600 hover:text-blue-600 transition-colors">
+                            制作历史
+                        </a>
+                        <a href="/orders" class="nav-link text-gray-600 hover:text-blue-600 transition-colors">
+                            我的订单
+                        </a>
+                    </div>
+
+                    <!-- 用户菜单 -->
+                    <div class="flex items-center space-x-2">
+                        <div class="relative">
+                            <button @click="toggleUserMenu"
+                                class="user-menu-btn flex items-center space-x-2 p-2 rounded-lg text-gray-600 hover:text-blue-600 hover:bg-gray-100 transition-colors">
+                                <div class="w-8 h-8 bg-blue-100 rounded-full flex items-center justify-center">
+                                    <span class="text-lg">👤</span>
+                                </div>
+                                <span class="hidden md:block text-sm font-medium">我的账户</span>
+                                <svg class="w-4 h-4 transition-transform" :class="{ 'rotate-180': userMenuOpen }"
+                                     fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                          d="M19 9l-7 7-7-7"></path>
+                                </svg>
+                            </button>
+
+                            <!-- 用户菜单下拉 -->
+                            <div v-show="userMenuOpen"
+                                class="user-menu-dropdown absolute right-0 mt-2 w-64 bg-white rounded-lg shadow-lg border border-gray-200 py-2 z-50"
+                                :class="{ 'menu-open': userMenuOpen, 'menu-closed': !userMenuOpen }">
+                                <!-- 用户信息 -->
+                                <div class="px-4 py-3 border-b border-gray-100">
+                                    <div class="flex items-center space-x-3">
+                                        <div class="w-10 h-10 bg-blue-100 rounded-full flex items-center justify-center">
+                                            <span class="text-xl">👨‍🎓</span>
+                                        </div>
+                                        <div>
+                                            <p class="text-sm font-medium text-gray-900">校园用户</p>
+                                            <p class="text-xs text-gray-500">创意无限，青春无悔</p>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- 快速操作 -->
+                                <div class="px-2 py-2">
+                                    <a href="/" class="flex items-center px-2 py-2 text-sm text-gray-700 hover:bg-gray-100 rounded-md">
+                                        <span class="mr-3">🏠</span>
+                                        首页
+                                    </a>
+                                    <a href="/gallery" class="flex items-center px-2 py-2 text-sm text-gray-700 hover:bg-gray-100 rounded-md">
+                                        <span class="mr-3">🎨</span>
+                                        作品画廊
+                                    </a>
+                                    <a href="/design" class="flex items-center px-2 py-2 text-sm text-gray-700 hover:bg-gray-100 rounded-md">
+                                        <span class="mr-3">✨</span>
+                                        开始设计
+                                    </a>
+                                    <a href="/orders" class="flex items-center px-2 py-2 text-sm text-gray-700 hover:bg-gray-100 rounded-md">
+                                        <span class="mr-3">📋</span>
+                                        我的订单
+                                    </a>
+                                    <a href="/history" class="flex items-center px-2 py-2 text-sm text-gray-700 hover:bg-gray-100 rounded-md">
+                                        <span class="mr-3">📝</span>
+                                        设计历史
+                                    </a>
+                                </div>
+
+                                <!-- 分隔线 -->
+                                <div class="border-t border-gray-100 my-2"></div>
+
+                                <!-- 帮助和关于 -->
+                                <div class="px-2 py-2">
+                                    <button @click="showHelp" class="flex items-center w-full px-2 py-2 text-sm text-gray-700 hover:bg-gray-100 rounded-md">
+                                        <span class="mr-3">❓</span>
+                                        帮助中心
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </nav>
+
+        <!-- 🎯 精选案例展示区域 -->
+        <section class="featured-cases-section bg-gradient-to-br from-gray-50 to-gray-100 py-16">
+            <div class="container mx-auto px-4">
+                <!-- 标题区域 -->
+                <div class="text-center mb-12">
+                    <h2 class="text-3xl font-bold text-gray-800 mb-4">
+                        <span class="gradient-text">✨ 精选案例</span>
+                    </h2>
+                    <p class="text-lg text-gray-600 mb-8">看看其他校园创作者的精彩吧唧，获取灵感 💡</p>
+
+                    <!-- 移动端横向滚动筛选 -->
+                    <div class="mobile-filter-tags md:hidden">
+                        <button v-for="filter in caseFilters" :key="filter.value"
+                            :class="['mobile-filter-tag campus-btn', { active: currentCaseFilter === filter.value }]"
+                            @click="setCaseFilter(filter.value)">
+                            <span v-text="filter.label"></span>
+                        </button>
+                    </div>
+
+                    <!-- 桌面端筛选按钮 -->
+                    <div class="hidden md:flex justify-center space-x-4">
+                        <button v-for="filter in caseFilters" :key="filter.value"
+                            :class="['filter-btn campus-btn', { active: currentCaseFilter === filter.value }]"
+                            @click="setCaseFilter(filter.value)">
+                            <span v-text="filter.label"></span>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- 案例网格 -->
+                <div v-if="featuredCases.length > 0"
+                     class="cases-grid mobile-grid md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+                    <div v-for="caseData in featuredCases" :key="caseData.id"
+                         class="case-card group bg-white rounded-xl shadow-sm hover:shadow-xl overflow-hidden campus-card">
+
+                        <div class="case-image-container relative overflow-hidden rounded-t-xl">
+                            <div class="baji-preview-homepage">
+                                <div class="baji-frame-homepage">
+                                    <img :src="getImageUrl(caseData.preview_image_path)" :alt="caseData.title"
+                                         class="case-image" @click="viewCase(caseData.id)">
+                                </div>
+                            </div>
+
+                            <div class="case-badges absolute top-3 left-3">
+                                <span v-if="caseData.is_featured" class="badge badge-featured">
+                                    ⭐ 学霸推荐
+                                </span>
+                                <span v-if="caseData.is_hot" class="badge badge-hot">
+                                    🔥 热门爆款
+                                </span>
+                            </div>
+
+                            <div class="case-overlay absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-50 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all duration-300">
+                                <div class="case-actions flex gap-3">
+                                    <button class="action-btn primary campus-btn ripple-effect"
+                                           @click="makeSame(caseData.id)">
+                                        <span class="mr-2">🎨</span>
+                                        <span>制作同款</span>
+                                    </button>
+                                    <button class="action-btn secondary campus-btn ripple-effect"
+                                           @click="likeCase(caseData.id)">
+                                        <span class="mr-2">❤️</span>
+                                        <span v-text="caseData.like_count"></span>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="case-info p-4">
+                            <h3 class="case-title text-lg font-semibold text-gray-800 mb-2" v-text="caseData.title"></h3>
+                            <p class="case-meta flex justify-between items-center text-sm text-gray-500">
+                                <span class="campus-tag campus-tag-success" v-text="caseData.category"></span>
+                                <span class="text-gray-400" v-text="makeCountText(caseData.make_count)"></span>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 加载状态 -->
+                <div v-else-if="loadingCases" class="text-center py-12">
+                    <div class="campus-loader mx-auto mb-4"></div>
+                    <p class="text-gray-600">加载中...</p>
+                </div>
+
+                <!-- 空状态 -->
+                <div v-else class="text-center py-12">
+                    <div class="empty-icon mb-4">
+                        <span class="text-6xl">🎨</span>
+                    </div>
+                    <h3 class="text-xl font-semibold text-gray-800 mb-2">还没有精选案例</h3>
+                    <p class="text-gray-600 mb-6">快来创作第一个校园作品吧！ 🚀</p>
+                    <a href="/design" class="campus-btn campus-btn-success">
+                        ✨ 立即创作
+                    </a>
+                </div>
+
+                <!-- 查看更多 -->
+                <div class="text-center mt-12">
+                    <a href="/gallery" class="campus-btn campus-btn-primary">
+                        🎪 查看更多案例
+                    </a>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- 🎪 交互脚本 -->
+    <script src="/static/js/campus-interactions.js"></script>
+
+    <script>
+        const { createApp } = Vue;
+
+        createApp({
+            data() {
+                return {
+                    // 导航组件数据
+                    userMenuOpen: false,
+
+                    // 页面数据
+                    featuredCases: [],
+                    loadingCases: false,
+                    currentCaseFilter: 'featured',
+                    caseFilters: [
+                        { value: 'featured', label: '🌟 学霸推荐' },
+                        { value: 'recommended', label: '🎯 为你推荐' },
+                        { value: 'trending', label: '🔥 热门趋势' },
+                        { value: 'popular', label: '💫 超人气' },
+                        { value: 'latest', label: '🆕 最新作品' }
+                    ]
+                }
+            },
+
+            computed: {
+                makeCountText() {
+                    return (count) => `${count} 人制作`;
+                }
+            },
+
+            methods: {
+                // 导航组件方法
+                toggleUserMenu() {
+                    this.userMenuOpen = !this.userMenuOpen;
+                },
+
+                showHelp() {
+                    this.userMenuOpen = false;
+                    // 显示帮助信息
+                    alert('🎓 校园创意工坊帮助中心\n\n📚 使用教程：\n1. 点击"开启创意之旅"开始设计\n2. 上传你的创意图片\n3. 调整效果并确认制作\n4. 坐等专属吧唧送到宿舍！\n\n❓ 有问题？联系客服小姐姐~ 💕');
+                },
+
+                async loadFeaturedCases() {
+                    this.loadingCases = true;
+                    try {
+                        let url = '/api/v1/cases/featured';
+                        if (this.currentCaseFilter === 'popular') {
+                            url = '/api/v1/cases/popular';
+                        } else if (this.currentCaseFilter === 'latest') {
+                            url = '/api/v1/cases/latest';
+                        } else if (this.currentCaseFilter === 'recommended') {
+                            url = '/api/v1/cases/recommended';
+                        } else if (this.currentCaseFilter === 'trending') {
+                            url = '/api/v1/cases/trending';
+                        }
+
+                        const headers = {};
+                        if (window.DeviceManager && window.DeviceManager.getDeviceId()) {
+                            headers['X-Device-ID'] = window.DeviceManager.getDeviceId();
+                        }
+
+                        const response = await fetch(`${url}?limit=8`, {
+                            headers: headers
+                        });
+                        const data = await response.json();
+
+                        if (data.success) {
+                            this.featuredCases = data.cases.map(caseItem => ({
+                                ...caseItem,
+                                is_featured: caseItem.is_featured || Math.random() > 0.7,
+                                is_hot: caseItem.make_count > 100 || Math.random() > 0.8
+                            }));
+                        }
+                    } catch (error) {
+                        console.error('加载精选案例失败:', error);
+                    } finally {
+                        this.loadingCases = false;
+                    }
+                },
+
+                setCaseFilter(filter) {
+                    this.currentCaseFilter = filter;
+                    this.loadFeaturedCases();
+                },
+
+                viewCase(caseId) {
+                    window.location.href = `/view/${caseId}`;
+                },
+
+                async likeCase(caseId) {
+                    try {
+                        const headers = {
+                            'Content-Type': 'application/json'
+                        };
+
+                        if (window.DeviceManager && window.DeviceManager.getDeviceId()) {
+                            headers['X-Device-ID'] = window.DeviceManager.getDeviceId();
+                        }
+
+                        const response = await fetch(`/api/v1/cases/${caseId}/like`, {
+                            method: 'POST',
+                            headers: headers
+                        });
+                        const data = await response.json();
+
+                        if (data.success) {
+                            const caseData = this.featuredCases.find(c => c.id === caseId);
+                            if (caseData) {
+                                caseData.like_count = data.like_count;
+                                // 显示点赞成功提示
+                                this.showToast('❤️ 点赞成功！');
+                            }
+                        } else {
+                            this.showToast('❌ 点赞失败，请重试');
+                        }
+                    } catch (error) {
+                        console.error('点赞失败:', error);
+                        this.showToast('❌ 网络错误，请重试');
+                    }
+                },
+
+                async makeSame(caseId) {
+                    try {
+                        const headers = {
+                            'Content-Type': 'application/json'
+                        };
+
+                        if (window.DeviceManager && window.DeviceManager.getDeviceId()) {
+                            headers['X-Device-ID'] = window.DeviceManager.getDeviceId();
+                        }
+
+                        const response = await fetch(`/api/v1/cases/${caseId}/make`, {
+                            method: 'POST',
+                            headers: headers
+                        });
+                        const data = await response.json();
+
+                        if (data.success) {
+                            const caseData = this.featuredCases.find(c => c.id === caseId);
+                            if (caseData) {
+                                caseData.make_count = data.make_count;
+                            }
+                            // 触发成功庆祝
+                            if (window.campusEffects) {
+                                window.campusEffects.celebrate();
+                            }
+                            setTimeout(() => {
+                                window.location.href = data.redirect_url;
+                            }, 500);
+                        }
+                    } catch (error) {
+                        console.error('制作同款失败:', error);
+                        this.showToast('❌ 制作失败，请重试');
+                    }
+                },
+
+                getImageUrl(imagePath) {
+                    if (!imagePath) return '/static/images/placeholder.png';
+
+                    if (imagePath.startsWith('http')) {
+                        return imagePath;
+                    }
+
+                    let normalizedPath = imagePath.replace(/\\/g, '/');
+
+                    if (normalizedPath.includes('static/uploads/')) {
+                        const filename = normalizedPath.split('/').pop();
+                        return `/api/v1/image/${filename}`;
+                    }
+
+                    if (normalizedPath.includes('uploads/')) {
+                        const filename = normalizedPath.split('/').pop();
+                        return `/api/v1/image/${filename}`;
+                    }
+
+                    if (!normalizedPath.includes('/')) {
+                        return `/api/v1/image/${normalizedPath}`;
+                    }
+
+                    const filename = normalizedPath.split('/').pop();
+                    return `/api/v1/image/${filename}`;
+                },
+
+                showToast(message) {
+                    // 创建提示消息
+                    const toast = document.createElement('div');
+                    toast.className = 'fixed top-4 right-4 bg-white shadow-lg rounded-lg p-4 z-50 bounce-in';
+                    toast.innerHTML = `
+                        <div class="flex items-center">
+                            <span class="text-lg mr-2">${message}</span>
+                        </div>
+                    `;
+                    document.body.appendChild(toast);
+
+                    setTimeout(() => {
+                        toast.style.opacity = '0';
+                        toast.style.transform = 'translateX(100%)';
+                        setTimeout(() => toast.remove(), 300);
+                    }, 3000);
+                }
+            },
+
+            mounted() {
+                this.loadFeaturedCases();
+
+                // 初始化统计数字动画
+                if (window.campusEffects) {
+                    document.addEventListener('DOMContentLoaded', () => {
+                        setTimeout(() => {
+                            document.querySelectorAll('.count-up').forEach(el => {
+                                const target = parseInt(el.dataset.target);
+                                if (target && !isNaN(target)) {
+                                    window.campusEffects.animateNumber(el, target);
+                                }
+                            });
+                        }, 1000);
+                    });
+                }
+            }
+        }).mount('#app');
+    </script>
+</body>
+
+</html>

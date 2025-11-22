@@ -1,0 +1,83 @@
+# 多阶段构建 - Alpine版本（更小）
+FROM python:3.9-alpine as builder
+
+# 添加镜像标签信息
+LABEL maintainer="odinluo"
+LABEL description="Baji Simple - 吧唧生成器应用"
+LABEL version="1.0.0"
+LABEL repository="https://github.com/odinluo/baji"
+
+# 设置工作目录
+WORKDIR /app
+
+# 安装构建依赖（Alpine使用apk）
+RUN apk add --no-cache \
+    gcc \
+    musl-dev \
+    libffi-dev \
+    openssl-dev \
+    jpeg-dev \
+    zlib-dev \
+    freetype-dev \
+    lcms2-dev \
+    openjpeg-dev \
+    tiff-dev \
+    tk-dev \
+    tcl-dev
+
+# 复制依赖文件
+COPY requirements.txt .
+
+# 创建虚拟环境并安装依赖
+RUN python -m venv /opt/venv
+ENV PATH="/opt/venv/bin:$PATH"
+
+# 升级pip并安装依赖
+RUN pip install --no-cache-dir --upgrade pip && \
+    pip install --no-cache-dir -r requirements.txt
+
+# 生产阶段
+FROM python:3.9-alpine as production
+
+# 设置工作目录
+WORKDIR /app
+
+# 安装运行时依赖（仅运行时需要的包）
+RUN apk add --no-cache \
+    libjpeg \
+    zlib \
+    freetype \
+    lcms2 \
+    openjpeg \
+    tiff \
+    tcl \
+    tk
+
+# 从构建阶段复制虚拟环境
+COPY --from=builder /opt/venv /opt/venv
+ENV PATH="/opt/venv/bin:$PATH"
+
+# 复制应用代码
+COPY . .
+
+# 创建必要的目录结构
+RUN mkdir -p static/uploads static/exports static/logs instance
+
+# 设置目录权限
+RUN chmod -R 777 static/uploads static/exports static/logs instance
+
+# 创建非root用户并设置权限
+RUN addgroup -g 1000 appuser && \
+    adduser -D -s /bin/sh -u 1000 -G appuser appuser
+RUN chown -R appuser:appuser /app
+USER appuser
+
+# 设置环境变量
+ENV FLASK_APP=main.py
+ENV FLASK_ENV=production
+
+# 暴露端口
+EXPOSE 5000
+
+# 启动命令
+CMD ["python", "main.py"]

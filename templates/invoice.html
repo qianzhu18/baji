@@ -1,0 +1,371 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>发票 - 吧唧生成器</title>
+    <link rel="stylesheet" href="[[ url_for('static', filename='css/design.css')  ]]">
+</head>
+
+<body>
+    <div class="container">
+        <header class="header">
+            <h1>发票</h1>
+            <nav>
+                <a href="/">首页</a>
+                <a href="/orders">我的订单</a>
+                <a href="/design">制作吧唧</a>
+            </nav>
+        </header>
+
+        <main class="main-content">
+            <div class="invoice-section">
+                <div class="invoice-header">
+                    <h2>订单发票</h2>
+                    <div class="invoice-actions">
+                        <button class="btn btn-primary" onclick="downloadInvoice()">
+                            <i class="icon-download"></i> 下载发票
+                        </button>
+                        <button class="btn btn-secondary" onclick="printInvoice()">
+                            <i class="icon-print"></i> 打印发票
+                        </button>
+                    </div>
+                </div>
+
+                <div class="invoice-content">
+                    <div class="invoice-info">
+                        <div class="info-section">
+                            <h3>订单信息</h3>
+                            <div class="info-grid">
+                                <div class="info-item">
+                                    <label>订单号:</label>
+                                    <span>[[ order_no ]]</span>
+                                </div>
+                                <div class="info-item">
+                                    <label>下单时间:</label>
+                                    <span v-text="order.created_at"></span>
+                                </div>
+                                <div class="info-item">
+                                    <label>订单状态:</label>
+                                    <span :class="'status status-'+  order.status ">
+                                        <span v-text="get_status_text(order.status)"></span>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="info-section">
+                            <h3>商品信息</h3>
+                            <div class="product-info">
+                                <div class="product-image">
+                                    <img src="/api/v1/image/[[ order.processed_image_path.split('/')[-1] ]]" alt="吧唧预览"
+                                        onerror="this.src='/static/images/placeholder.png'">
+                                </div>
+                                <div class="product-details">
+                                    <h4>定制吧唧</h4>
+                                    <p>数量: [[ order.quantity ]] 个</p>
+                                    <p>单价: ¥[[ "%.2f"|format(order.total_price / order.quantity) ]]</p>
+                                    <p class="total-price">总价: ¥[[ order.total_price ]]</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="info-section">
+                            <h3>支付信息</h3>
+                            <div class="info-grid">
+                                <div class="info-item">
+                                    <label>支付方式:</label>
+                                    <span>[[ order.payment_method or '未支付' ]]</span>
+                                </div>
+                                <div class="info-item">
+                                    <label>支付状态:</label>
+                                    <span class="status status-[[ order.payment_status ]]">
+                                        [[ get_payment_status_text(order.payment_status) ]]
+                                    </span>
+                                </div>
+                                <div class="info-item">
+                                    <label>支付时间:</label>
+                                    <span>[[ order.payment_time or '未支付' ]]</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="qr-section">
+                        <h3>发票二维码</h3>
+                        <div class="qr-code">
+                            <img src="/api/v1/invoice/[[ order_no  ]]/qr" alt="发票二维码"
+                                onerror="this.style.display='none'">
+                        </div>
+                        <p class="qr-description">扫描二维码查看发票详情</p>
+                    </div>
+                </div>
+
+                <div class="invoice-footer">
+                    <div class="company-info">
+                        <h4>吧唧生成器</h4>
+                        <p>专业定制吧唧制作服务</p>
+                        <p>联系电话: 400-123-4567</p>
+                        <p>邮箱: service@baji.com</p>
+                    </div>
+                    <div class="invoice-note">
+                        <p>此发票为电子发票，具有法律效力</p>
+                        <p>如有疑问，请联系客服</p>
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <footer class="footer">
+            <p>&copy; 2024 吧唧生成器. All rights reserved.</p>
+        </footer>
+    </div>
+
+    <script>
+        function downloadInvoice() {
+            const orderNo = '[[ order_no  ]]';
+            const link = document.createElement('a');
+            link.href = `/api/v1/invoice/${orderNo}`;
+            link.download = `invoice_${orderNo}.pdf`;
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+        }
+
+        function printInvoice() {
+            window.print();
+        }
+
+        // 页面加载完成后自动加载二维码
+        document.addEventListener('DOMContentLoaded', () => {
+            const qrImg = document.querySelector('.qr-code img');
+            if (qrImg) {
+                qrImg.onerror = () => {
+                    qrImg.parentElement.innerHTML = '<p class="qr-error">二维码生成失败</p>';
+                };
+            }
+        });
+    </script>
+
+    <style>
+        .invoice-section {
+            width: 100%;
+            margin: 0 auto;
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+        }
+
+        /* 响应式宽度控制 */
+        @media (min-width: 640px) {
+            .invoice-section {
+                padding: 0;
+            }
+        }
+
+        @media (min-width: 768px) {
+            .invoice-section {
+                padding: 0;
+            }
+        }
+
+        @media (min-width: 1024px) {
+            .invoice-section {
+                max-width: 50rem; /* 800px */
+            }
+        }
+
+        @media (min-width: 1280px) {
+            .invoice-section {
+                max-width: 60rem; /* 960px */
+            }
+        }
+
+        @media (min-width: 1536px) {
+            .invoice-section {
+                max-width: 70rem; /* 1120px */
+            }
+        }
+
+        .invoice-header {
+            background: #f8f9fa;
+            padding: 20px;
+            border-bottom: 1px solid #dee2e6;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .invoice-actions {
+            display: flex;
+            gap: 10px;
+        }
+
+        .invoice-content {
+            padding: 30px;
+        }
+
+        .info-section {
+            margin-bottom: 30px;
+        }
+
+        .info-section h3 {
+            color: #333;
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #007bff;
+        }
+
+        .info-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+        }
+
+        .info-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 10px 0;
+            border-bottom: 1px solid #eee;
+        }
+
+        .info-item label {
+            font-weight: bold;
+            color: #666;
+        }
+
+        .product-info {
+            display: flex;
+            gap: 20px;
+            align-items: center;
+        }
+
+        .product-image {
+            width: 100px;
+            height: 100px;
+            border-radius: 8px;
+            overflow: hidden;
+            border: 2px solid #dee2e6;
+        }
+
+        .product-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .product-details h4 {
+            margin: 0 0 10px 0;
+            color: #333;
+        }
+
+        .product-details p {
+            margin: 5px 0;
+            color: #666;
+        }
+
+        .total-price {
+            font-weight: bold;
+            color: #007bff;
+            font-size: 1.1em;
+        }
+
+        .qr-section {
+            text-align: center;
+            margin: 30px 0;
+            padding: 20px;
+            background: #f8f9fa;
+            border-radius: 8px;
+        }
+
+        .qr-code {
+            margin: 20px 0;
+        }
+
+        .qr-code img {
+            max-width: 200px;
+            height: auto;
+        }
+
+        .qr-description {
+            color: #666;
+            font-size: 0.9em;
+        }
+
+        .qr-error {
+            color: #dc3545;
+            font-style: italic;
+        }
+
+        .invoice-footer {
+            background: #f8f9fa;
+            padding: 20px 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-top: 1px solid #dee2e6;
+        }
+
+        .company-info h4 {
+            margin: 0 0 10px 0;
+            color: #333;
+        }
+
+        .company-info p {
+            margin: 5px 0;
+            color: #666;
+            font-size: 0.9em;
+        }
+
+        .invoice-note {
+            text-align: right;
+        }
+
+        .invoice-note p {
+            margin: 5px 0;
+            color: #666;
+            font-size: 0.8em;
+        }
+
+        .status {
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 0.8em;
+            font-weight: bold;
+        }
+
+        .status-pending {
+            background: #fff3cd;
+            color: #856404;
+        }
+
+        .status-processing {
+            background: #d1ecf1;
+            color: #0c5460;
+        }
+
+        .status-completed {
+            background: #d4edda;
+            color: #155724;
+        }
+
+        .status-paid {
+            background: #d4edda;
+            color: #155724;
+        }
+
+        @media print {
+            .invoice-actions {
+                display: none;
+            }
+
+            .invoice-section {
+                box-shadow: none;
+            }
+        }
+    </style>
+</body>
+
+</html>

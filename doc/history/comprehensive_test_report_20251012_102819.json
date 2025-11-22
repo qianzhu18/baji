@@ -1,0 +1,844 @@
+{
+  "functional_tests": {
+    "图片上传功能测试": {
+      "success": false,
+      "timestamp": "2025-10-12T10:25:35.925490",
+      "details": {
+        "exception": "HTTPConnectionPool(host='localhost', port=5000): Max retries exceeded with url: /api/v1/upload (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x000001F5393FBB60>: Failed to establish a new connection: [WinError 10061] No connection could be made because the target machine actively refused it'))"
+      },
+      "issue": "图片上传测试异常: HTTPConnectionPool(host='localhost', port=5000): Max retries exceeded with url: /api/v1/upload (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x000001F5393FBB60>: Failed to establish a new connection: [WinError 10061] No connection could be made because the target machine actively refused it'))"
+    },
+    "预览生成功能测试": {
+      "success": false,
+      "timestamp": "2025-10-12T10:25:35.925490",
+      "details": {},
+      "issue": "缺少上传的图片文件"
+    },
+    "订单创建功能测试": {
+      "success": false,
+      "timestamp": "2025-10-12T10:25:35.925490",
+      "details": {},
+      "issue": "缺少上传的图片文件"
+    },
+    "订单查询功能测试": {
+      "success": false,
+      "timestamp": "2025-10-12T10:25:35.925490",
+      "details": {},
+      "issue": "缺少创建的订单"
+    },
+    "支付流程测试": {
+      "success": false,
+      "timestamp": "2025-10-12T10:25:35.925490",
+      "details": {},
+      "issue": "缺少创建的订单"
+    },
+    "配送功能测试": {
+      "success": false,
+      "timestamp": "2025-10-12T10:25:35.925490",
+      "details": {},
+      "issue": "缺少创建的订单"
+    },
+    "作品库功能测试": {
+      "success": false,
+      "timestamp": "2025-10-12T10:25:39.997129",
+      "details": {
+        "exception": "HTTPConnectionPool(host='localhost', port=5000): Max retries exceeded with url: /api/v1/gallery (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x000001F5393FBE90>: Failed to establish a new connection: [WinError 10061] No connection could be made because the target machine actively refused it'))"
+      },
+      "issue": "作品库功能测试异常: HTTPConnectionPool(host='localhost', port=5000): Max retries exceeded with url: /api/v1/gallery (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x000001F5393FBE90>: Failed to establish a new connection: [WinError 10061] No connection could be made because the target machine actively refused it'))"
+    },
+    "发票功能测试": {
+      "success": false,
+      "timestamp": "2025-10-12T10:25:39.997129",
+      "details": {},
+      "issue": "缺少创建的订单"
+    },
+    "图片管理功能测试": {
+      "success": false,
+      "timestamp": "2025-10-12T10:25:39.997129",
+      "details": {},
+      "issue": "缺少上传的图片文件"
+    },
+    "案例功能测试": {
+      "success": false,
+      "timestamp": "2025-10-12T10:25:44.070813",
+      "details": {
+        "exception": "HTTPConnectionPool(host='localhost', port=5000): Max retries exceeded with url: /api/v1/cases (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x000001F539424260>: Failed to establish a new connection: [WinError 10061] No connection could be made because the target machine actively refused it'))"
+      },
+      "issue": "案例功能测试异常: HTTPConnectionPool(host='localhost', port=5000): Max retries exceeded with url: /api/v1/cases (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x000001F539424260>: Failed to establish a new connection: [WinError 10061] No connection could be made because the target machine actively refused it'))"
+    },
+    "订单状态管理测试": {
+      "success": false,
+      "timestamp": "2025-10-12T10:25:44.070813",
+      "details": {},
+      "issue": "缺少创建的订单"
+    },
+    "图片删除功能测试": {
+      "success": false,
+      "timestamp": "2025-10-12T10:25:44.070813",
+      "details": {},
+      "issue": "缺少上传的图片文件"
+    },
+    "订单更新功能测试": {
+      "success": false,
+      "timestamp": "2025-10-12T10:25:44.070813",
+      "details": {},
+      "issue": "缺少创建的订单"
+    },
+    "支付状态查询测试": {
+      "success": false,
+      "timestamp": "2025-10-12T10:25:44.070813",
+      "details": {},
+      "issue": "缺少创建的订单"
+    },
+    "配送详情查询测试": {
+      "success": false,
+      "timestamp": "2025-10-12T10:25:44.070813",
+      "details": {},
+      "issue": "缺少创建的配送记录"
+    },
+    "管理员登录测试": {
+      "success": false,
+      "timestamp": "2025-10-12T10:26:57.468730",
+      "details": {
+        "exception": "HTTPConnectionPool(host='localhost', port=5000): Max retries exceeded with url: /api/v1/admin/login (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x000001F539426570>: Failed to establish a new connection: [WinError 10061] No connection could be made because the target machine actively refused it'))"
+      },
+      "issue": "管理员登录测试异常: HTTPConnectionPool(host='localhost', port=5000): Max retries exceeded with url: /api/v1/admin/login (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x000001F539426570>: Failed to establish a new connection: [WinError 10061] No connection could be made because the target machine actively refused it'))"
+    },
+    "管理员订单管理测试": {
+      "success": false,
+      "timestamp": "2025-10-12T10:26:57.468730",
+      "details": {},
+      "issue": "管理员未登录"
+    },
+    "管理员券码管理测试": {
+      "success": false,
+      "timestamp": "2025-10-12T10:26:57.468730",
+      "details": {},
+      "issue": "管理员未登录"
+    },
+    "管理员导出功能测试": {
+      "success": false,
+      "timestamp": "2025-10-12T10:26:57.468730",
+      "details": {},
+      "issue": "管理员未登录"
+    },
+    "管理员登出测试": {
+      "success": false,
+      "timestamp": "2025-10-12T10:26:57.468730",
+      "details": {},
+      "issue": "管理员未登录"
+    },
+    "管理员登录状态检查测试": {
+      "success": false,
+      "timestamp": "2025-10-12T10:27:01.547629",
+      "details": {
+        "exception": "HTTPConnectionPool(host='localhost', port=5000): Max retries exceeded with url: /api/v1/admin/check (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x000001F5394268D0>: Failed to establish a new connection: [WinError 10061] No connection could be made because the target machine actively refused it'))"
+      },
+      "issue": "管理员登录状态检查测试异常: HTTPConnectionPool(host='localhost', port=5000): Max retries exceeded with url: /api/v1/admin/check (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x000001F5394268D0>: Failed to establish a new connection: [WinError 10061] No connection could be made because the target machine actively refused it'))"
+    },
+    "管理员订单状态更新测试": {
+      "success": false,
+      "timestamp": "2025-10-12T10:27:01.547629",
+      "details": {},
+      "issue": "管理员未登录"
+    },
+    "管理员券码列表测试": {
+      "success": false,
+      "timestamp": "2025-10-12T10:27:01.547629",
+      "details": {},
+      "issue": "管理员未登录"
+    },
+    "管理员系统配置测试": {
+      "success": false,
+      "timestamp": "2025-10-12T10:27:01.547629",
+      "details": {},
+      "issue": "管理员未登录"
+    },
+    "页面路由测试: /": {
+      "success": false,
+      "timestamp": "2025-10-12T10:27:05.617145",
+      "details": {
+        "exception": "HTTPConnectionPool(host='localhost', port=5000): Max retries exceeded with url: / (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x000001F5393FBE00>: Failed to establish a new connection: [WinError 10061] No connection could be made because the target machine actively refused it'))"
+      },
+      "issue": "页面路由测试异常: HTTPConnectionPool(host='localhost', port=5000): Max retries exceeded with url: / (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x000001F5393FBE00>: Failed to establish a new connection: [WinError 10061] No connection could be made because the target machine actively refused it'))"
+    },
+    "页面路由测试: /design": {
+      "success": false,
+      "timestamp": "2025-10-12T10:27:09.697483",
+      "details": {
+        "exception": "HTTPConnectionPool(host='localhost', port=5000): Max retries exceeded with url: /design (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x000001F539426C00>: Failed to establish a new connection: [WinError 10061] No connection could be made because the target machine actively refused it'))"
+      },
+      "issue": "页面路由测试异常: HTTPConnectionPool(host='localhost', port=5000): Max retries exceeded with url: /design (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x000001F539426C00>: Failed to establish a new connection: [WinError 10061] No connection could be made because the target machine actively refused it'))"
+    },
+    "页面路由测试: /orders": {
+      "success": false,
+      "timestamp": "2025-10-12T10:27:13.771268",
+      "details": {
+        "exception": "HTTPConnectionPool(host='localhost', port=5000): Max retries exceeded with url: /orders (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x000001F539426450>: Failed to establish a new connection: [WinError 10061] No connection could be made because the target machine actively refused it'))"
+      },
+      "issue": "页面路由测试异常: HTTPConnectionPool(host='localhost', port=5000): Max retries exceeded with url: /orders (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x000001F539426450>: Failed to establish a new connection: [WinError 10061] No connection could be made because the target machine actively refused it'))"
+    },
+    "页面路由测试: /delivery": {
+      "success": false,
+      "timestamp": "2025-10-12T10:27:17.847161",
+      "details": {
+        "exception": "HTTPConnectionPool(host='localhost', port=5000): Max retries exceeded with url: /delivery (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x000001F5394260C0>: Failed to establish a new connection: [WinError 10061] No connection could be made because the target machine actively refused it'))"
+      },
+      "issue": "页面路由测试异常: HTTPConnectionPool(host='localhost', port=5000): Max retries exceeded with url: /delivery (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x000001F5394260C0>: Failed to establish a new connection: [WinError 10061] No connection could be made because the target machine actively refused it'))"
+    },
+    "页面路由测试: /gallery": {
+      "success": false,
+      "timestamp": "2025-10-12T10:27:21.933521",
+      "details": {
+        "exception": "HTTPConnectionPool(host='localhost', port=5000): Max retries exceeded with url: /gallery (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x000001F539424500>: Failed to establish a new connection: [WinError 10061] No connection could be made because the target machine actively refused it'))"
+      },
+      "issue": "页面路由测试异常: HTTPConnectionPool(host='localhost', port=5000): Max retries exceeded with url: /gallery (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x000001F539424500>: Failed to establish a new connection: [WinError 10061] No connection could be made because the target machine actively refused it'))"
+    },
+    "页面路由测试: /payment": {
+      "success": false,
+      "timestamp": "2025-10-12T10:27:26.019797",
+      "details": {
+        "exception": "HTTPConnectionPool(host='localhost', port=5000): Max retries exceeded with url: /payment (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x000001F539424650>: Failed to establish a new connection: [WinError 10061] No connection could be made because the target machine actively refused it'))"
+      },
+      "issue": "页面路由测试异常: HTTPConnectionPool(host='localhost', port=5000): Max retries exceeded with url: /payment (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x000001F539424650>: Failed to establish a new connection: [WinError 10061] No connection could be made because the target machine actively refused it'))"
+    },
+    "页面路由测试: /error": {
+      "success": false,
+      "timestamp": "2025-10-12T10:27:30.090399",
+      "details": {
+        "exception": "HTTPConnectionPool(host='localhost', port=5000): Max retries exceeded with url: /error (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x000001F539425220>: Failed to establish a new connection: [WinError 10061] No connection could be made because the target machine actively refused it'))"
+      },
+      "issue": "页面路由测试异常: HTTPConnectionPool(host='localhost', port=5000): Max retries exceeded with url: /error (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x000001F539425220>: Failed to establish a new connection: [WinError 10061] No connection could be made because the target machine actively refused it'))"
+    },
+    "页面路由测试: /admin/login": {
+      "success": false,
+      "timestamp": "2025-10-12T10:27:34.175529",
+      "details": {
+        "exception": "HTTPConnectionPool(host='localhost', port=5000): Max retries exceeded with url: /admin/login (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x000001F5394251F0>: Failed to establish a new connection: [WinError 10061] No connection could be made because the target machine actively refused it'))"
+      },
+      "issue": "页面路由测试异常: HTTPConnectionPool(host='localhost', port=5000): Max retries exceeded with url: /admin/login (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x000001F5394251F0>: Failed to establish a new connection: [WinError 10061] No connection could be made because the target machine actively refused it'))"
+    },
+    "页面路由测试: /admin/dashboard": {
+      "success": false,
+      "timestamp": "2025-10-12T10:27:38.238844",
+      "details": {
+        "exception": "HTTPConnectionPool(host='localhost', port=5000): Max retries exceeded with url: /admin/dashboard (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x000001F539425310>: Failed to establish a new connection: [WinError 10061] No connection could be made because the target machine actively refused it'))"
+      },
+      "issue": "页面路由测试异常: HTTPConnectionPool(host='localhost', port=5000): Max retries exceeded with url: /admin/dashboard (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x000001F539425310>: Failed to establish a new connection: [WinError 10061] No connection could be made because the target machine actively refused it'))"
+    },
+    "页面路由测试: /admin/orders": {
+      "success": false,
+      "timestamp": "2025-10-12T10:27:42.311034",
+      "details": {
+        "exception": "HTTPConnectionPool(host='localhost', port=5000): Max retries exceeded with url: /admin/orders (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x000001F539426DE0>: Failed to establish a new connection: [WinError 10061] No connection could be made because the target machine actively refused it'))"
+      },
+      "issue": "页面路由测试异常: HTTPConnectionPool(host='localhost', port=5000): Max retries exceeded with url: /admin/orders (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x000001F539426DE0>: Failed to establish a new connection: [WinError 10061] No connection could be made because the target machine actively refused it'))"
+    },
+    "页面路由测试: /admin/coupons": {
+      "success": false,
+      "timestamp": "2025-10-12T10:27:46.406781",
+      "details": {
+        "exception": "HTTPConnectionPool(host='localhost', port=5000): Max retries exceeded with url: /admin/coupons (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x000001F5394271D0>: Failed to establish a new connection: [WinError 10061] No connection could be made because the target machine actively refused it'))"
+      },
+      "issue": "页面路由测试异常: HTTPConnectionPool(host='localhost', port=5000): Max retries exceeded with url: /admin/coupons (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x000001F5394271D0>: Failed to establish a new connection: [WinError 10061] No connection could be made because the target machine actively refused it'))"
+    },
+    "页面路由测试: /admin/print": {
+      "success": false,
+      "timestamp": "2025-10-12T10:27:50.477060",
+      "details": {
+        "exception": "HTTPConnectionPool(host='localhost', port=5000): Max retries exceeded with url: /admin/print (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x000001F5393A98E0>: Failed to establish a new connection: [WinError 10061] No connection could be made because the target machine actively refused it'))"
+      },
+      "issue": "页面路由测试异常: HTTPConnectionPool(host='localhost', port=5000): Max retries exceeded with url: /admin/print (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x000001F5393A98E0>: Failed to establish a new connection: [WinError 10061] No connection could be made because the target machine actively refused it'))"
+    },
+    "页面路由测试: /admin/delivery": {
+      "success": false,
+      "timestamp": "2025-10-12T10:27:54.554282",
+      "details": {
+        "exception": "HTTPConnectionPool(host='localhost', port=5000): Max retries exceeded with url: /admin/delivery (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x000001F5393FBDD0>: Failed to establish a new connection: [WinError 10061] No connection could be made because the target machine actively refused it'))"
+      },
+      "issue": "页面路由测试异常: HTTPConnectionPool(host='localhost', port=5000): Max retries exceeded with url: /admin/delivery (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x000001F5393FBDD0>: Failed to establish a new connection: [WinError 10061] No connection could be made because the target machine actively refused it'))"
+    },
+    "页面路由测试: /admin/cases": {
+      "success": false,
+      "timestamp": "2025-10-12T10:27:58.624261",
+      "details": {
+        "exception": "HTTPConnectionPool(host='localhost', port=5000): Max retries exceeded with url: /admin/cases (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x000001F539426FF0>: Failed to establish a new connection: [WinError 10061] No connection could be made because the target machine actively refused it'))"
+      },
+      "issue": "页面路由测试异常: HTTPConnectionPool(host='localhost', port=5000): Max retries exceeded with url: /admin/cases (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x000001F539426FF0>: Failed to establish a new connection: [WinError 10061] No connection could be made because the target machine actively refused it'))"
+    },
+    "页面路由测试: /favicon.ico": {
+      "success": false,
+      "timestamp": "2025-10-12T10:28:02.707007",
+      "details": {
+        "exception": "HTTPConnectionPool(host='localhost', port=5000): Max retries exceeded with url: /favicon.ico (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x000001F539425C10>: Failed to establish a new connection: [WinError 10061] No connection could be made because the target machine actively refused it'))"
+      },
+      "issue": "页面路由测试异常: HTTPConnectionPool(host='localhost', port=5000): Max retries exceeded with url: /favicon.ico (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x000001F539425C10>: Failed to establish a new connection: [WinError 10061] No connection could be made because the target machine actively refused it'))"
+    },
+    "页面路由测试: /order/TEST123456": {
+      "success": false,
+      "timestamp": "2025-10-12T10:28:06.788193",
+      "details": {
+        "exception": "HTTPConnectionPool(host='localhost', port=5000): Max retries exceeded with url: /order/TEST123456 (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x000001F539424BF0>: Failed to establish a new connection: [WinError 10061] No connection could be made because the target machine actively refused it'))"
+      },
+      "issue": "页面路由测试异常: HTTPConnectionPool(host='localhost', port=5000): Max retries exceeded with url: /order/TEST123456 (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x000001F539424BF0>: Failed to establish a new connection: [WinError 10061] No connection could be made because the target machine actively refused it'))"
+    },
+    "页面路由测试: /invoice/TEST123456": {
+      "success": false,
+      "timestamp": "2025-10-12T10:28:10.859933",
+      "details": {
+        "exception": "HTTPConnectionPool(host='localhost', port=5000): Max retries exceeded with url: /invoice/TEST123456 (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x000001F5394246B0>: Failed to establish a new connection: [WinError 10061] No connection could be made because the target machine actively refused it'))"
+      },
+      "issue": "页面路由测试异常: HTTPConnectionPool(host='localhost', port=5000): Max retries exceeded with url: /invoice/TEST123456 (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x000001F5394246B0>: Failed to establish a new connection: [WinError 10061] No connection could be made because the target machine actively refused it'))"
+    },
+    "页面路由测试: /view/1": {
+      "success": false,
+      "timestamp": "2025-10-12T10:28:14.931107",
+      "details": {
+        "exception": "HTTPConnectionPool(host='localhost', port=5000): Max retries exceeded with url: /view/1 (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x000001F539424890>: Failed to establish a new connection: [WinError 10061] No connection could be made because the target machine actively refused it'))"
+      },
+      "issue": "页面路由测试异常: HTTPConnectionPool(host='localhost', port=5000): Max retries exceeded with url: /view/1 (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x000001F539424890>: Failed to establish a new connection: [WinError 10061] No connection could be made because the target machine actively refused it'))"
+    },
+    "页面路由测试: /case/1": {
+      "success": false,
+      "timestamp": "2025-10-12T10:28:19.017396",
+      "details": {
+        "exception": "HTTPConnectionPool(host='localhost', port=5000): Max retries exceeded with url: /case/1 (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x000001F539425820>: Failed to establish a new connection: [WinError 10061] No connection could be made because the target machine actively refused it'))"
+      },
+      "issue": "页面路由测试异常: HTTPConnectionPool(host='localhost', port=5000): Max retries exceeded with url: /case/1 (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x000001F539425820>: Failed to establish a new connection: [WinError 10061] No connection could be made because the target machine actively refused it'))"
+    }
+  },
+  "security_tests": {
+    "文件上传安全测试": {
+      "success": false,
+      "timestamp": "2025-10-12T10:25:48.154503",
+      "details": {
+        "exception": "HTTPConnectionPool(host='localhost', port=5000): Max retries exceeded with url: /api/v1/upload (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x000001F5393FBBF0>: Failed to establish a new connection: [WinError 10061] No connection could be made because the target machine actively refused it'))"
+      },
+      "issue": "文件上传安全测试异常: HTTPConnectionPool(host='localhost', port=5000): Max retries exceeded with url: /api/v1/upload (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x000001F5393FBBF0>: Failed to establish a new connection: [WinError 10061] No connection could be made because the target machine actively refused it'))"
+    },
+    "SQL注入测试": {
+      "success": false,
+      "timestamp": "2025-10-12T10:25:52.231586",
+      "details": {
+        "exception": "HTTPConnectionPool(host='localhost', port=5000): Max retries exceeded with url: /api/v1/orders/1'%20OR%20'1'='1 (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x000001F5393FBB00>: Failed to establish a new connection: [WinError 10061] No connection could be made because the target machine actively refused it'))"
+      },
+      "issue": "SQL注入测试异常: HTTPConnectionPool(host='localhost', port=5000): Max retries exceeded with url: /api/v1/orders/1'%20OR%20'1'='1 (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x000001F5393FBB00>: Failed to establish a new connection: [WinError 10061] No connection could be made because the target machine actively refused it'))"
+    },
+    "XSS漏洞测试": {
+      "success": false,
+      "timestamp": "2025-10-12T10:25:56.306481",
+      "details": {
+        "exception": "HTTPConnectionPool(host='localhost', port=5000): Max retries exceeded with url: /api/v1/orders (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x000001F539424440>: Failed to establish a new connection: [WinError 10061] No connection could be made because the target machine actively refused it'))"
+      },
+      "issue": "XSS测试异常: HTTPConnectionPool(host='localhost', port=5000): Max retries exceeded with url: /api/v1/orders (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x000001F539424440>: Failed to establish a new connection: [WinError 10061] No connection could be made because the target machine actively refused it'))"
+    },
+    "路径遍历测试": {
+      "success": false,
+      "timestamp": "2025-10-12T10:26:00.378595",
+      "details": {
+        "exception": "HTTPConnectionPool(host='localhost', port=5000): Max retries exceeded with url: /etc/passwd (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x000001F5394246B0>: Failed to establish a new connection: [WinError 10061] No connection could be made because the target machine actively refused it'))"
+      },
+      "issue": "路径遍历测试异常: HTTPConnectionPool(host='localhost', port=5000): Max retries exceeded with url: /etc/passwd (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x000001F5394246B0>: Failed to establish a new connection: [WinError 10061] No connection could be made because the target machine actively refused it'))"
+    },
+    "认证绕过测试": {
+      "success": false,
+      "timestamp": "2025-10-12T10:26:04.462936",
+      "details": {
+        "exception": "HTTPConnectionPool(host='localhost', port=5000): Max retries exceeded with url: /api/v1/admin/orders (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x000001F539424A70>: Failed to establish a new connection: [WinError 10061] No connection could be made because the target machine actively refused it'))"
+      },
+      "issue": "认证绕过测试异常: HTTPConnectionPool(host='localhost', port=5000): Max retries exceeded with url: /api/v1/admin/orders (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x000001F539424A70>: Failed to establish a new connection: [WinError 10061] No connection could be made because the target machine actively refused it'))"
+    },
+    "权限提升测试": {
+      "success": false,
+      "timestamp": "2025-10-12T10:26:08.538770",
+      "details": {
+        "exception": "HTTPConnectionPool(host='localhost', port=5000): Max retries exceeded with url: /api/v1/admin/coupons (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x000001F539424EF0>: Failed to establish a new connection: [WinError 10061] No connection could be made because the target machine actively refused it'))"
+      },
+      "issue": "权限提升测试异常: HTTPConnectionPool(host='localhost', port=5000): Max retries exceeded with url: /api/v1/admin/coupons (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x000001F539424EF0>: Failed to establish a new connection: [WinError 10061] No connection could be made because the target machine actively refused it'))"
+    },
+    "敏感信息泄露测试": {
+      "success": false,
+      "timestamp": "2025-10-12T10:26:12.611847",
+      "details": {
+        "exception": "HTTPConnectionPool(host='localhost', port=5000): Max retries exceeded with url: /api/v1/nonexistent (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x000001F5394252E0>: Failed to establish a new connection: [WinError 10061] No connection could be made because the target machine actively refused it'))"
+      },
+      "issue": "敏感信息泄露测试异常: HTTPConnectionPool(host='localhost', port=5000): Max retries exceeded with url: /api/v1/nonexistent (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x000001F5394252E0>: Failed to establish a new connection: [WinError 10061] No connection could be made because the target machine actively refused it'))"
+    },
+    "MIME类型验证测试": {
+      "success": false,
+      "timestamp": "2025-10-12T10:26:16.697638",
+      "details": {
+        "exception": "HTTPConnectionPool(host='localhost', port=5000): Max retries exceeded with url: /api/v1/upload (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x000001F5394256A0>: Failed to establish a new connection: [WinError 10061] No connection could be made because the target machine actively refused it'))"
+      },
+      "issue": "MIME类型验证测试异常: HTTPConnectionPool(host='localhost', port=5000): Max retries exceeded with url: /api/v1/upload (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x000001F5394256A0>: Failed to establish a new connection: [WinError 10061] No connection could be made because the target machine actively refused it'))"
+    },
+    "文件权限测试": {
+      "success": false,
+      "timestamp": "2025-10-12T10:26:20.777548",
+      "details": {
+        "exception": "HTTPConnectionPool(host='localhost', port=5000): Max retries exceeded with url: /api/v1/upload (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x000001F539425A90>: Failed to establish a new connection: [WinError 10061] No connection could be made because the target machine actively refused it'))"
+      },
+      "issue": "文件权限测试异常: HTTPConnectionPool(host='localhost', port=5000): Max retries exceeded with url: /api/v1/upload (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x000001F539425A90>: Failed to establish a new connection: [WinError 10061] No connection could be made because the target machine actively refused it'))"
+    },
+    "请求频率限制测试": {
+      "success": false,
+      "timestamp": "2025-10-12T10:26:24.860147",
+      "details": {
+        "exception": "HTTPConnectionPool(host='localhost', port=5000): Max retries exceeded with url: /api/v1/upload (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x000001F5393FBD40>: Failed to establish a new connection: [WinError 10061] No connection could be made because the target machine actively refused it'))"
+      },
+      "issue": "请求频率限制测试异常: HTTPConnectionPool(host='localhost', port=5000): Max retries exceeded with url: /api/v1/upload (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x000001F5393FBD40>: Failed to establish a new connection: [WinError 10061] No connection could be made because the target machine actively refused it'))"
+    },
+    "安全头测试": {
+      "success": false,
+      "timestamp": "2025-10-12T10:26:28.931700",
+      "details": {
+        "exception": "HTTPConnectionPool(host='localhost', port=5000): Max retries exceeded with url: / (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x000001F5394256A0>: Failed to establish a new connection: [WinError 10061] No connection could be made because the target machine actively refused it'))"
+      },
+      "issue": "安全头测试异常: HTTPConnectionPool(host='localhost', port=5000): Max retries exceeded with url: / (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x000001F5394256A0>: Failed to establish a new connection: [WinError 10061] No connection could be made because the target machine actively refused it'))"
+    },
+    "安全审计日志测试": {
+      "success": true,
+      "timestamp": "2025-10-12T10:26:41.153003",
+      "details": {
+        "log_files_found": [
+          "static/logs\\access.log",
+          "static/logs\\error.log",
+          "static/logs\\operation.log",
+          "static/logs\\system.log"
+        ]
+      },
+      "issue": null
+    },
+    "设备ID验证测试": {
+      "success": false,
+      "timestamp": "2025-10-12T10:26:45.232411",
+      "details": {
+        "exception": "HTTPConnectionPool(host='localhost', port=5000): Max retries exceeded with url: /api/v1/orders (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x000001F539424680>: Failed to establish a new connection: [WinError 10061] No connection could be made because the target machine actively refused it'))"
+      },
+      "issue": "设备ID验证测试异常: HTTPConnectionPool(host='localhost', port=5000): Max retries exceeded with url: /api/v1/orders (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x000001F539424680>: Failed to establish a new connection: [WinError 10061] No connection could be made because the target machine actively refused it'))"
+    },
+    "设备隔离测试": {
+      "success": false,
+      "timestamp": "2025-10-12T10:26:49.323077",
+      "details": {
+        "exception": "HTTPConnectionPool(host='localhost', port=5000): Max retries exceeded with url: /api/v1/orders (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x000001F539425D00>: Failed to establish a new connection: [WinError 10061] No connection could be made because the target machine actively refused it'))"
+      },
+      "issue": "设备隔离测试异常: HTTPConnectionPool(host='localhost', port=5000): Max retries exceeded with url: /api/v1/orders (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x000001F539425D00>: Failed to establish a new connection: [WinError 10061] No connection could be made because the target machine actively refused it'))"
+    },
+    "管理员会话管理测试": {
+      "success": false,
+      "timestamp": "2025-10-12T10:26:53.396704",
+      "details": {
+        "exception": "HTTPConnectionPool(host='localhost', port=5000): Max retries exceeded with url: /api/v1/admin/check (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x000001F5394260C0>: Failed to establish a new connection: [WinError 10061] No connection could be made because the target machine actively refused it'))"
+      },
+      "issue": "管理员会话管理测试异常: HTTPConnectionPool(host='localhost', port=5000): Max retries exceeded with url: /api/v1/admin/check (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x000001F5394260C0>: Failed to establish a new connection: [WinError 10061] No connection could be made because the target machine actively refused it'))"
+    }
+  },
+  "performance_tests": {},
+  "issues_found": [
+    {
+      "test_name": "图片上传功能测试",
+      "test_type": "functional_tests",
+      "issue": "图片上传测试异常: HTTPConnectionPool(host='localhost', port=5000): Max retries exceeded with url: /api/v1/upload (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x000001F5393FBB60>: Failed to establish a new connection: [WinError 10061] No connection could be made because the target machine actively refused it'))",
+      "timestamp": "2025-10-12T10:25:35.925490"
+    },
+    {
+      "test_name": "预览生成功能测试",
+      "test_type": "functional_tests",
+      "issue": "缺少上传的图片文件",
+      "timestamp": "2025-10-12T10:25:35.925490"
+    },
+    {
+      "test_name": "订单创建功能测试",
+      "test_type": "functional_tests",
+      "issue": "缺少上传的图片文件",
+      "timestamp": "2025-10-12T10:25:35.925490"
+    },
+    {
+      "test_name": "订单查询功能测试",
+      "test_type": "functional_tests",
+      "issue": "缺少创建的订单",
+      "timestamp": "2025-10-12T10:25:35.925490"
+    },
+    {
+      "test_name": "支付流程测试",
+      "test_type": "functional_tests",
+      "issue": "缺少创建的订单",
+      "timestamp": "2025-10-12T10:25:35.925490"
+    },
+    {
+      "test_name": "配送功能测试",
+      "test_type": "functional_tests",
+      "issue": "缺少创建的订单",
+      "timestamp": "2025-10-12T10:25:35.925490"
+    },
+    {
+      "test_name": "作品库功能测试",
+      "test_type": "functional_tests",
+      "issue": "作品库功能测试异常: HTTPConnectionPool(host='localhost', port=5000): Max retries exceeded with url: /api/v1/gallery (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x000001F5393FBE90>: Failed to establish a new connection: [WinError 10061] No connection could be made because the target machine actively refused it'))",
+      "timestamp": "2025-10-12T10:25:39.997129"
+    },
+    {
+      "test_name": "发票功能测试",
+      "test_type": "functional_tests",
+      "issue": "缺少创建的订单",
+      "timestamp": "2025-10-12T10:25:39.997129"
+    },
+    {
+      "test_name": "图片管理功能测试",
+      "test_type": "functional_tests",
+      "issue": "缺少上传的图片文件",
+      "timestamp": "2025-10-12T10:25:39.997129"
+    },
+    {
+      "test_name": "案例功能测试",
+      "test_type": "functional_tests",
+      "issue": "案例功能测试异常: HTTPConnectionPool(host='localhost', port=5000): Max retries exceeded with url: /api/v1/cases (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x000001F539424260>: Failed to establish a new connection: [WinError 10061] No connection could be made because the target machine actively refused it'))",
+      "timestamp": "2025-10-12T10:25:44.070813"
+    },
+    {
+      "test_name": "订单状态管理测试",
+      "test_type": "functional_tests",
+      "issue": "缺少创建的订单",
+      "timestamp": "2025-10-12T10:25:44.070813"
+    },
+    {
+      "test_name": "图片删除功能测试",
+      "test_type": "functional_tests",
+      "issue": "缺少上传的图片文件",
+      "timestamp": "2025-10-12T10:25:44.070813"
+    },
+    {
+      "test_name": "订单更新功能测试",
+      "test_type": "functional_tests",
+      "issue": "缺少创建的订单",
+      "timestamp": "2025-10-12T10:25:44.070813"
+    },
+    {
+      "test_name": "支付状态查询测试",
+      "test_type": "functional_tests",
+      "issue": "缺少创建的订单",
+      "timestamp": "2025-10-12T10:25:44.070813"
+    },
+    {
+      "test_name": "配送详情查询测试",
+      "test_type": "functional_tests",
+      "issue": "缺少创建的配送记录",
+      "timestamp": "2025-10-12T10:25:44.070813"
+    },
+    {
+      "test_name": "文件上传安全测试",
+      "test_type": "security_tests",
+      "issue": "文件上传安全测试异常: HTTPConnectionPool(host='localhost', port=5000): Max retries exceeded with url: /api/v1/upload (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x000001F5393FBBF0>: Failed to establish a new connection: [WinError 10061] No connection could be made because the target machine actively refused it'))",
+      "timestamp": "2025-10-12T10:25:48.154503"
+    },
+    {
+      "test_name": "SQL注入测试",
+      "test_type": "security_tests",
+      "issue": "SQL注入测试异常: HTTPConnectionPool(host='localhost', port=5000): Max retries exceeded with url: /api/v1/orders/1'%20OR%20'1'='1 (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x000001F5393FBB00>: Failed to establish a new connection: [WinError 10061] No connection could be made because the target machine actively refused it'))",
+      "timestamp": "2025-10-12T10:25:52.231586"
+    },
+    {
+      "test_name": "XSS漏洞测试",
+      "test_type": "security_tests",
+      "issue": "XSS测试异常: HTTPConnectionPool(host='localhost', port=5000): Max retries exceeded with url: /api/v1/orders (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x000001F539424440>: Failed to establish a new connection: [WinError 10061] No connection could be made because the target machine actively refused it'))",
+      "timestamp": "2025-10-12T10:25:56.306481"
+    },
+    {
+      "test_name": "路径遍历测试",
+      "test_type": "security_tests",
+      "issue": "路径遍历测试异常: HTTPConnectionPool(host='localhost', port=5000): Max retries exceeded with url: /etc/passwd (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x000001F5394246B0>: Failed to establish a new connection: [WinError 10061] No connection could be made because the target machine actively refused it'))",
+      "timestamp": "2025-10-12T10:26:00.378595"
+    },
+    {
+      "test_name": "认证绕过测试",
+      "test_type": "security_tests",
+      "issue": "认证绕过测试异常: HTTPConnectionPool(host='localhost', port=5000): Max retries exceeded with url: /api/v1/admin/orders (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x000001F539424A70>: Failed to establish a new connection: [WinError 10061] No connection could be made because the target machine actively refused it'))",
+      "timestamp": "2025-10-12T10:26:04.462936"
+    },
+    {
+      "test_name": "权限提升测试",
+      "test_type": "security_tests",
+      "issue": "权限提升测试异常: HTTPConnectionPool(host='localhost', port=5000): Max retries exceeded with url: /api/v1/admin/coupons (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x000001F539424EF0>: Failed to establish a new connection: [WinError 10061] No connection could be made because the target machine actively refused it'))",
+      "timestamp": "2025-10-12T10:26:08.538770"
+    },
+    {
+      "test_name": "敏感信息泄露测试",
+      "test_type": "security_tests",
+      "issue": "敏感信息泄露测试异常: HTTPConnectionPool(host='localhost', port=5000): Max retries exceeded with url: /api/v1/nonexistent (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x000001F5394252E0>: Failed to establish a new connection: [WinError 10061] No connection could be made because the target machine actively refused it'))",
+      "timestamp": "2025-10-12T10:26:12.611847"
+    },
+    {
+      "test_name": "MIME类型验证测试",
+      "test_type": "security_tests",
+      "issue": "MIME类型验证测试异常: HTTPConnectionPool(host='localhost', port=5000): Max retries exceeded with url: /api/v1/upload (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x000001F5394256A0>: Failed to establish a new connection: [WinError 10061] No connection could be made because the target machine actively refused it'))",
+      "timestamp": "2025-10-12T10:26:16.697638"
+    },
+    {
+      "test_name": "文件权限测试",
+      "test_type": "security_tests",
+      "issue": "文件权限测试异常: HTTPConnectionPool(host='localhost', port=5000): Max retries exceeded with url: /api/v1/upload (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x000001F539425A90>: Failed to establish a new connection: [WinError 10061] No connection could be made because the target machine actively refused it'))",
+      "timestamp": "2025-10-12T10:26:20.777548"
+    },
+    {
+      "test_name": "请求频率限制测试",
+      "test_type": "security_tests",
+      "issue": "请求频率限制测试异常: HTTPConnectionPool(host='localhost', port=5000): Max retries exceeded with url: /api/v1/upload (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x000001F5393FBD40>: Failed to establish a new connection: [WinError 10061] No connection could be made because the target machine actively refused it'))",
+      "timestamp": "2025-10-12T10:26:24.860147"
+    },
+    {
+      "test_name": "安全头测试",
+      "test_type": "security_tests",
+      "issue": "安全头测试异常: HTTPConnectionPool(host='localhost', port=5000): Max retries exceeded with url: / (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x000001F5394256A0>: Failed to establish a new connection: [WinError 10061] No connection could be made because the target machine actively refused it'))",
+      "timestamp": "2025-10-12T10:26:28.931700"
+    },
+    {
+      "test_name": "设备ID验证测试",
+      "test_type": "security_tests",
+      "issue": "设备ID验证测试异常: HTTPConnectionPool(host='localhost', port=5000): Max retries exceeded with url: /api/v1/orders (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x000001F539424680>: Failed to establish a new connection: [WinError 10061] No connection could be made because the target machine actively refused it'))",
+      "timestamp": "2025-10-12T10:26:45.232411"
+    },
+    {
+      "test_name": "设备隔离测试",
+      "test_type": "security_tests",
+      "issue": "设备隔离测试异常: HTTPConnectionPool(host='localhost', port=5000): Max retries exceeded with url: /api/v1/orders (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x000001F539425D00>: Failed to establish a new connection: [WinError 10061] No connection could be made because the target machine actively refused it'))",
+      "timestamp": "2025-10-12T10:26:49.323077"
+    },
+    {
+      "test_name": "管理员会话管理测试",
+      "test_type": "security_tests",
+      "issue": "管理员会话管理测试异常: HTTPConnectionPool(host='localhost', port=5000): Max retries exceeded with url: /api/v1/admin/check (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x000001F5394260C0>: Failed to establish a new connection: [WinError 10061] No connection could be made because the target machine actively refused it'))",
+      "timestamp": "2025-10-12T10:26:53.396704"
+    },
+    {
+      "test_name": "管理员登录测试",
+      "test_type": "functional_tests",
+      "issue": "管理员登录测试异常: HTTPConnectionPool(host='localhost', port=5000): Max retries exceeded with url: /api/v1/admin/login (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x000001F539426570>: Failed to establish a new connection: [WinError 10061] No connection could be made because the target machine actively refused it'))",
+      "timestamp": "2025-10-12T10:26:57.468730"
+    },
+    {
+      "test_name": "管理员订单管理测试",
+      "test_type": "functional_tests",
+      "issue": "管理员未登录",
+      "timestamp": "2025-10-12T10:26:57.468730"
+    },
+    {
+      "test_name": "管理员券码管理测试",
+      "test_type": "functional_tests",
+      "issue": "管理员未登录",
+      "timestamp": "2025-10-12T10:26:57.468730"
+    },
+    {
+      "test_name": "管理员导出功能测试",
+      "test_type": "functional_tests",
+      "issue": "管理员未登录",
+      "timestamp": "2025-10-12T10:26:57.468730"
+    },
+    {
+      "test_name": "管理员登出测试",
+      "test_type": "functional_tests",
+      "issue": "管理员未登录",
+      "timestamp": "2025-10-12T10:26:57.468730"
+    },
+    {
+      "test_name": "管理员登录状态检查测试",
+      "test_type": "functional_tests",
+      "issue": "管理员登录状态检查测试异常: HTTPConnectionPool(host='localhost', port=5000): Max retries exceeded with url: /api/v1/admin/check (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x000001F5394268D0>: Failed to establish a new connection: [WinError 10061] No connection could be made because the target machine actively refused it'))",
+      "timestamp": "2025-10-12T10:27:01.547629"
+    },
+    {
+      "test_name": "管理员订单状态更新测试",
+      "test_type": "functional_tests",
+      "issue": "管理员未登录",
+      "timestamp": "2025-10-12T10:27:01.547629"
+    },
+    {
+      "test_name": "管理员券码列表测试",
+      "test_type": "functional_tests",
+      "issue": "管理员未登录",
+      "timestamp": "2025-10-12T10:27:01.547629"
+    },
+    {
+      "test_name": "管理员系统配置测试",
+      "test_type": "functional_tests",
+      "issue": "管理员未登录",
+      "timestamp": "2025-10-12T10:27:01.547629"
+    },
+    {
+      "test_name": "页面路由测试: /",
+      "test_type": "functional_tests",
+      "issue": "页面路由测试异常: HTTPConnectionPool(host='localhost', port=5000): Max retries exceeded with url: / (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x000001F5393FBE00>: Failed to establish a new connection: [WinError 10061] No connection could be made because the target machine actively refused it'))",
+      "timestamp": "2025-10-12T10:27:05.617653"
+    },
+    {
+      "test_name": "页面路由测试: /design",
+      "test_type": "functional_tests",
+      "issue": "页面路由测试异常: HTTPConnectionPool(host='localhost', port=5000): Max retries exceeded with url: /design (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x000001F539426C00>: Failed to establish a new connection: [WinError 10061] No connection could be made because the target machine actively refused it'))",
+      "timestamp": "2025-10-12T10:27:09.697483"
+    },
+    {
+      "test_name": "页面路由测试: /orders",
+      "test_type": "functional_tests",
+      "issue": "页面路由测试异常: HTTPConnectionPool(host='localhost', port=5000): Max retries exceeded with url: /orders (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x000001F539426450>: Failed to establish a new connection: [WinError 10061] No connection could be made because the target machine actively refused it'))",
+      "timestamp": "2025-10-12T10:27:13.771268"
+    },
+    {
+      "test_name": "页面路由测试: /delivery",
+      "test_type": "functional_tests",
+      "issue": "页面路由测试异常: HTTPConnectionPool(host='localhost', port=5000): Max retries exceeded with url: /delivery (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x000001F5394260C0>: Failed to establish a new connection: [WinError 10061] No connection could be made because the target machine actively refused it'))",
+      "timestamp": "2025-10-12T10:27:17.847161"
+    },
+    {
+      "test_name": "页面路由测试: /gallery",
+      "test_type": "functional_tests",
+      "issue": "页面路由测试异常: HTTPConnectionPool(host='localhost', port=5000): Max retries exceeded with url: /gallery (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x000001F539424500>: Failed to establish a new connection: [WinError 10061] No connection could be made because the target machine actively refused it'))",
+      "timestamp": "2025-10-12T10:27:21.933521"
+    },
+    {
+      "test_name": "页面路由测试: /payment",
+      "test_type": "functional_tests",
+      "issue": "页面路由测试异常: HTTPConnectionPool(host='localhost', port=5000): Max retries exceeded with url: /payment (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x000001F539424650>: Failed to establish a new connection: [WinError 10061] No connection could be made because the target machine actively refused it'))",
+      "timestamp": "2025-10-12T10:27:26.020302"
+    },
+    {
+      "test_name": "页面路由测试: /error",
+      "test_type": "functional_tests",
+      "issue": "页面路由测试异常: HTTPConnectionPool(host='localhost', port=5000): Max retries exceeded with url: /error (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x000001F539425220>: Failed to establish a new connection: [WinError 10061] No connection could be made because the target machine actively refused it'))",
+      "timestamp": "2025-10-12T10:27:30.090399"
+    },
+    {
+      "test_name": "页面路由测试: /admin/login",
+      "test_type": "functional_tests",
+      "issue": "页面路由测试异常: HTTPConnectionPool(host='localhost', port=5000): Max retries exceeded with url: /admin/login (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x000001F5394251F0>: Failed to establish a new connection: [WinError 10061] No connection could be made because the target machine actively refused it'))",
+      "timestamp": "2025-10-12T10:27:34.175529"
+    },
+    {
+      "test_name": "页面路由测试: /admin/dashboard",
+      "test_type": "functional_tests",
+      "issue": "页面路由测试异常: HTTPConnectionPool(host='localhost', port=5000): Max retries exceeded with url: /admin/dashboard (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x000001F539425310>: Failed to establish a new connection: [WinError 10061] No connection could be made because the target machine actively refused it'))",
+      "timestamp": "2025-10-12T10:27:38.238844"
+    },
+    {
+      "test_name": "页面路由测试: /admin/orders",
+      "test_type": "functional_tests",
+      "issue": "页面路由测试异常: HTTPConnectionPool(host='localhost', port=5000): Max retries exceeded with url: /admin/orders (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x000001F539426DE0>: Failed to establish a new connection: [WinError 10061] No connection could be made because the target machine actively refused it'))",
+      "timestamp": "2025-10-12T10:27:42.311034"
+    },
+    {
+      "test_name": "页面路由测试: /admin/coupons",
+      "test_type": "functional_tests",
+      "issue": "页面路由测试异常: HTTPConnectionPool(host='localhost', port=5000): Max retries exceeded with url: /admin/coupons (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x000001F5394271D0>: Failed to establish a new connection: [WinError 10061] No connection could be made because the target machine actively refused it'))",
+      "timestamp": "2025-10-12T10:27:46.406781"
+    },
+    {
+      "test_name": "页面路由测试: /admin/print",
+      "test_type": "functional_tests",
+      "issue": "页面路由测试异常: HTTPConnectionPool(host='localhost', port=5000): Max retries exceeded with url: /admin/print (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x000001F5393A98E0>: Failed to establish a new connection: [WinError 10061] No connection could be made because the target machine actively refused it'))",
+      "timestamp": "2025-10-12T10:27:50.477060"
+    },
+    {
+      "test_name": "页面路由测试: /admin/delivery",
+      "test_type": "functional_tests",
+      "issue": "页面路由测试异常: HTTPConnectionPool(host='localhost', port=5000): Max retries exceeded with url: /admin/delivery (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x000001F5393FBDD0>: Failed to establish a new connection: [WinError 10061] No connection could be made because the target machine actively refused it'))",
+      "timestamp": "2025-10-12T10:27:54.554282"
+    },
+    {
+      "test_name": "页面路由测试: /admin/cases",
+      "test_type": "functional_tests",
+      "issue": "页面路由测试异常: HTTPConnectionPool(host='localhost', port=5000): Max retries exceeded with url: /admin/cases (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x000001F539426FF0>: Failed to establish a new connection: [WinError 10061] No connection could be made because the target machine actively refused it'))",
+      "timestamp": "2025-10-12T10:27:58.624261"
+    },
+    {
+      "test_name": "页面路由测试: /favicon.ico",
+      "test_type": "functional_tests",
+      "issue": "页面路由测试异常: HTTPConnectionPool(host='localhost', port=5000): Max retries exceeded with url: /favicon.ico (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x000001F539425C10>: Failed to establish a new connection: [WinError 10061] No connection could be made because the target machine actively refused it'))",
+      "timestamp": "2025-10-12T10:28:02.707007"
+    },
+    {
+      "test_name": "页面路由测试: /order/TEST123456",
+      "test_type": "functional_tests",
+      "issue": "页面路由测试异常: HTTPConnectionPool(host='localhost', port=5000): Max retries exceeded with url: /order/TEST123456 (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x000001F539424BF0>: Failed to establish a new connection: [WinError 10061] No connection could be made because the target machine actively refused it'))",
+      "timestamp": "2025-10-12T10:28:06.788193"
+    },
+    {
+      "test_name": "页面路由测试: /invoice/TEST123456",
+      "test_type": "functional_tests",
+      "issue": "页面路由测试异常: HTTPConnectionPool(host='localhost', port=5000): Max retries exceeded with url: /invoice/TEST123456 (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x000001F5394246B0>: Failed to establish a new connection: [WinError 10061] No connection could be made because the target machine actively refused it'))",
+      "timestamp": "2025-10-12T10:28:10.859933"
+    },
+    {
+      "test_name": "页面路由测试: /view/1",
+      "test_type": "functional_tests",
+      "issue": "页面路由测试异常: HTTPConnectionPool(host='localhost', port=5000): Max retries exceeded with url: /view/1 (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x000001F539424890>: Failed to establish a new connection: [WinError 10061] No connection could be made because the target machine actively refused it'))",
+      "timestamp": "2025-10-12T10:28:14.931107"
+    },
+    {
+      "test_name": "页面路由测试: /case/1",
+      "test_type": "functional_tests",
+      "issue": "页面路由测试异常: HTTPConnectionPool(host='localhost', port=5000): Max retries exceeded with url: /case/1 (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x000001F539425820>: Failed to establish a new connection: [WinError 10061] No connection could be made because the target machine actively refused it'))",
+      "timestamp": "2025-10-12T10:28:19.017396"
+    }
+  ],
+  "recommendations": [
+    {
+      "type": "security",
+      "priority": "high",
+      "title": "修复安全漏洞",
+      "description": "发现以下安全测试失败: 文件上传安全测试, SQL注入测试, XSS漏洞测试, 路径遍历测试, 认证绕过测试, 权限提升测试, 敏感信息泄露测试, MIME类型验证测试, 文件权限测试, 请求频率限制测试, 安全头测试, 设备ID验证测试, 设备隔离测试, 管理员会话管理测试，需要立即修复"
+    },
+    {
+      "type": "security",
+      "priority": "high",
+      "title": "加强文件类型验证",
+      "description": "MIME类型验证测试失败，建议加强文件头检查和内容验证"
+    },
+    {
+      "type": "security",
+      "priority": "high",
+      "title": "启用请求频率限制",
+      "description": "请求频率限制测试失败，建议检查Flask-Limiter配置"
+    },
+    {
+      "type": "security",
+      "priority": "medium",
+      "title": "完善安全头配置",
+      "description": "安全头测试失败，建议检查Flask-Talisman配置"
+    },
+    {
+      "type": "functionality",
+      "priority": "medium",
+      "title": "修复功能问题",
+      "description": "部分功能测试失败，建议检查相关代码逻辑和错误处理"
+    },
+    {
+      "type": "security",
+      "priority": "low",
+      "title": "定期安全审计",
+      "description": "建议定期运行安全测试，检查系统安全状态"
+    },
+    {
+      "type": "security",
+      "priority": "low",
+      "title": "监控安全日志",
+      "description": "建议设置安全日志监控和告警机制"
+    },
+    {
+      "type": "security",
+      "priority": "low",
+      "title": "更新依赖包",
+      "description": "建议定期更新安全相关依赖包，修复已知漏洞"
+    },
+    {
+      "type": "performance",
+      "priority": "low",
+      "title": "优化图片处理",
+      "description": "建议优化图片处理性能，添加缓存机制"
+    },
+    {
+      "type": "security",
+      "priority": "low",
+      "title": "备份和恢复",
+      "description": "建议建立完善的数据备份和恢复机制"
+    }
+  ]
+}

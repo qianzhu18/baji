@@ -1,0 +1,777 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>我的订单 - 吧唧生成器</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    <link rel="stylesheet" href="/static/css/design.css">
+    <script src="/static/js/device-manager.js"></script>
+    <script src="/static/js/api.js"></script>
+    <style>
+        .order-card {
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .order-card:hover {
+            transform: translateY(-8px) scale(1.02);
+            box-shadow: 0 20px 25px rgba(0, 0, 0, 0.1);
+        }
+
+        .order-image {
+            transition: transform 0.5s ease;
+        }
+
+        .order-card:hover .order-image {
+            transform: scale(1.1);
+        }
+
+        .filter-tab {
+            transition: all 0.2s ease;
+        }
+
+        .filter-tab.active {
+            background: linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%);
+            color: white;
+            transform: scale(1.05);
+        }
+
+        .status-badge {
+            transition: all 0.2s ease;
+            font-size: 0.75rem;
+            padding: 0.25rem 0.75rem;
+            border-radius: 9999px;
+            font-weight: 500;
+        }
+
+        .status-pending {
+            background-color: #fef3c7;
+            color: #92400e;
+        }
+
+        .status-processing {
+            background-color: #dbeafe;
+            color: #1e40af;
+        }
+
+        .status-completed {
+            background-color: #d1fae5;
+            color: #065f46;
+        }
+
+        .status-cancelled {
+            background-color: #fee2e2;
+            color: #991b1b;
+        }
+
+        .status-printed {
+            background-color: #e9d5ff;
+            color: #7c3aed;
+        }
+
+        .payment-unpaid {
+            background-color: #fee2e2;
+            color: #991b1b;
+        }
+
+        .payment-paid {
+            background-color: #d1fae5;
+            color: #065f46;
+        }
+
+        .payment-refunded {
+            background-color: #f3f4f6;
+            color: #374151;
+        }
+
+        .nav-link {
+            position: relative;
+            padding: 0.5rem 0;
+            font-weight: 500;
+        }
+
+        .nav-link:hover {
+            transform: translateY(-1px);
+        }
+
+        .mobile-menu {
+            animation: slideDown 0.3s ease-out;
+        }
+
+        @keyframes slideDown {
+            from {
+                opacity: 0;
+                transform: translateY(-10px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .empty-state {
+            background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+        }
+
+        .loading-spinner {
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            from {
+                transform: rotate(0deg);
+            }
+
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
+        /* 导航栏样式 */
+        .navbar {
+            position: sticky;
+            top: 0;
+            z-index: 50;
+        }
+
+        /* 导航组件样式 */
+        .user-menu-dropdown {
+            transition: all 0.2s ease-out;
+            transform-origin: top right;
+        }
+
+        .menu-open {
+            opacity: 1;
+            transform: translateY(0) scale(1);
+            visibility: visible;
+        }
+
+        .menu-closed {
+            opacity: 0;
+            transform: translateY(-10px) scale(0.95);
+            visibility: hidden;
+        }
+
+        .user-menu-btn {
+            transition: all 0.2s ease-out;
+        }
+
+        .user-menu-btn:hover {
+            transform: translateY(-1px);
+        }
+
+        .user-menu-dropdown a,
+        .user-menu-dropdown button {
+            transition: all 0.15s ease-out;
+        }
+
+        .user-menu-dropdown a:hover,
+        .user-menu-dropdown button:hover {
+            transform: translateX(2px);
+            background-color: rgba(59, 130, 246, 0.05);
+        }
+
+        /* 手机版订单页面优化 - 适配新的卡片布局 */
+        @media (max-width: 768px) {
+
+            /* 筛选标签在手机端换行 */
+            .filter-tab {
+                font-size: 0.75rem;
+                padding: 0.5rem 0.75rem;
+            }
+
+            /* 订单卡片在手机端单列显示 */
+            .order-card {
+                margin-bottom: 1rem;
+            }
+
+            /* 订单卡片图片区域在手机端调整高度 */
+            .order-card .relative.h-48 {
+                height: 200px;
+            }
+
+            /* 状态标签在手机端调整位置 */
+            .order-card .absolute.top-3.right-3 {
+                top: 0.5rem;
+                right: 0.5rem;
+            }
+
+            .order-card .absolute.top-3.left-3 {
+                top: 0.5rem;
+                left: 0.5rem;
+            }
+
+            /* 状态标签在手机端调整大小 */
+            .order-card .status-badge {
+                font-size: 0.625rem;
+                padding: 0.125rem 0.5rem;
+            }
+
+            /* 悬停操作按钮在手机端调整 */
+            .order-card .absolute.inset-0 .flex.space-x-2 {
+                flex-direction: column;
+                gap: 0.5rem;
+            }
+
+            .order-card .absolute.inset-0 .flex.space-x-2 button {
+                padding: 0.5rem 1rem;
+                font-size: 0.875rem;
+            }
+
+            /* 订单信息区域在手机端调整 */
+            .order-card .p-4 {
+                padding: 1rem;
+            }
+
+            /* 订单信息在手机端调整布局 */
+            .order-card .flex.justify-between.items-center.text-sm {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 0.25rem;
+            }
+
+            /* 总价在手机端调整 */
+            .order-card .mt-2.text-right {
+                text-align: left;
+                margin-top: 0.5rem;
+            }
+
+            .order-card .text-lg.font-bold.text-green-600 {
+                font-size: 1.125rem;
+            }
+        }
+
+        /* 超小屏幕进一步优化 */
+        @media (max-width: 480px) {
+
+            /* 订单卡片图片区域在超小屏幕调整高度 */
+            .order-card .relative.h-48 {
+                height: 180px;
+            }
+
+            /* 筛选标签在超小屏幕调整 */
+            .filter-tab {
+                font-size: 0.625rem;
+                padding: 0.375rem 0.5rem;
+            }
+
+            /* 订单信息区域在超小屏幕调整 */
+            .order-card .p-4 {
+                padding: 0.75rem;
+            }
+
+            /* 订单标题在超小屏幕调整 */
+            .order-card .font-semibold.text-gray-900.mb-1 {
+                font-size: 0.875rem;
+            }
+
+            /* 订单日期在超小屏幕调整 */
+            .order-card .text-sm.text-gray-600.mb-2 {
+                font-size: 0.75rem;
+            }
+
+            /* 订单信息在超小屏幕调整 */
+            .order-card .flex.justify-between.items-center.text-sm {
+                font-size: 0.75rem;
+            }
+
+            /* 总价在超小屏幕调整 */
+            .order-card .text-lg.font-bold.text-green-600 {
+                font-size: 1rem;
+            }
+        }
+    </style>
+</head>
+
+<body class="bg-gray-50">
+    <div id="app">
+        <!-- 统一导航栏 -->
+        <!-- 统一导航栏 -->
+        <nav class="navbar bg-white shadow-sm border-b border-gray-200">
+            <div class="container mx-auto px-4">
+                <div class="flex items-center justify-between h-16">
+                    <!-- Logo和标题 -->
+                    <div class="flex items-center space-x-4">
+                        <a href="/"
+                            class="flex items-center space-x-2 text-blue-600 hover:text-blue-700 transition-colors">
+                            <svg class="w-8 h-8" fill="currentColor" viewBox="0 0 24 24">
+                                <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5" />
+                            </svg>
+                            <span class="text-xl font-bold">吧唧生成器</span>
+                        </a>
+                    </div>
+
+                    <!-- 导航菜单 -->
+                    <div class="hidden md:flex items-center space-x-6">
+                        <a href="/" class="nav-link text-gray-600 hover:text-blue-600 transition-colors">
+                            首页
+                        </a>
+                        <a href="/gallery" class="nav-link text-gray-600 hover:text-blue-600 transition-colors">
+                            作品画廊
+                        </a>
+                        <a href="/design" class="nav-link text-gray-600 hover:text-blue-600 transition-colors">
+                            开始设计
+                        </a>
+                        <a href="/history" class="nav-link text-gray-600 hover:text-blue-600 transition-colors">
+                            制作历史
+                        </a>
+                        <a href="/orders" class="nav-link text-gray-600 hover:text-blue-600 transition-colors">
+                            我的订单
+                        </a>
+                    </div>
+
+                    <!-- 用户菜单 -->
+                    <div class="flex items-center space-x-2">
+                        <div class="relative">
+                            <button @click="toggleUserMenu"
+                                class="user-menu-btn flex items-center space-x-2 p-2 rounded-lg text-gray-600 hover:text-blue-600 hover:bg-gray-100 transition-colors">
+                                <div class="w-8 h-8 bg-blue-100 rounded-full flex items-center justify-center">
+                                    <svg class="w-5 h-5 text-blue-600" fill="none" stroke="currentColor"
+                                        viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                            d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z">
+                                        </path>
+                                    </svg>
+                                </div>
+                                <span class="hidden md:block text-sm font-medium">我的账户</span>
+                                <svg class="w-4 h-4 transition-transform" :class="{ 'rotate-180': userMenuOpen }"
+                                    fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M19 9l-7 7-7-7"></path>
+                                </svg>
+                            </button>
+
+                            <!-- 用户菜单下拉 -->
+                            <div v-show="userMenuOpen"
+                                class="user-menu-dropdown absolute right-0 mt-2 w-64 bg-white rounded-lg shadow-lg border border-gray-200 py-2 z-50"
+                                :class="{ 'menu-open': userMenuOpen, 'menu-closed': !userMenuOpen }">
+                                <!-- 用户信息 -->
+                                <div class="px-4 py-3 border-b border-gray-100">
+                                    <div class="flex items-center space-x-3">
+                                        <div
+                                            class="w-10 h-10 bg-blue-100 rounded-full flex items-center justify-center">
+                                            <svg class="w-6 h-6 text-blue-600" fill="none" stroke="currentColor"
+                                                viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                    d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z">
+                                                </path>
+                                            </svg>
+                                        </div>
+                                        <div>
+                                            <p class="text-sm font-medium text-gray-900">访客用户</p>
+                                            <p class="text-xs text-gray-500">基于订单号的身份管理</p>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- 快速操作 -->
+                                <div class="px-2 py-2">
+                                    <a href="/"
+                                        class="flex items-center px-2 py-2 text-sm text-gray-700 hover:bg-gray-100 rounded-md">
+                                        <svg class="w-4 h-4 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                d="M3 7v10a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2H5a2 2 0 00-2-2z">
+                                            </path>
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                d="M8 5a2 2 0 012-2h4a2 2 0 012 2v2H8V5z"></path>
+                                        </svg>
+                                        首页
+                                    </a>
+                                    <a href="/gallery"
+                                        class="flex items-center px-2 py-2 text-sm text-gray-700 hover:bg-gray-100 rounded-md">
+                                        <svg class="w-4 h-4 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z">
+                                            </path>
+                                        </svg>
+                                        作品画廊
+                                    </a>
+                                    <a href="/design"
+                                        class="flex items-center px-2 py-2 text-sm text-gray-700 hover:bg-gray-100 rounded-md">
+                                        <svg class="w-4 h-4 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path>
+                                        </svg>
+                                        开始设计
+                                    </a>
+                                    <a href="/orders"
+                                        class="flex items-center px-2 py-2 text-sm text-gray-700 hover:bg-gray-100 rounded-md">
+                                        <svg class="w-4 h-4 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                d="M9 5H7a2 2 0 00-2 2v10a2 2 0 002 2h8a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2">
+                                            </path>
+                                        </svg>
+                                        我的订单
+                                    </a>
+                                    <a href="/history"
+                                        class="flex items-center px-2 py-2 text-sm text-gray-700 hover:bg-gray-100 rounded-md">
+                                        <svg class="w-4 h-4 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                                        </svg>
+                                        设计历史
+                                    </a>
+                                    <a href="/delivery"
+                                        class="flex items-center px-2 py-2 text-sm text-gray-700 hover:bg-gray-100 rounded-md">
+                                        <svg class="w-4 h-4 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4">
+                                            </path>
+                                        </svg>
+                                        配送管理
+                                    </a>
+                                </div>
+ 
+
+                                <!-- 分隔线 -->
+                                <div class="border-t border-gray-100 my-2"></div>
+
+                                <!-- 帮助和关于 -->
+                                <div class="px-2 py-2">
+                                    <button @click="showHelp"
+                                        class="flex items-center w-full px-2 py-2 text-sm text-gray-700 hover:bg-gray-100 rounded-md">
+                                        <svg class="w-4 h-4 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                d="M8.228 9c.549-1.165 2.03-2 3.772-2 2.21 0 4 1.343 4 3 0 1.4-1.278 2.575-3.006 2.907-.542.104-.994.54-.994 1.093m0 3h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z">
+                                            </path>
+                                        </svg>
+                                        帮助中心
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </nav>
+
+        <!-- 主要内容 -->
+        <main class="container mx-auto px-4 py-8">
+            <!-- 页面标题 -->
+            <div class="mb-8">
+                <h1 class="text-3xl font-bold text-gray-900 mb-2">我的订单</h1>
+                <p class="text-gray-600">查看和管理您的所有订单</p>
+            </div>
+
+            <!-- 筛选和搜索 -->
+            <div class="mb-6">
+                <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+                    <!-- 状态筛选 -->
+                    <div class="flex flex-wrap gap-2">
+                        <button @click="setFilter('')" :class="['filter-tab px-4 py-2 rounded-full text-sm font-medium', 
+                                   statusFilter === '' ? 'active' : 'bg-gray-100 text-gray-600 hover:bg-gray-200']">
+                            全部 ({{ total }})
+                        </button>
+                        <button @click="setFilter('pending')"
+                            :class="['filter-tab px-4 py-2 rounded-full text-sm font-medium', 
+                                   statusFilter === 'pending' ? 'active' : 'bg-gray-100 text-gray-600 hover:bg-gray-200']">
+                            待支付 ({{ getCountByStatus('pending') }})
+                        </button>
+                        <button @click="setFilter('processing')"
+                            :class="['filter-tab px-4 py-2 rounded-full text-sm font-medium', 
+                                   statusFilter === 'processing' ? 'active' : 'bg-gray-100 text-gray-600 hover:bg-gray-200']">
+                            处理中 ({{ getCountByStatus('processing') }})
+                        </button>
+                        <button @click="setFilter('completed')"
+                            :class="['filter-tab px-4 py-2 rounded-full text-sm font-medium', 
+                                   statusFilter === 'completed' ? 'active' : 'bg-gray-100 text-gray-600 hover:bg-gray-200']">
+                            已完成 ({{ getCountByStatus('completed') }})
+                        </button>
+                        <button @click="setFilter('printed')"
+                            :class="['filter-tab px-4 py-2 rounded-full text-sm font-medium', 
+                                   statusFilter === 'printed' ? 'active' : 'bg-gray-100 text-gray-600 hover:bg-gray-200']">
+                            已打印 ({{ getCountByStatus('printed') }})
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 加载状态 -->
+            <div v-if="loading" class="flex justify-center items-center py-12">
+                <div class="loading-spinner w-8 h-8 border-4 border-blue-200 border-t-blue-600 rounded-full"></div>
+                <span class="ml-3 text-gray-600">加载中...</span>
+            </div>
+
+            <!-- 订单列表 -->
+            <div v-if="orders.length > 0" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+                <div v-for="order in orders" :key="order.id"
+                    class="order-card bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden">
+
+                    <!-- 图片 -->
+                    <div class="relative h-48 overflow-hidden">
+                        <img :src="`/api/v1/image/${order.processed_image_path.split('/').pop()}`"
+                            :alt="`订单 ${order.order_no}`" class="order-image w-full h-full object-cover"
+                            @error="$event.target.src='/static/images/placeholder.png'">
+
+                        <!-- 状态标签 -->
+                        <div class="absolute top-3 right-3">
+                            <span :class="['status-badge', `status-${order.status}`]">
+                                {{ getStatusText(order.status) }}
+                            </span>
+                        </div>
+
+                        <!-- 支付状态标签 -->
+                        <div class="absolute top-3 left-3">
+                            <span :class="['status-badge', `payment-${order.payment_status}`]">
+                                {{ getPaymentStatusText(order.payment_status) }}
+                            </span>
+                        </div>
+
+                        <!-- 悬停操作 -->
+                        <div
+                            class="absolute inset-0 bg-black bg-opacity-0 hover:bg-opacity-30 transition-all duration-300 flex items-center justify-center opacity-0 hover:opacity-100">
+                            <div class="flex space-x-2">
+                                <button v-if="order.payment_status === 'paid'" @click="viewOrder(order.order_no)"
+                                    class="px-4 py-2 bg-white text-gray-800 rounded-lg font-medium hover:bg-gray-100 transition-colors">
+                                    查看详情
+                                </button>
+                                <button v-if="order.payment_status === 'unpaid'" @click="goToPayment(order.order_no)"
+                                    class="px-4 py-2 bg-blue-600 text-white rounded-lg font-medium hover:bg-blue-700 transition-colors">
+                                    立即支付
+                                </button>
+                                <button v-if="order.status === 'completed' || order.status === 'printed'"
+                                    @click="downloadOrder(order.order_no)"
+                                    class="px-4 py-2 bg-green-600 text-white rounded-lg font-medium hover:bg-green-700 transition-colors">
+                                    下载
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 信息 -->
+                    <div class="p-4">
+                        <h3 class="font-semibold text-gray-900 mb-1">订单 {{ order.order_no }}</h3>
+                        <p class="text-sm text-gray-600 mb-2">{{ formatDate(order.created_at) }}</p>
+                        <div class="flex justify-between items-center text-sm">
+                            <span class="text-gray-500">数量: {{ order.quantity }} 个</span>
+                            <span class="text-gray-500">单价: ¥{{ order.unit_price }}</span>
+                        </div>
+                        <div class="mt-2 text-right">
+                            <span class="text-lg font-bold text-green-600">¥{{ order.total_price }}</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 空状态 -->
+            <div v-else class="empty-state rounded-xl p-12 text-center">
+                <svg class="w-16 h-16 text-gray-400 mx-auto mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z">
+                    </path>
+                </svg>
+                <h3 class="text-lg font-medium text-gray-900 mb-2">暂无订单</h3>
+                <p class="text-gray-600 mb-4">开始创建您的第一个订单</p>
+                <a href="/design"
+                    class="inline-flex items-center px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors">
+                    <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path>
+                    </svg>
+                    开始设计
+                </a>
+            </div>
+
+            <!-- 分页 -->
+            <div v-if="totalPages > 1" class="mt-8 flex justify-center">
+                <nav class="flex items-center space-x-2">
+                    <button @click="goToPage(currentPage - 1)" :disabled="currentPage === 1"
+                        class="px-3 py-2 text-sm font-medium text-gray-500 bg-white border border-gray-300 rounded-md hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed">
+                        上一页
+                    </button>
+
+                    <template v-for="page in getPageNumbers()" :key="page">
+                        <button @click="goToPage(page)"
+                            :class="['px-3 py-2 text-sm font-medium rounded-md', 
+                                   page === currentPage ? 'bg-blue-600 text-white' : 'text-gray-500 bg-white border border-gray-300 hover:bg-gray-50']">
+                            {{ page }}
+                        </button>
+                    </template>
+
+                    <button @click="goToPage(currentPage + 1)" :disabled="currentPage === totalPages"
+                        class="px-3 py-2 text-sm font-medium text-gray-500 bg-white border border-gray-300 rounded-md hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed">
+                        下一页
+                    </button>
+                </nav>
+            </div>
+        </main>
+
+        <!-- 页脚 -->
+        <footer class="bg-white border-t border-gray-200 mt-16">
+            <div class="container mx-auto px-4 py-8">
+                <div class="text-center text-gray-600">
+                    <p>&copy; 2024 吧唧生成器. All rights reserved.</p>
+                </div>
+            </div>
+        </footer>
+    </div>
+
+    <script src="[[ url_for('static', filename='js/user-state-manager.js')  ]]"></script>
+    <script src="[[ url_for('static', filename='js/navigation.js')  ]]"></script>
+    <script>
+        const { createApp } = Vue;
+
+        createApp({
+            data() {
+                return {
+                    // 导航组件数据
+                    userMenuOpen: false,
+                    // 页面数据
+                    orders: [],
+                    currentPage: 1,
+                    pageSize: 10,
+                    total: 0,
+                    totalPages: 0,
+                    statusFilter: '',
+                    loading: false
+                }
+            },
+            mounted() {
+                this.loadOrders();
+            },
+            methods: {
+                // 导航组件方法
+                toggleUserMenu() {
+                    this.userMenuOpen = !this.userMenuOpen;
+                },  
+                showHelp() {
+                    this.userMenuOpen = false;
+                    alert('帮助中心功能开发中...');
+                },
+
+                async loadOrders() {
+                    this.loading = true;
+                    try {
+                        const params = {
+                            page: this.currentPage,
+                            per_page: this.pageSize
+                        };
+
+                        if (this.statusFilter) {
+                            params.status = this.statusFilter;
+                        }
+
+                        const headers = {
+                            'Content-Type': 'application/json'
+                        };
+
+                        // 添加设备ID头
+                        if (window.DeviceManager && window.DeviceManager.getDeviceId()) {
+                            headers['X-Device-ID'] = window.DeviceManager.getDeviceId();
+                        }
+
+                        const response = await fetch(`/api/v1/orders?${new URLSearchParams(params)}`, {
+                            headers: headers
+                        });
+                        const data = await response.json();
+
+                        if (data.success) {
+                            this.orders = data.orders;
+                            this.total = data.total;
+                            this.totalPages = data.pages;
+                        } else {
+                            console.error('加载订单失败:', data.error);
+                        }
+                    } catch (error) {
+                        console.error('加载订单失败:', error);
+                    } finally {
+                        this.loading = false;
+                    }
+                },
+
+                setFilter(filter) {
+                    this.statusFilter = filter;
+                    this.currentPage = 1;
+                    this.loadOrders();
+                },
+
+                getCountByStatus(status) {
+                    // 这里需要从服务器获取各状态的订单数量
+                    // 暂时返回0，实际应用中应该从API获取
+                    return 0;
+                },
+
+                goToPage(page) {
+                    if (page >= 1 && page <= this.totalPages) {
+                        this.currentPage = page;
+                        this.loadOrders();
+                    }
+                },
+
+                getPageNumbers() {
+                    const pages = [];
+                    const start = Math.max(1, this.currentPage - 2);
+                    const end = Math.min(this.totalPages, this.currentPage + 2);
+
+                    for (let i = start; i <= end; i++) {
+                        pages.push(i);
+                    }
+                    return pages;
+                },
+
+                viewOrder(orderNo) {
+                    // 只有已支付的订单才会调用此函数，直接跳转到订单详情页面
+                    window.location.href = `/order/${orderNo}`;
+                },
+
+                goToPayment(orderNo) {
+                    // 跳转到支付页面，就像设计标准流程一样
+                    window.location.href = `/payment?order_no=${orderNo}`;
+                },
+
+                downloadOrder(orderNo) {
+                    window.open(`/api/v1/image/${orderNo}.png`, '_blank');
+                },
+
+                getStatusText(status) {
+                    const statusMap = {
+                        'pending': '待支付',
+                        'processing': '处理中',
+                        'completed': '已完成',
+                        'cancelled': '已取消',
+                        'printed': '已打印'
+                    };
+                    return statusMap[status] || status;
+                },
+
+                getStatusClass(status) {
+                    const classMap = {
+                        'pending': 'status-pending',
+                        'processing': 'status-processing',
+                        'completed': 'status-completed',
+                        'cancelled': 'status-cancelled',
+                        'printed': 'status-printed'
+                    };
+                    return classMap[status] || 'status-pending';
+                },
+
+                getPaymentStatusText(status) {
+                    const statusMap = {
+                        'unpaid': '未支付',
+                        'paid': '已支付',
+                        'refunded': '已退款'
+                    };
+                    return statusMap[status] || status;
+                },
+
+                getPaymentStatusClass(status) {
+                    const classMap = {
+                        'unpaid': 'payment-unpaid',
+                        'paid': 'payment-paid',
+                        'refunded': 'payment-refunded'
+                    };
+                    return classMap[status] || 'payment-unpaid';
+                },
+
+                formatDate(dateString) {
+                    return new Date(dateString).toLocaleString('zh-CN');
+                }
+            }
+        }).mount('#app');
+    </script>
+</body>
+
+</html>

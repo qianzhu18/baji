@@ -1,0 +1,85 @@
+version: '3.8'
+
+services:
+  mysql:
+    image: mysql:8.0
+    container_name: baji_mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD:-rootpassword}
+      MYSQL_DATABASE: ${MYSQL_DATABASE:-baji_simple}
+      MYSQL_USER: ${MYSQL_USER:-baji_user}
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD:-baji_password}
+    ports:
+      - "${MYSQL_PORT:-3306}:3306"
+    volumes:
+      - mysql_data:/var/lib/mysql
+      - ./scripts/init_mysql_database.py:/docker-entrypoint-initdb.d/init_mysql_database.py
+    command: --default-authentication-plugin=mysql_native_password --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-u", "root", "-p${MYSQL_ROOT_PASSWORD:-rootpassword}"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+
+  web:
+    # 使用预构建镜像（生产环境推荐）
+    image: odinluo/baji:latest
+    # 或者使用本地构建（开发环境）
+    # build: .
+    container_name: baji_web
+    ports:
+      - "5000:5000"
+    environment:
+      - FLASK_ENV=production
+      - SECRET_KEY=${SECRET_KEY:-your-secret-key-change-in-production}
+      - ADMIN_PASSWORD=${ADMIN_PASSWORD:-your-admin-password}
+      - DEFAULT_PRICE=${DEFAULT_PRICE:-15.00}
+      - ORDER_PREFIX=${ORDER_PREFIX:-BJI}
+      - DATABASE_URL=mysql+pymysql://${MYSQL_USER:-baji_user}:${MYSQL_PASSWORD:-baji_password}@mysql:3306/${MYSQL_DATABASE:-baji_simple}?charset=utf8mb4
+      - UPLOAD_FOLDER=static/uploads
+      - EXPORT_FOLDER=static/exports
+      - MAX_CONTENT_LENGTH=${MAX_CONTENT_LENGTH:-5242880}
+      - ALLOWED_EXTENSIONS=${ALLOWED_EXTENSIONS:-png,jpg,jpeg,webp}
+      - CACHE_TYPE=${CACHE_TYPE:-simple}
+      - CACHE_DEFAULT_TIMEOUT=${CACHE_DEFAULT_TIMEOUT:-300}
+    volumes:
+      # 用户上传文件目录
+      - ./static/uploads:/app/static/uploads
+      # 导出文件目录
+      - ./static/exports:/app/static/exports
+      # 日志文件目录
+      - ./static/logs:/app/static/logs
+    depends_on:
+      mysql:
+        condition: service_healthy
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:5000/"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+  nginx:
+    image: nginx:alpine
+    container_name: baji_nginx
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./nginx.conf:/etc/nginx/nginx.conf
+      - ./static/uploads:/var/www/uploads
+      - ./static/exports:/var/www/exports
+      - ./static/logs:/var/www/logs
+    depends_on:
+      - web
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "wget", "--quiet", "--tries=1", "--spider", "http://localhost/"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+volumes:
+  mysql_data:
+    driver: local

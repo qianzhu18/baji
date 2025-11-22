@@ -1,0 +1,456 @@
+/* 📱 移动端校园风格优化 */
+
+/* 基础移动端设置 */
+@media (max-width: 768px) {
+  body {
+    font-size: 16px; /* 防止iOS自动缩放 */
+    -webkit-text-size-adjust: 100%;
+    line-height: 1.5;
+  }
+
+  /* 导航栏优化 */
+  .navbar {
+    padding: 0.5rem 1rem;
+    backdrop-filter: blur(10px);
+    background: rgba(255, 255, 255, 0.95);
+  }
+
+  .navbar-brand {
+    font-size: 1.25rem;
+  }
+
+  /* 触摸友好的按钮 */
+  .touch-target {
+    min-height: 44px;
+    min-width: 44px;
+    padding: 12px 16px;
+  }
+
+  /* 移动端卡片 */
+  .campus-card {
+    margin: 0.5rem;
+    border-radius: 15px;
+  }
+
+  .campus-card:hover {
+    transform: none; /* 移动端禁用hover效果 */
+  }
+
+  .campus-card:active {
+    transform: scale(0.98);
+    transition: transform 0.1s ease;
+  }
+
+  /* 移动端网格布局 */
+  .mobile-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1rem;
+    padding: 1rem;
+  }
+
+  .mobile-grid-2 {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0.75rem;
+  }
+
+  .mobile-grid-3 {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0.5rem;
+  }
+
+  /* 滑动提示 */
+  .swipe-hint {
+    position: relative;
+    overflow: hidden;
+  }
+
+  .swipe-hint::after {
+    content: '← 左右滑动查看更多 →';
+    position: absolute;
+    bottom: 10px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 0.8rem;
+    color: rgba(255, 255, 255, 0.8);
+    background: rgba(0, 0, 0, 0.5);
+    padding: 4px 12px;
+    border-radius: 12px;
+    animation: swipeHint 2s ease-in-out infinite;
+  }
+
+  @keyframes swipeHint {
+    0%, 100% { opacity: 0.5; }
+    50% { opacity: 1; }
+  }
+
+  /* 底部操作栏 */
+  .mobile-bottom-bar {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: white;
+    box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.1);
+    padding: 1rem;
+    z-index: 100;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    padding-bottom: calc(1rem + env(safe-area-inset-bottom));
+  }
+
+  .mobile-bottom-bar button {
+    flex: 1;
+    margin: 0 0.25rem;
+    min-height: 44px;
+  }
+
+  /* 移动端模态框 */
+  .mobile-modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    align-items: flex-end;
+    z-index: 1000;
+  }
+
+  .mobile-modal-content {
+    background: white;
+    border-radius: 20px 20px 0 0;
+    width: 100%;
+    max-height: 80vh;
+    overflow-y: auto;
+    padding: 1.5rem;
+    animation: slideUp 0.3s ease-out;
+  }
+
+  @keyframes slideUp {
+    from {
+      transform: translateY(100%);
+    }
+    to {
+      transform: translateY(0);
+    }
+  }
+
+  /* 移动端标签页 */
+  .mobile-tabs {
+    display: flex;
+    overflow-x: auto;
+    background: white;
+    border-bottom: 1px solid #e5e7eb;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none; /* 隐藏滚动条 */
+  }
+
+  .mobile-tabs::-webkit-scrollbar {
+    display: none;
+  }
+
+  .mobile-tab {
+    flex-shrink: 0;
+    padding: 1rem 1.5rem;
+    text-align: center;
+    white-space: nowrap;
+    border-bottom: 3px solid transparent;
+    transition: all 0.2s ease;
+    min-width: 80px;
+    font-weight: 500;
+  }
+
+  .mobile-tab.active {
+    border-bottom-color: var(--campus-blue);
+    color: var(--campus-blue);
+  }
+
+  /* 移动端列表 */
+  .mobile-list-item {
+    display: flex;
+    align-items: center;
+    padding: 1rem;
+    background: white;
+    border-bottom: 1px solid #f3f4f6;
+    transition: background-color 0.2s ease;
+    cursor: pointer;
+  }
+
+  .mobile-list-item:active {
+    background-color: #f9fafb;
+  }
+
+  /* 移动端头像 */
+  .mobile-avatar {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    margin-right: 1rem;
+    flex-shrink: 0;
+  }
+
+  /* 移动端状态指示器 */
+  .mobile-status {
+    display: inline-flex;
+    align-items: center;
+    padding: 4px 8px;
+    border-radius: 12px;
+    font-size: 0.75rem;
+    font-weight: 600;
+  }
+
+  /* 移动端底部安全区域适配 */
+  .safe-area-bottom {
+    padding-bottom: env(safe-area-inset-bottom);
+  }
+
+  /* 移动端横屏适配 */
+  @media (orientation: landscape) and (max-height: 500px) {
+    .mobile-modal-content {
+      max-height: 90vh;
+    }
+
+    .hero-campus {
+      padding: 1rem;
+    }
+
+    .mobile-bottom-bar {
+      padding: 0.5rem;
+    }
+  }
+
+  /* 移动端按钮优化 */
+  .mobile-btn {
+    min-height: 44px;
+    padding: 12px 20px;
+    font-size: 1rem;
+    border-radius: 22px;
+    margin: 0.25rem;
+  }
+
+  .mobile-btn-group {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    padding: 1rem;
+  }
+
+  .mobile-btn-row {
+    display: flex;
+    gap: 0.5rem;
+  }
+
+  .mobile-btn-row .mobile-btn {
+    flex: 1;
+  }
+
+  /* 移动端输入框优化 */
+  .mobile-input {
+    font-size: 16px; /* 防止iOS缩放 */
+    padding: 12px 16px;
+    border-radius: 12px;
+    min-height: 44px;
+    margin: 0.5rem 0;
+  }
+
+  /* 移动端卡片组 */
+  .mobile-card-group {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    padding: 1rem;
+  }
+
+  .mobile-horizontal-scroll {
+    display: flex;
+    overflow-x: auto;
+    gap: 1rem;
+    padding: 1rem;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+  }
+
+  .mobile-horizontal-scroll::-webkit-scrollbar {
+    display: none;
+  }
+
+  /* 移动端Hero区域 */
+  .hero-campus {
+    min-height: 100vh;
+    padding: 2rem 1rem;
+    text-align: center;
+  }
+
+  .hero-campus h1 {
+    font-size: 2.5rem;
+    margin-bottom: 0.5rem;
+  }
+
+  .hero-campus h2 {
+    font-size: 1.5rem;
+    margin-bottom: 1rem;
+  }
+
+  .hero-campus .magic-button {
+    font-size: 1.1rem;
+    padding: 16px 32px;
+    min-height: 44px;
+    margin: 1rem auto;
+  }
+
+  /* 移动端统计区域 */
+  .mobile-stats {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1rem;
+    margin-top: 2rem;
+    padding: 0 1rem;
+  }
+
+  .mobile-stat-item {
+    text-align: center;
+    padding: 1rem;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 15px;
+    backdrop-filter: blur(10px);
+  }
+
+  .mobile-stat-number {
+    font-size: 1.5rem;
+    font-weight: bold;
+    margin-bottom: 0.25rem;
+  }
+
+  .mobile-stat-label {
+    font-size: 0.875rem;
+    opacity: 0.8;
+  }
+
+  /* 移动端案例卡片 */
+  .mobile-case-card {
+    background: white;
+    border-radius: 15px;
+    overflow: hidden;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    margin-bottom: 1rem;
+  }
+
+  .mobile-case-image {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+  }
+
+  .mobile-case-content {
+    padding: 1rem;
+  }
+
+  /* 移动端筛选标签 */
+  .mobile-filter-tags {
+    display: flex;
+    overflow-x: auto;
+    gap: 0.5rem;
+    padding: 1rem;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+  }
+
+  .mobile-filter-tags::-webkit-scrollbar {
+    display: none;
+  }
+
+  .mobile-filter-tag {
+    flex-shrink: 0;
+    padding: 8px 16px;
+    border-radius: 20px;
+    font-size: 0.875rem;
+    white-space: nowrap;
+  }
+}
+
+/* 触摸反馈效果 */
+@media (hover: none) and (pointer: coarse) {
+  .campus-btn,
+  .campus-card,
+  .mobile-list-item {
+    -webkit-tap-highlight-color: rgba(102, 126, 234, 0.1);
+  }
+
+  .campus-btn:active,
+  .campus-card:active {
+    transform: scale(0.95);
+    transition: transform 0.1s ease;
+  }
+
+  /* 移动端按钮按下去的效果 */
+  .mobile-btn:active {
+    transform: scale(0.98);
+    background: linear-gradient(135deg, #5a7fd8 0%, #6b5aa7 100%);
+  }
+
+  .mobile-btn-success:active {
+    background: linear-gradient(135deg, #3d8bbd 0%, #00d4e4 100%);
+  }
+
+  .mobile-btn-warning:active {
+    background: linear-gradient(135deg, #35d86a 0%, #2bc5a8 100%);
+  }
+
+  .mobile-btn-danger:active {
+    background: linear-gradient(135deg, #dd6feb 0%, #e83d8f 100%);
+  }
+}
+
+/* 大屏手机适配 */
+@media (min-width: 414px) and (max-width: 768px) {
+  .mobile-grid-3 {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  .mobile-stats {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+
+/* 小屏手机适配 */
+@media (max-width: 375px) {
+  .mobile-grid-2 {
+    grid-template-columns: 1fr;
+  }
+
+  .mobile-stats {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .mobile-btn-group {
+    padding: 0.75rem;
+  }
+
+  .hero-campus h1 {
+    font-size: 2rem;
+  }
+
+  .hero-campus h2 {
+    font-size: 1.25rem;
+  }
+}
+
+/* 超小屏适配 */
+@media (max-width: 320px) {
+  .hero-campus h1 {
+    font-size: 1.75rem;
+  }
+
+  .mobile-filter-tag {
+    padding: 6px 12px;
+    font-size: 0.75rem;
+  }
+
+  .mobile-btn {
+    padding: 10px 16px;
+    font-size: 0.9rem;
+  }
+}

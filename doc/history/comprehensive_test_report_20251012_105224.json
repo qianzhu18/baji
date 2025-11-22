@@ -1,0 +1,652 @@
+{
+  "functional_tests": {
+    "图片上传功能测试": {
+      "success": true,
+      "timestamp": "2025-10-12T10:49:59.086831",
+      "details": {
+        "uploaded_file": "static/uploads/2025/10/20251012_104959_721a01f0.png"
+      },
+      "issue": null
+    },
+    "预览生成功能测试": {
+      "success": true,
+      "timestamp": "2025-10-12T10:50:01.166319",
+      "details": {
+        "preview_path": "C:\\Workspace\\github\\js\\baji\\baji_simple\\static/exports\\preview_af66fc92.png"
+      },
+      "issue": null
+    },
+    "订单创建功能测试": {
+      "success": false,
+      "timestamp": "2025-10-12T10:50:03.216942",
+      "details": {
+        "status_code": 400
+      },
+      "issue": "订单创建返回错误状态码"
+    },
+    "订单查询功能测试": {
+      "success": false,
+      "timestamp": "2025-10-12T10:50:03.216942",
+      "details": {},
+      "issue": "缺少创建的订单"
+    },
+    "支付流程测试": {
+      "success": false,
+      "timestamp": "2025-10-12T10:50:03.216942",
+      "details": {},
+      "issue": "缺少创建的订单"
+    },
+    "配送功能测试": {
+      "success": false,
+      "timestamp": "2025-10-12T10:50:03.216942",
+      "details": {},
+      "issue": "缺少创建的订单"
+    },
+    "作品库功能测试": {
+      "success": true,
+      "timestamp": "2025-10-12T10:50:05.268311",
+      "details": {
+        "gallery_items": 0
+      },
+      "issue": null
+    },
+    "发票功能测试": {
+      "success": false,
+      "timestamp": "2025-10-12T10:50:05.268311",
+      "details": {},
+      "issue": "缺少创建的订单"
+    },
+    "图片管理功能测试": {
+      "success": true,
+      "timestamp": "2025-10-12T10:50:07.384400",
+      "details": {
+        "image_retrieved": true
+      },
+      "issue": null
+    },
+    "案例功能测试": {
+      "success": true,
+      "timestamp": "2025-10-12T10:50:09.422720",
+      "details": {
+        "cases_count": 0
+      },
+      "issue": null
+    },
+    "订单状态管理测试": {
+      "success": false,
+      "timestamp": "2025-10-12T10:50:09.422720",
+      "details": {},
+      "issue": "缺少创建的订单"
+    },
+    "图片删除功能测试": {
+      "success": true,
+      "timestamp": "2025-10-12T10:50:11.473985",
+      "details": {
+        "image_deleted": true
+      },
+      "issue": null
+    },
+    "订单更新功能测试": {
+      "success": false,
+      "timestamp": "2025-10-12T10:50:11.473985",
+      "details": {},
+      "issue": "缺少创建的订单"
+    },
+    "支付状态查询测试": {
+      "success": false,
+      "timestamp": "2025-10-12T10:50:11.473985",
+      "details": {},
+      "issue": "缺少创建的订单"
+    },
+    "配送详情查询测试": {
+      "success": false,
+      "timestamp": "2025-10-12T10:50:11.473985",
+      "details": {},
+      "issue": "缺少创建的配送记录"
+    },
+    "管理员登录测试": {
+      "success": true,
+      "timestamp": "2025-10-12T10:51:34.807286",
+      "details": {
+        "admin_login_successful": true
+      },
+      "issue": null
+    },
+    "管理员订单管理测试": {
+      "success": true,
+      "timestamp": "2025-10-12T10:51:36.850285",
+      "details": {
+        "orders_count": 16
+      },
+      "issue": null
+    },
+    "管理员券码管理测试": {
+      "success": true,
+      "timestamp": "2025-10-12T10:51:38.899900",
+      "details": {
+        "coupons_generated": 1
+      },
+      "issue": null
+    },
+    "管理员导出功能测试": {
+      "success": true,
+      "timestamp": "2025-10-12T10:51:41.121085",
+      "details": {
+        "pdf_exported": true
+      },
+      "issue": null
+    },
+    "管理员登出测试": {
+      "success": true,
+      "timestamp": "2025-10-12T10:51:43.160539",
+      "details": {
+        "logout_successful": true
+      },
+      "issue": null
+    },
+    "管理员登录状态检查测试": {
+      "success": true,
+      "timestamp": "2025-10-12T10:51:45.205677",
+      "details": {
+        "logout_status_correct": true
+      },
+      "issue": null
+    },
+    "管理员订单状态更新测试": {
+      "success": false,
+      "timestamp": "2025-10-12T10:51:45.205677",
+      "details": {},
+      "issue": "管理员未登录"
+    },
+    "管理员券码列表测试": {
+      "success": false,
+      "timestamp": "2025-10-12T10:51:45.205677",
+      "details": {},
+      "issue": "管理员未登录"
+    },
+    "管理员系统配置测试": {
+      "success": false,
+      "timestamp": "2025-10-12T10:51:45.205677",
+      "details": {},
+      "issue": "管理员未登录"
+    },
+    "页面路由测试: /": {
+      "success": true,
+      "timestamp": "2025-10-12T10:51:47.249853",
+      "details": {
+        "content_length": 35002
+      },
+      "issue": null
+    },
+    "页面路由测试: /design": {
+      "success": true,
+      "timestamp": "2025-10-12T10:51:49.305683",
+      "details": {
+        "content_length": 35113
+      },
+      "issue": null
+    },
+    "页面路由测试: /orders": {
+      "success": true,
+      "timestamp": "2025-10-12T10:51:51.365507",
+      "details": {
+        "content_length": 32584
+      },
+      "issue": null
+    },
+    "页面路由测试: /delivery": {
+      "success": true,
+      "timestamp": "2025-10-12T10:51:53.391828",
+      "details": {
+        "content_length": 42418
+      },
+      "issue": null
+    },
+    "页面路由测试: /gallery": {
+      "success": true,
+      "timestamp": "2025-10-12T10:51:55.427866",
+      "details": {
+        "content_length": 40499
+      },
+      "issue": null
+    },
+    "页面路由测试: /payment": {
+      "success": true,
+      "timestamp": "2025-10-12T10:51:57.453633",
+      "details": {
+        "content_length": 18586
+      },
+      "issue": null
+    },
+    "页面路由测试: /error": {
+      "success": true,
+      "timestamp": "2025-10-12T10:51:59.489552",
+      "details": {
+        "content_length": 11502
+      },
+      "issue": null
+    },
+    "页面路由测试: /admin/login": {
+      "success": true,
+      "timestamp": "2025-10-12T10:52:01.531350",
+      "details": {
+        "content_length": 6816
+      },
+      "issue": null
+    },
+    "页面路由测试: /admin/dashboard": {
+      "success": true,
+      "timestamp": "2025-10-12T10:52:03.577880",
+      "details": {
+        "content_length": 19904
+      },
+      "issue": null
+    },
+    "页面路由测试: /admin/orders": {
+      "success": true,
+      "timestamp": "2025-10-12T10:52:05.629505",
+      "details": {
+        "content_length": 36174
+      },
+      "issue": null
+    },
+    "页面路由测试: /admin/coupons": {
+      "success": true,
+      "timestamp": "2025-10-12T10:52:07.659381",
+      "details": {
+        "content_length": 44778
+      },
+      "issue": null
+    },
+    "页面路由测试: /admin/print": {
+      "success": true,
+      "timestamp": "2025-10-12T10:52:09.705137",
+      "details": {
+        "content_length": 37708
+      },
+      "issue": null
+    },
+    "页面路由测试: /admin/delivery": {
+      "success": true,
+      "timestamp": "2025-10-12T10:52:11.761306",
+      "details": {
+        "content_length": 53344
+      },
+      "issue": null
+    },
+    "页面路由测试: /admin/cases": {
+      "success": true,
+      "timestamp": "2025-10-12T10:52:13.814035",
+      "details": {
+        "content_length": 60454
+      },
+      "issue": null
+    },
+    "页面路由测试: /favicon.ico": {
+      "success": true,
+      "timestamp": "2025-10-12T10:52:15.859309",
+      "details": {
+        "content_length": 67646
+      },
+      "issue": null
+    },
+    "页面路由测试: /order/TEST123456": {
+      "success": false,
+      "timestamp": "2025-10-12T10:52:17.893273",
+      "details": {
+        "status_code": 404
+      },
+      "issue": "页面路由返回错误状态码: 404"
+    },
+    "页面路由测试: /invoice/TEST123456": {
+      "success": false,
+      "timestamp": "2025-10-12T10:52:19.925320",
+      "details": {
+        "status_code": 404
+      },
+      "issue": "页面路由返回错误状态码: 404"
+    },
+    "页面路由测试: /view/1": {
+      "success": false,
+      "timestamp": "2025-10-12T10:52:21.960383",
+      "details": {
+        "status_code": 404
+      },
+      "issue": "页面路由返回错误状态码: 404"
+    },
+    "页面路由测试: /case/1": {
+      "success": false,
+      "timestamp": "2025-10-12T10:52:24.001417",
+      "details": {
+        "status_code": 404
+      },
+      "issue": "页面路由返回错误状态码: 404"
+    }
+  },
+  "security_tests": {
+    "文件上传安全测试": {
+      "success": true,
+      "timestamp": "2025-10-12T10:50:15.540481",
+      "details": {
+        "blocked_executable_file": true
+      },
+      "issue": null
+    },
+    "SQL注入测试": {
+      "success": true,
+      "timestamp": "2025-10-12T10:50:19.617102",
+      "details": {
+        "sql_injection_in_params_blocked": true
+      },
+      "issue": null
+    },
+    "XSS漏洞测试": {
+      "success": true,
+      "timestamp": "2025-10-12T10:50:21.662703",
+      "details": {
+        "xss_request_rejected": true
+      },
+      "issue": null
+    },
+    "路径遍历测试": {
+      "success": true,
+      "timestamp": "2025-10-12T10:50:23.702380",
+      "details": {
+        "path_traversal_blocked": true
+      },
+      "issue": null
+    },
+    "认证绕过测试": {
+      "success": true,
+      "timestamp": "2025-10-12T10:50:25.746424",
+      "details": {
+        "authentication_required": true
+      },
+      "issue": null
+    },
+    "权限提升测试": {
+      "success": true,
+      "timestamp": "2025-10-12T10:50:27.787547",
+      "details": {
+        "privilege_escalation_blocked": true
+      },
+      "issue": null
+    },
+    "敏感信息泄露测试": {
+      "success": true,
+      "timestamp": "2025-10-12T10:50:29.832215",
+      "details": {
+        "no_sensitive_info_leaked": true
+      },
+      "issue": null
+    },
+    "MIME类型验证测试": {
+      "success": true,
+      "timestamp": "2025-10-12T10:50:33.980069",
+      "details": {
+        "malicious_image_rejected": true
+      },
+      "issue": null
+    },
+    "文件权限测试": {
+      "success": true,
+      "timestamp": "2025-10-12T10:50:36.015928",
+      "details": {
+        "file_saved_successfully": true
+      },
+      "issue": null
+    },
+    "请求频率限制测试": {
+      "success": false,
+      "timestamp": "2025-10-12T10:51:08.234317",
+      "details": {
+        "rate_limiting_active": false,
+        "all_responses": [
+          200,
+          200,
+          200,
+          200,
+          200,
+          200,
+          200,
+          200,
+          200,
+          200,
+          200,
+          200,
+          200,
+          200,
+          200
+        ]
+      },
+      "issue": "请求频率限制可能未生效"
+    },
+    "安全头测试": {
+      "success": false,
+      "timestamp": "2025-10-12T10:51:10.282635",
+      "details": {
+        "found_headers": {
+          "X-Frame-Options": "SAMEORIGIN",
+          "X-Content-Type-Options": "nosniff"
+        }
+      },
+      "issue": "安全头不足，仅找到2个"
+    },
+    "安全审计日志测试": {
+      "success": true,
+      "timestamp": "2025-10-12T10:51:16.417576",
+      "details": {
+        "log_files_found": [
+          "static/logs\\access.log",
+          "static/logs\\error.log",
+          "static/logs\\operation.log",
+          "static/logs\\system.log"
+        ]
+      },
+      "issue": null
+    },
+    "设备ID验证测试": {
+      "success": true,
+      "timestamp": "2025-10-12T10:51:24.595347",
+      "details": {
+        "invalid_device_ids_rejected": true
+      },
+      "issue": null
+    },
+    "设备隔离测试": {
+      "success": false,
+      "timestamp": "2025-10-12T10:51:26.636316",
+      "details": {
+        "status_code": 400
+      },
+      "issue": "无法创建测试订单"
+    },
+    "管理员会话管理测试": {
+      "success": true,
+      "timestamp": "2025-10-12T10:51:30.721632",
+      "details": {
+        "logout_handled": true
+      },
+      "issue": null
+    }
+  },
+  "performance_tests": {},
+  "issues_found": [
+    {
+      "test_name": "订单创建功能测试",
+      "test_type": "functional_tests",
+      "issue": "订单创建返回错误状态码",
+      "timestamp": "2025-10-12T10:50:03.216942"
+    },
+    {
+      "test_name": "订单查询功能测试",
+      "test_type": "functional_tests",
+      "issue": "缺少创建的订单",
+      "timestamp": "2025-10-12T10:50:03.216942"
+    },
+    {
+      "test_name": "支付流程测试",
+      "test_type": "functional_tests",
+      "issue": "缺少创建的订单",
+      "timestamp": "2025-10-12T10:50:03.216942"
+    },
+    {
+      "test_name": "配送功能测试",
+      "test_type": "functional_tests",
+      "issue": "缺少创建的订单",
+      "timestamp": "2025-10-12T10:50:03.216942"
+    },
+    {
+      "test_name": "发票功能测试",
+      "test_type": "functional_tests",
+      "issue": "缺少创建的订单",
+      "timestamp": "2025-10-12T10:50:05.268311"
+    },
+    {
+      "test_name": "订单状态管理测试",
+      "test_type": "functional_tests",
+      "issue": "缺少创建的订单",
+      "timestamp": "2025-10-12T10:50:09.422720"
+    },
+    {
+      "test_name": "订单更新功能测试",
+      "test_type": "functional_tests",
+      "issue": "缺少创建的订单",
+      "timestamp": "2025-10-12T10:50:11.473985"
+    },
+    {
+      "test_name": "支付状态查询测试",
+      "test_type": "functional_tests",
+      "issue": "缺少创建的订单",
+      "timestamp": "2025-10-12T10:50:11.473985"
+    },
+    {
+      "test_name": "配送详情查询测试",
+      "test_type": "functional_tests",
+      "issue": "缺少创建的配送记录",
+      "timestamp": "2025-10-12T10:50:11.473985"
+    },
+    {
+      "test_name": "SQL注入测试",
+      "test_type": "security_tests",
+      "issue": "可能存在SQL注入漏洞",
+      "timestamp": "2025-10-12T10:50:17.575077"
+    },
+    {
+      "test_name": "请求频率限制测试",
+      "test_type": "security_tests",
+      "issue": "请求频率限制可能未生效",
+      "timestamp": "2025-10-12T10:51:08.234317"
+    },
+    {
+      "test_name": "安全头测试",
+      "test_type": "security_tests",
+      "issue": "安全头不足，仅找到2个",
+      "timestamp": "2025-10-12T10:51:10.282635"
+    },
+    {
+      "test_name": "设备隔离测试",
+      "test_type": "security_tests",
+      "issue": "无法创建测试订单",
+      "timestamp": "2025-10-12T10:51:26.636316"
+    },
+    {
+      "test_name": "管理员订单状态更新测试",
+      "test_type": "functional_tests",
+      "issue": "管理员未登录",
+      "timestamp": "2025-10-12T10:51:45.205677"
+    },
+    {
+      "test_name": "管理员券码列表测试",
+      "test_type": "functional_tests",
+      "issue": "管理员未登录",
+      "timestamp": "2025-10-12T10:51:45.205677"
+    },
+    {
+      "test_name": "管理员系统配置测试",
+      "test_type": "functional_tests",
+      "issue": "管理员未登录",
+      "timestamp": "2025-10-12T10:51:45.205677"
+    },
+    {
+      "test_name": "页面路由测试: /order/TEST123456",
+      "test_type": "functional_tests",
+      "issue": "页面路由返回错误状态码: 404",
+      "timestamp": "2025-10-12T10:52:17.893273"
+    },
+    {
+      "test_name": "页面路由测试: /invoice/TEST123456",
+      "test_type": "functional_tests",
+      "issue": "页面路由返回错误状态码: 404",
+      "timestamp": "2025-10-12T10:52:19.925320"
+    },
+    {
+      "test_name": "页面路由测试: /view/1",
+      "test_type": "functional_tests",
+      "issue": "页面路由返回错误状态码: 404",
+      "timestamp": "2025-10-12T10:52:21.960383"
+    },
+    {
+      "test_name": "页面路由测试: /case/1",
+      "test_type": "functional_tests",
+      "issue": "页面路由返回错误状态码: 404",
+      "timestamp": "2025-10-12T10:52:24.001417"
+    }
+  ],
+  "recommendations": [
+    {
+      "type": "security",
+      "priority": "high",
+      "title": "修复安全漏洞",
+      "description": "发现以下安全测试失败: 请求频率限制测试, 安全头测试, 设备隔离测试，需要立即修复"
+    },
+    {
+      "type": "security",
+      "priority": "high",
+      "title": "启用请求频率限制",
+      "description": "请求频率限制测试失败，建议检查Flask-Limiter配置"
+    },
+    {
+      "type": "security",
+      "priority": "medium",
+      "title": "完善安全头配置",
+      "description": "安全头测试失败，建议检查Flask-Talisman配置"
+    },
+    {
+      "type": "functionality",
+      "priority": "medium",
+      "title": "修复功能问题",
+      "description": "部分功能测试失败，建议检查相关代码逻辑和错误处理"
+    },
+    {
+      "type": "security",
+      "priority": "low",
+      "title": "定期安全审计",
+      "description": "建议定期运行安全测试，检查系统安全状态"
+    },
+    {
+      "type": "security",
+      "priority": "low",
+      "title": "监控安全日志",
+      "description": "建议设置安全日志监控和告警机制"
+    },
+    {
+      "type": "security",
+      "priority": "low",
+      "title": "更新依赖包",
+      "description": "建议定期更新安全相关依赖包，修复已知漏洞"
+    },
+    {
+      "type": "performance",
+      "priority": "low",
+      "title": "优化图片处理",
+      "description": "建议优化图片处理性能，添加缓存机制"
+    },
+    {
+      "type": "security",
+      "priority": "low",
+      "title": "备份和恢复",
+      "description": "建议建立完善的数据备份和恢复机制"
+    }
+  ]
+}
