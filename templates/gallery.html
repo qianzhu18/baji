@@ -8,6 +8,9 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
     <script src="/static/js/device-manager.js"></script>
+    <link rel="stylesheet" href="/static/css/campus-style.css">
+    <link rel="stylesheet" href="/static/css/campus-animations.css">
+    <link rel="stylesheet" href="/static/css/campus-mobile.css">
     <link rel="stylesheet" href="/static/css/design.css">
     <script src="/static/js/user-state-manager.js"></script>
     <script src="/static/js/magic-experience.js"></script>
@@ -15,11 +18,13 @@
     <style>
         .case-card {
             transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            background: var(--card);
+            box-shadow: var(--shadow);
         }
 
         .case-card:hover {
-            transform: translateY(-8px) scale(1.02);
-            box-shadow: 0 20px 25px rgba(0, 0, 0, 0.1);
+            transform: translateY(-8px) scale(1.02) rotate(-1deg);
+            box-shadow: 0 20px 35px rgba(48, 55, 66, 0.18);
         }
 
         .case-image {
@@ -35,9 +40,10 @@
         }
 
         .filter-tab.active {
-            background: linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%);
+            background: var(--primary-gradient);
             color: white;
-            transform: scale(1.05);
+            transform: scale(1.03);
+            box-shadow: 0 10px 20px rgba(108, 92, 231, 0.25);
         }
 
         .loading-spinner {
@@ -198,7 +204,7 @@
     </style>
 </head>
 
-<body class="bg-gray-50">
+<body class="campus-shell">
     <div id="app">
         <!-- 统一导航栏 -->
         <nav class="navbar bg-white shadow-sm border-b border-gray-200">
@@ -331,25 +337,66 @@
             </div>
         </nav>
 
-        <!-- 页面头部 -->
-        <div class="gallery-header bg-white shadow-sm">
-            <div class="container mx-auto px-4 py-8">
-                <div class="text-center mb-8">
-                    <h1 class="text-4xl font-bold text-gray-800 mb-4">
-                        🎨 作品画廊
-                    </h1>
-                    <p class="text-lg text-gray-600 mb-8">
-                        探索用户创作的精彩吧唧，寻找你的灵感
-                    </p>
+        <!-- 校园风页面头部 -->
+        <section class="hero-campus py-10">
+            <div class="container mx-auto px-4">
+                <div class="flex flex-col lg:flex-row gap-8 items-start">
+                    <div class="flex-1 space-y-4">
+                        <div class="pill w-max">🎨 校园作品画廊</div>
+                        <h1 class="text-4xl md:text-5xl font-bold leading-tight">找灵感 · 做同款 · 分享给社团</h1>
+                        <p class="text-lg opacity-90">瀑布流精选 + 筛选胶囊，热门标签一键切换。点击卡片即可预览/同款/点赞。</p>
+                        <div class="flex flex-wrap gap-2">
+                            <span class="campus-tag campus-tag-muted">#动漫社</span>
+                            <span class="campus-tag campus-tag-muted">#话剧节</span>
+                            <span class="campus-tag campus-tag-muted">#摊位必备</span>
+                            <span class="campus-tag campus-tag-muted">#限定周边</span>
+                        </div>
+                        <div class="flex flex-wrap gap-3">
+                            <a href="/design" class="campus-btn campus-btn-success">🪄 去做同款</a>
+                            <a href="#gallery-grid" class="campus-btn campus-btn-ghost">⬇️ 直接看案例</a>
+                        </div>
+                    </div>
+                    <div class="glass-card w-full lg:w-96 p-6 space-y-4">
+                        <div class="stepper">
+                            <div class="step">
+                                <span class="step-number">1</span>
+                                <div>
+                                    <p class="font-semibold">筛选</p>
+                                    <p class="text-sm opacity-80">风格/主题/人气</p>
+                                </div>
+                            </div>
+                            <div class="step">
+                                <span class="step-number">2</span>
+                                <div>
+                                    <p class="font-semibold">预览</p>
+                                    <p class="text-sm opacity-80">3D 轻微倾斜</p>
+                                </div>
+                            </div>
+                            <div class="step">
+                                <span class="step-number">3</span>
+                                <div>
+                                    <p class="font-semibold">同款</p>
+                                    <p class="text-sm opacity-80">一键进入设计页</p>
+                                </div>
+                            </div>
+                            <div class="step">
+                                <span class="step-number">4</span>
+                                <div>
+                                    <p class="font-semibold">互动</p>
+                                    <p class="text-sm opacity-80">点赞/收藏/分享</p>
+                                </div>
+                            </div>
+                        </div>
+                        <p class="text-sm opacity-80">移动端横滑筛选，点击卡片即可放大，长按可呼出分享弹层。</p>
+                    </div>
                 </div>
 
                 <!-- 筛选和搜索 -->
-                <div class="gallery-controls">
-                    <div class="filter-tabs flex flex-wrap justify-center gap-4 mb-6">
+                <div class="gallery-controls mt-8">
+                    <div class="filter-tabs flex flex-wrap justify-center gap-3 mb-6">
                         <button v-for="filter in filters" :key="filter.value"
-                            :class="['filter-tab px-6 py-3 rounded-full font-medium', { active: currentFilter === filter.value }]"
-                            @click="setFilter(filter.value)"
-                            class="bg-white text-gray-600 hover:bg-blue-50 hover:text-blue-600 border border-gray-200 hover:border-blue-300">
+                            :class="['filter-tab filter-capsule', { active: currentFilter === filter.value }]"
+                            @click="setFilter(filter.value)">
                             <span v-text="filter.label"></span>
                         </button>
                     </div>
@@ -357,7 +404,7 @@
                     <div class="search-box flex justify-center">
                         <div class="relative w-full max-w-md">
                             <input type="text" placeholder="搜索作品..."
-                                class="search-input w-full px-4 py-3 pr-12 rounded-full border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                                class="search-input input-capsule pr-12"
                                 v-model="searchQuery" @input="searchCases">
                             <button
                                 class="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-blue-600">
@@ -370,11 +417,11 @@
                     </div>
                 </div>
             </div>
-        </div>
+        </section>
 
         <!-- 作品网格 -->
         <div class="gallery-content">
-            <div class="container mx-auto px-4 py-8">
+            <div id="gallery-grid" class="container mx-auto px-4 py-8">
                 <!-- 加载状态 -->
                 <div v-if="loading" class="text-center py-12">
                     <div
@@ -508,7 +555,7 @@
                     <h3 class="text-xl font-semibold text-gray-800 mb-2">暂无作品</h3>
                     <p class="text-gray-600 mb-6">还没有找到符合条件的作品</p>
                     <button
-                        class="btn btn-primary px-6 py-3 rounded-full bg-blue-600 text-white hover:bg-blue-700 transition-colors"
+                        class="campus-btn campus-btn-primary"
                         @click="clearSearch">
                         清除筛选
                     </button>
@@ -517,7 +564,7 @@
                 <!-- 加载更多 -->
                 <div v-if="hasMore && !loading" class="load-more-section text-center py-12">
                     <button
-                        class="btn btn-primary px-8 py-3 rounded-full bg-blue-600 text-white hover:bg-blue-700 transition-colors"
+                        class="campus-btn campus-btn-primary"
                         @click="loadMoreCases">
                         加载更多
                     </button>
@@ -526,6 +573,8 @@
         </div>
     </div>
 
+    <script src="/static/js/campus-interactions.js"></script>
+    <script src="/static/js/campus-social.js"></script>
     <script>
         const { createApp } = Vue;
 

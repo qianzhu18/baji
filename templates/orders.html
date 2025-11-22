@@ -7,6 +7,9 @@
     <title>我的订单 - 吧唧生成器</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    <link rel="stylesheet" href="/static/css/campus-style.css">
+    <link rel="stylesheet" href="/static/css/campus-animations.css">
+    <link rel="stylesheet" href="/static/css/campus-mobile.css">
     <link rel="stylesheet" href="/static/css/design.css">
     <script src="/static/js/device-manager.js"></script>
     <script src="/static/js/api.js"></script>
@@ -15,9 +18,15 @@
             transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
+        .order-card {
+            background: var(--card);
+            box-shadow: var(--shadow);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
         .order-card:hover {
-            transform: translateY(-8px) scale(1.02);
-            box-shadow: 0 20px 25px rgba(0, 0, 0, 0.1);
+            transform: translateY(-8px) scale(1.02) rotate(-1deg);
+            box-shadow: 0 20px 35px rgba(48, 55, 66, 0.18);
         }
 
         .order-image {
@@ -33,9 +42,10 @@
         }
 
         .filter-tab.active {
-            background: linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%);
+            background: var(--primary-gradient);
             color: white;
-            transform: scale(1.05);
+            transform: scale(1.03);
+            box-shadow: 0 10px 20px rgba(108, 92, 231, 0.25);
         }
 
         .status-badge {
@@ -47,43 +57,44 @@
         }
 
         .status-pending {
-            background-color: #fef3c7;
-            color: #92400e;
+            background-color: rgba(255, 209, 102, 0.25);
+            color: #8a5a00;
         }
 
         .status-processing {
-            background-color: #dbeafe;
-            color: #1e40af;
+            background-color: rgba(108, 92, 231, 0.15);
+            color: #4b3bbf;
         }
 
         .status-completed {
-            background-color: #d1fae5;
-            color: #065f46;
+            background-color: rgba(78, 225, 193, 0.18);
+            color: #0f766e;
         }
 
         .status-cancelled {
-            background-color: #fee2e2;
-            color: #991b1b;
+            background-color: rgba(255, 126, 103, 0.18);
+            color: #9b1c1c;
         }
 
         .status-printed {
-            background-color: #e9d5ff;
-            color: #7c3aed;
+            background-color: rgba(255, 255, 255, 0.7);
+            color: #5b21b6;
+            border: 1px solid rgba(108, 92, 231, 0.35);
         }
 
         .payment-unpaid {
-            background-color: #fee2e2;
-            color: #991b1b;
+            background-color: rgba(255, 209, 102, 0.25);
+            color: #8a5a00;
         }
 
         .payment-paid {
-            background-color: #d1fae5;
-            color: #065f46;
+            background-color: rgba(78, 225, 193, 0.18);
+            color: #0f766e;
         }
 
         .payment-refunded {
-            background-color: #f3f4f6;
-            color: #374151;
+            background-color: rgba(255, 126, 103, 0.18);
+            color: #9b1c1c;
         }
 
         .nav-link {
@@ -113,7 +124,7 @@
         }
 
         .empty-state {
-            background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+            background: var(--card);
         }
 
         .loading-spinner {
@@ -286,7 +297,7 @@
     </style>
 </head>
 
-<body class="bg-gray-50">
+<body class="campus-shell">
     <div id="app">
         <!-- 统一导航栏 -->
         <!-- 统一导航栏 -->
@@ -448,12 +459,40 @@
             </div>
         </nav>
 
+        <!-- 订单页 Hero -->
+        <section class="hero-campus py-10">
+            <div class="container mx-auto px-4">
+                <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 items-center">
+                    <div class="lg:col-span-2 space-y-3">
+                        <div class="pill w-max">📦 校园订单中心</div>
+                        <h1 class="text-4xl md:text-5xl font-bold leading-tight">状态可视化，一眼看懂订单进度</h1>
+                        <p class="text-lg opacity-90">制作中 · 打印中 · 配送中 · 已签收，颜色清晰，异常有显著提示。移动端同样友好。</p>
+                        <div class="progress-bar max-w-xl">
+                            <div class="progress-dot active"></div>
+                            <div class="progress-dot active"></div>
+                            <div class="progress-dot"></div>
+                            <div class="progress-dot"></div>
+                        </div>
+                        <div class="flex flex-wrap gap-3">
+                            <span class="campus-tag campus-tag-success">✅ 已付款</span>
+                            <span class="campus-tag campus-tag-warning">⚠️ 待支付</span>
+                            <span class="campus-tag">🚚 配送跟踪</span>
+                        </div>
+                    </div>
+                    <div class="glass-card p-6 space-y-3">
+                        <p class="text-sm">若订单异常会高亮橘珊瑚底；待付款用柠檬黄提示条；制作中用薄荷绿描边。</p>
+                        <p class="text-sm opacity-80">点击卡片可“再来一单/联系客服/下载”，移动端卡片支持单列展示。</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
         <!-- 主要内容 -->
         <main class="container mx-auto px-4 py-8">
             <!-- 页面标题 -->
             <div class="mb-8">
-                <h1 class="text-3xl font-bold text-gray-900 mb-2">我的订单</h1>
-                <p class="text-gray-600">查看和管理您的所有订单</p>
+                <h2 class="text-3xl font-bold text-gray-900 mb-2">订单列表</h2>
+                <p class="text-gray-600">按状态、时间快速筛选，实时更新。</p>
             </div>
 
             <!-- 筛选和搜索 -->
@@ -461,28 +500,23 @@
                 <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
                     <!-- 状态筛选 -->
                     <div class="flex flex-wrap gap-2">
-                        <button @click="setFilter('')" :class="['filter-tab px-4 py-2 rounded-full text-sm font-medium', 
-                                   statusFilter === '' ? 'active' : 'bg-gray-100 text-gray-600 hover:bg-gray-200']">
+                        <button @click="setFilter('')" :class="['filter-tab filter-capsule', statusFilter === '' && 'active']">
                             全部 ({{ total }})
                         </button>
                         <button @click="setFilter('pending')"
-                            :class="['filter-tab px-4 py-2 rounded-full text-sm font-medium', 
-                                   statusFilter === 'pending' ? 'active' : 'bg-gray-100 text-gray-600 hover:bg-gray-200']">
+                            :class="['filter-tab filter-capsule', statusFilter === 'pending' && 'active']">
                             待支付 ({{ getCountByStatus('pending') }})
                         </button>
                         <button @click="setFilter('processing')"
-                            :class="['filter-tab px-4 py-2 rounded-full text-sm font-medium', 
-                                   statusFilter === 'processing' ? 'active' : 'bg-gray-100 text-gray-600 hover:bg-gray-200']">
+                            :class="['filter-tab filter-capsule', statusFilter === 'processing' && 'active']">
                             处理中 ({{ getCountByStatus('processing') }})
                         </button>
                         <button @click="setFilter('completed')"
-                            :class="['filter-tab px-4 py-2 rounded-full text-sm font-medium', 
-                                   statusFilter === 'completed' ? 'active' : 'bg-gray-100 text-gray-600 hover:bg-gray-200']">
+                            :class="['filter-tab filter-capsule', statusFilter === 'completed' && 'active']">
                             已完成 ({{ getCountByStatus('completed') }})
                         </button>
                         <button @click="setFilter('printed')"
-                            :class="['filter-tab px-4 py-2 rounded-full text-sm font-medium', 
-                                   statusFilter === 'printed' ? 'active' : 'bg-gray-100 text-gray-600 hover:bg-gray-200']">
+                            :class="['filter-tab filter-capsule', statusFilter === 'printed' && 'active']">
                             已打印 ({{ getCountByStatus('printed') }})
                         </button>
                     </div>
@@ -552,6 +586,20 @@
                         <div class="mt-2 text-right">
                             <span class="text-lg font-bold text-green-600">¥{{ order.total_price }}</span>
                         </div>
+                        <div class="mt-3">
+                            <div class="progress-bar">
+                                <span :class="['progress-dot', order.status !== 'pending' ? 'active' : '']"></span>
+                                <span :class="['progress-dot', ['processing','printed','completed'].includes(order.status) ? 'active' : '']"></span>
+                                <span :class="['progress-dot', ['printed','completed'].includes(order.status) ? 'active' : '']"></span>
+                                <span :class="['progress-dot', order.status === 'completed' ? 'active' : '']"></span>
+                            </div>
+                            <div class="flex justify-between text-xs text-gray-500 mt-1">
+                                <span>制作中</span>
+                                <span>打印中</span>
+                                <span>配送中</span>
+                                <span>已签收</span>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -566,7 +614,7 @@
                 <h3 class="text-lg font-medium text-gray-900 mb-2">暂无订单</h3>
                 <p class="text-gray-600 mb-4">开始创建您的第一个订单</p>
                 <a href="/design"
-                    class="inline-flex items-center px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors">
+                    class="campus-btn campus-btn-primary inline-flex items-center gap-2">
                     <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                             d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path>
@@ -611,6 +659,8 @@
 
     <script src="[[ url_for('static', filename='js/user-state-manager.js')  ]]"></script>
     <script src="[[ url_for('static', filename='js/navigation.js')  ]]"></script>
+    <script src="/static/js/campus-interactions.js"></script>
+    <script src="/static/js/campus-social.js"></script>
     <script>
         const { createApp } = Vue;
 

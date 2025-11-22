@@ -6,6 +6,9 @@
     <title>吧唧生成器 - 设计页面</title>
     <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
     <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="/static/css/campus-style.css">
+    <link rel="stylesheet" href="/static/css/campus-animations.css">
+    <link rel="stylesheet" href="/static/css/campus-mobile.css">
     <link rel="stylesheet" href="[[ url_for('static', filename='css/design.css')  ]]">
     <script src="[[ url_for('static', filename='js/device-manager.js') ]]"></script>
     <script src="[[ url_for('static', filename='js/magic-experience.js') ]]"></script>
@@ -14,8 +17,8 @@
     <script src="[[ url_for('static', filename='js/error-handler.js') ]]"></script>
     <script src="[[ url_for('static', filename='js/navigation.js') ]]"></script>
 </head>
-<body>
-    <div id="app" class="min-h-screen bg-gray-50">
+<body class="campus-shell">
+    <div id="app" class="min-h-screen">
         <!-- 统一导航栏 -->
         <nav class="navbar bg-white shadow-sm border-b border-gray-200">
             <div class="container mx-auto px-4">
@@ -147,8 +150,71 @@
             </div>
         </nav>
 
+        <!-- 校园风设计页 Hero + 引导 -->
+        <section class="hero-campus py-10">
+            <div class="container mx-auto px-4">
+                <div class="grid grid-cols-1 lg:grid-cols-3 gap-8 items-center">
+                    <div class="lg:col-span-2 space-y-4">
+                        <div class="pill w-max">🎡 校园创意吧唧工坊 · 设计台</div>
+                        <h1 class="text-4xl md:text-5xl font-bold leading-tight">3 步做出社团限定周边</h1>
+                        <p class="text-lg opacity-90">上传/套模板、调整、预览、下单，过程清晰，反馈即时，移动端也好操作。</p>
+                        <div class="flex flex-wrap gap-3">
+                            <span class="campus-tag campus-tag-success">🎨 一键同款</span>
+                            <span class="campus-tag campus-tag-warning">✨ 触控对齐</span>
+                            <span class="campus-tag">📦 宿舍收货</span>
+                        </div>
+                        <div class="flex flex-wrap gap-3">
+                            <button @click="selectFile" class="campus-btn campus-btn-success">📸 上传/拍照</button>
+                            <a href="#designer-stage" class="campus-btn campus-btn-ghost">🪄 跳到画布</a>
+                        </div>
+                        <div class="stepper mt-4">
+                            <div class="step">
+                                <span class="step-number">1</span>
+                                <div>
+                                    <p class="font-semibold">选图/模板</p>
+                                    <p class="text-sm opacity-80">自拍、社团 logo、展会物料</p>
+                                </div>
+                            </div>
+                            <div class="step">
+                                <span class="step-number">2</span>
+                                <div>
+                                    <p class="font-semibold">调整/贴纸</p>
+                                    <p class="text-sm opacity-80">缩放旋转，对齐参考线</p>
+                                </div>
+                            </div>
+                            <div class="step">
+                                <span class="step-number">3</span>
+                                <div>
+                                    <p class="font-semibold">预览/校对</p>
+                                    <p class="text-sm opacity-80">高清预览 + 双击重置</p>
+                                </div>
+                            </div>
+                            <div class="step">
+                                <span class="step-number">4</span>
+                                <div>
+                                    <p class="font-semibold">下单/跟踪</p>
+                                    <p class="text-sm opacity-80">状态推送，配送可视化</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="glass-card p-6 space-y-3">
+                        <div class="pill">👆 小贴士</div>
+                        <p class="text-sm">双指缩放、双击重置，拖拽有辅助线；上传成功自动撒花，失败会给温柔提示。</p>
+                        <div class="progress-bar">
+                            <div class="progress-dot active"></div>
+                            <div class="progress-dot active"></div>
+                            <div class="progress-dot"></div>
+                            <div class="progress-dot"></div>
+                        </div>
+                        <p class="text-sm opacity-80">建议图片尺寸 ≥ 1000px，透明底 PNG 最佳。</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
         <!-- 主要内容区域 -->
-        <main class="responsive-container py-8">
+        <main id="designer-stage" class="responsive-container py-8">
             <div class="design-container grid grid-cols-1 lg:grid-cols-12 gap-8">
                 
                 <!-- 左侧：上传区域 - 已移除，整合到预览区 -->
@@ -424,6 +490,8 @@
         <input ref="fileInput" type="file" accept="image/*" @change="handleFileSelect" class="hidden">
     </div>
 
+    <script src="/static/js/campus-interactions.js"></script>
+    <script src="/static/js/campus-social.js"></script>
     <script src="[[ url_for('static', filename='js/design.js') ]]"></script>
 </body>
 </html>
