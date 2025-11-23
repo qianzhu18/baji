@@ -1,13 +1,13 @@
-/* design.css - 乔布斯式极致体验样式 */
+/* design.css - 视觉青春版（仅配色与风格，不改结构与功能） */
 :root {
-  --primary-color: #3b82f6;
-  --secondary-color: #6b7280;
-  --success-color: #10b981;
-  --warning-color: #f59e0b;
-  --error-color: #ef4444;
+  --primary-color: #6c5ce7; /* 葡萄紫 */
+  --secondary-color: #8fa3b5;
+  --success-color: #4ee1c1; /* 薄荷绿 */
+  --warning-color: #ffd166; /* 柠檬黄 */
+  --error-color: #ff7e67;   /* 橘珊瑚 */
   --baji-size: 200px;
-  --magic-gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-  --success-gradient: linear-gradient(135deg, #4ecdc4 0%, #44a08d 100%);
+  --magic-gradient: linear-gradient(135deg, #a6c1ff 0%, #fbc2eb 100%);
+  --success-gradient: linear-gradient(135deg, #4ee1c1 0%, #00c6ff 100%);
 }
 
 /* 基础样式 - 乔布斯式极简设计 */
@@ -16,10 +16,10 @@
 }
 
 body {
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  font-family: 'Smiley Sans', 'LXGW WenKai', 'Sora', -apple-system, 'PingFang SC', 'Microsoft YaHei', sans-serif;
   line-height: 1.6;
   color: #1f2937;
-  background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+  background: linear-gradient(135deg, #a6c1ff 0%, #fbc2eb 100%);
 }
 
 /* 响应式容器 - 支持带鱼屏等宽屏显示器 */
@@ -908,14 +908,14 @@ body {
   background: var(--primary-color);
   color: white;
   border-color: var(--primary-color);
-  box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3);
+  box-shadow: 0 4px 12px rgba(108, 92, 231, 0.3);
 }
 
 .btn-primary:hover:not(:disabled) {
-  background: #2563eb;
-  border-color: #2563eb;
+  background: #5948d8;
+  border-color: #5948d8;
   transform: translateY(-2px);
-  box-shadow: 0 8px 25px rgba(59, 130, 246, 0.4);
+  box-shadow: 0 8px 25px rgba(108, 92, 231, 0.4);
 }
 
 .btn-secondary {
@@ -936,28 +936,28 @@ body {
   background: var(--warning-color);
   color: white;
   border-color: var(--warning-color);
-  box-shadow: 0 4px 12px rgba(245, 158, 11, 0.3);
+  box-shadow: 0 4px 12px rgba(255, 209, 102, 0.35);
 }
 
 .btn-warning:hover:not(:disabled) {
-  background: #d97706;
-  border-color: #d97706;
+  background: #e6b23a;
+  border-color: #e6b23a;
   transform: translateY(-2px);
-  box-shadow: 0 8px 25px rgba(245, 158, 11, 0.4);
+  box-shadow: 0 8px 25px rgba(255, 209, 102, 0.45);
 }
 
 .btn-info {
-  background: #06b6d4;
+  background: var(--success-color);
   color: white;
-  border-color: #06b6d4;
-  box-shadow: 0 4px 12px rgba(6, 182, 212, 0.3);
+  border-color: var(--success-color);
+  box-shadow: 0 4px 12px rgba(78, 225, 193, 0.35);
 }
 
 .btn-info:hover:not(:disabled) {
-  background: #0891b2;
-  border-color: #0891b2;
+  background: #35c7ae;
+  border-color: #35c7ae;
   transform: translateY(-2px);
-  box-shadow: 0 8px 25px rgba(6, 182, 212, 0.4);
+  box-shadow: 0 8px 25px rgba(78, 225, 193, 0.45);
 }
 
 /* 操作按钮区域 */
