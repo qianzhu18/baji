@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>🍎 吧唧生成器 - 乔布斯式极致体验</title>
+    <title>🎧 校园创意吧唧工坊 - 首屏</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
     <script src="/static/js/device-manager.js"></script>
@@ -18,6 +18,8 @@
             --btn-hero: linear-gradient(135deg, #3c8dff 0%, #45e2c4 100%);
             --btn-hero-shadow: 0 10px 30px rgba(60, 141, 255, 0.35);
             --accent-red: #ff5f6d;
+            --card-glass: rgba(255, 255, 255, 0.08);
+            --card-border: rgba(255, 255, 255, 0.22);
         }
 
         body {
@@ -28,6 +30,8 @@
             position: relative;
             background: var(--hero-bg);
             overflow: hidden;
+            color: var(--hero-text);
+            padding: 4rem 0;
         }
 
         .hero-section::before,
@@ -53,6 +57,195 @@
             bottom: 8%;
             right: 10%;
             background: radial-gradient(circle, rgba(69, 226, 196, 0.35), transparent 60%);
+        }
+
+        .hero-grid {
+            display: grid;
+            grid-template-columns: repeat(1, minmax(0, 1fr));
+            gap: 2.5rem;
+        }
+
+        @media (min-width: 1024px) {
+            .hero-grid {
+                grid-template-columns: 1.1fr 0.9fr;
+                align-items: center;
+            }
+        }
+
+        .hero-title {
+            color: var(--hero-text);
+            text-shadow: 0 0 18px rgba(139, 216, 255, 0.45);
+        }
+
+        .hero-sub {
+            color: var(--hero-text-muted);
+        }
+
+        .pill {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 10px 14px;
+            border-radius: 999px;
+            background: rgba(255, 255, 255, 0.12);
+            color: var(--hero-text);
+            font-weight: 600;
+        }
+
+        .tag-row {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .tag {
+            padding: 8px 12px;
+            border-radius: 999px;
+            background: rgba(255, 255, 255, 0.12);
+            color: var(--hero-text);
+            font-weight: 600;
+            font-size: 0.9rem;
+        }
+
+        .stepper {
+            display: grid;
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+            gap: 12px;
+            color: var(--hero-text);
+        }
+
+        .step-card {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 12px 14px;
+            border-radius: 14px;
+            background: rgba(255, 255, 255, 0.08);
+            border: 1px solid rgba(255, 255, 255, 0.12);
+        }
+
+        .step-dot {
+            width: 14px;
+            height: 14px;
+            border-radius: 50%;
+            background: var(--btn-hero);
+            box-shadow: 0 0 0 4px rgba(60, 141, 255, 0.18);
+        }
+
+        .btn-row {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+        }
+
+        .btn-ghost {
+            padding: 12px 18px;
+            border-radius: 999px;
+            border: 1px solid rgba(255, 255, 255, 0.25);
+            color: var(--hero-text);
+            background: rgba(255, 255, 255, 0.08);
+            font-weight: 700;
+            transition: all 0.2s ease;
+        }
+
+        .btn-ghost:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 14px 32px rgba(255, 255, 255, 0.15);
+        }
+
+        .trust-row {
+            display: grid;
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+            gap: 12px;
+        }
+
+        .trust-card {
+            background: rgba(255, 255, 255, 0.08);
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            border-radius: 14px;
+            padding: 12px;
+            color: var(--hero-text);
+            text-align: center;
+        }
+
+        .trust-number {
+            font-size: 1.4rem;
+            font-weight: 800;
+            color: #8bd8ff;
+        }
+
+        .preview-frame {
+            background: var(--card-glass);
+            border: 1px solid var(--card-border);
+            border-radius: 24px;
+            padding: 18px;
+            box-shadow: 0 10px 40px rgba(12, 24, 48, 0.35);
+        }
+
+        .preview-inner {
+            position: relative;
+            aspect-ratio: 1 / 1;
+            border-radius: 18px;
+            background: radial-gradient(circle at 30% 30%, rgba(255, 255, 255, 0.16), transparent 55%), linear-gradient(145deg, rgba(60, 141, 255, 0.2), rgba(69, 226, 196, 0.15));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+        }
+
+        .preview-badge {
+            position: absolute;
+            top: 12px;
+            left: 12px;
+            padding: 6px 10px;
+            border-radius: 999px;
+            background: rgba(255, 255, 255, 0.16);
+            color: var(--hero-text);
+            font-weight: 700;
+            font-size: 0.85rem;
+            backdrop-filter: blur(6px);
+        }
+
+        .preview-circle {
+            position: relative;
+            width: 55%;
+            aspect-ratio: 1 / 1;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #2f3b5f, #192139);
+            border: 1px solid rgba(255, 255, 255, 0.18);
+            box-shadow: 0 12px 30px rgba(12, 24, 48, 0.35), 0 0 0 10px rgba(139, 216, 255, 0.08);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+        }
+
+        .preview-circle img {
+            width: 86%;
+            height: 86%;
+            object-fit: cover;
+            border-radius: 50%;
+        }
+
+        .preview-sticker {
+            position: absolute;
+            width: 28%;
+            border-radius: 16px;
+            background: rgba(255, 255, 255, 0.12);
+            border: 1px solid rgba(255, 255, 255, 0.22);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.25);
+            padding: 8px;
+            backdrop-filter: blur(6px);
+        }
+
+        .sticker-1 { top: 12%; right: 8%; }
+        .sticker-2 { bottom: 10%; left: 8%; }
+
+        .preview-sticker img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 12px;
         }
 
         .magic-button {
@@ -240,26 +433,79 @@
 
 
         <!-- Hero Section -->
-        <section class="hero-section min-h-screen flex items-center justify-center">
-            <div class="text-center text-white px-8">
-                <div class="floating mb-8">
-                    <h1 class="text-6xl font-bold mb-4">🍎</h1>
-                    <h2 class="text-4xl font-bold mb-2">吧唧生成器</h2>
-                    <p class="text-xl opacity-90">乔布斯式极致体验</p>
-                </div>
+        <section class="hero-section min-h-screen flex items-center">
+            <div class="container mx-auto px-6">
+                <div class="hero-grid">
+                    <!-- 左侧：文案与引导 -->
+                    <div class="space-y-6">
+                        <div class="pill w-max">🎧 校园创意吧唧工坊</div>
+                        <div class="space-y-3">
+                            <h1 class="hero-title text-4xl md:text-5xl font-bold leading-tight">
+                                3 步做出专属周边，社团/展会一键同款
+                            </h1>
+                            <p class="hero-sub text-lg md:text-xl">
+                                选图/模板 → 调整/贴纸 → 预览/下单，酷炫动画 + 贴纸拼贴，让你的吧唧开场即吸睛。
+                            </p>
+                        </div>
+                        <div class="tag-row">
+                            <span class="tag">#二次元同款</span>
+                            <span class="tag">#社团批量</span>
+                            <span class="tag">#展会快印</span>
+                        </div>
+                        <div class="stepper">
+                            <div class="step-card">
+                                <span class="step-dot"></span>
+                                <span>选图 / 模板</span>
+                            </div>
+                            <div class="step-card">
+                                <span class="step-dot"></span>
+                                <span>调整 / 贴纸</span>
+                            </div>
+                            <div class="step-card">
+                                <span class="step-dot"></span>
+                                <span>预览 / 下单</span>
+                            </div>
+                        </div>
+                        <div class="btn-row">
+                            <a href="/design"
+                                class="magic-button inline-block px-7 py-3 rounded-full text-white font-semibold text-lg shadow-lg">
+                                ✨ 立即制作
+                            </a>
+                            <a href="/gallery" class="btn-ghost inline-flex items-center gap-2">
+                                🔥 看看同款
+                            </a>
+                        </div>
+                        <div class="trust-row">
+                            <div class="trust-card">
+                                <div class="trust-number">12k+</div>
+                                <div class="text-sm">校园创作者</div>
+                            </div>
+                            <div class="trust-card">
+                                <div class="trust-number">98%</div>
+                                <div class="text-sm">好评率</div>
+                            </div>
+                            <div class="trust-card">
+                                <div class="trust-number">24h</div>
+                                <div class="text-sm">极速出图</div>
+                            </div>
+                        </div>
+                    </div>
 
-                <div class="mb-8">
-                    <p class="text-lg opacity-80 mb-4">简单到极致，优雅到完美</p>
-                    <p class="text-sm opacity-70">拖拽上传 → 调整参数 → 实时预览 → 确认制作</p>
-                </div>
-
-                <a href="/design"
-                    class="magic-button inline-block px-8 py-4 rounded-full text-white font-semibold text-lg shadow-lg">
-                    ✨ 开始制作吧唧
-                </a>
-
-                <div class="mt-12 text-sm opacity-60">
-                    <p>"简单是终极的复杂" - 史蒂夫·乔布斯</p>
+                    <!-- 右侧：动态预览 -->
+                    <div class="preview-frame">
+                        <div class="preview-inner floating">
+                            <div class="preview-badge">🌟 校园爆款</div>
+                            <div class="preview-circle">
+                                <img src="/static/images/placeholder.png" alt="示例吧唧">
+                            </div>
+                            <div class="preview-sticker sticker-1">
+                                <img src="/static/images/placeholder.png" alt="贴纸示例1">
+                            </div>
+                            <div class="preview-sticker sticker-2">
+                                <img src="/static/images/placeholder.png" alt="贴纸示例2">
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </section>
