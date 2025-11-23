@@ -8,20 +8,15 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
     <script src="/static/js/device-manager.js"></script>
-    <link rel="stylesheet" href="/static/css/campus-style.css">
-    <link rel="stylesheet" href="/static/css/campus-animations.css">
-    <link rel="stylesheet" href="/static/css/campus-mobile.css">
     <link rel="stylesheet" href="/static/css/design.css">
     <style>
         .history-card {
             transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-            background: var(--card);
-            box-shadow: var(--shadow);
         }
 
         .history-card:hover {
-            transform: translateY(-8px) scale(1.02) rotate(-1deg);
-            box-shadow: 0 20px 35px rgba(48, 55, 66, 0.18);
+            transform: translateY(-8px) scale(1.02);
+            box-shadow: 0 20px 25px rgba(0, 0, 0, 0.1);
         }
 
         .history-image {
@@ -37,10 +32,9 @@
         }
 
         .filter-tab.active {
-            background: var(--primary-gradient);
+            background: linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%);
             color: white;
-            transform: scale(1.03);
-            box-shadow: 0 10px 20px rgba(108, 92, 231, 0.25);
+            transform: scale(1.05);
         }
 
         .loading-spinner {
@@ -89,7 +83,7 @@
         }
 
         .empty-state {
-            background: var(--card);
+            background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
         }
 
         .status-badge {
@@ -100,23 +94,23 @@
         }
 
         .status-pending {
-            background-color: rgba(255, 209, 102, 0.25);
-            color: #8a5a00;
+            background-color: #fef3c7;
+            color: #92400e;
         }
 
         .status-processing {
-            background-color: rgba(108, 92, 231, 0.15);
-            color: #4b3bbf;
+            background-color: #dbeafe;
+            color: #1e40af;
         }
 
         .status-completed {
-            background-color: rgba(78, 225, 193, 0.18);
-            color: #0f766e;
+            background-color: #d1fae5;
+            color: #065f46;
         }
 
         .status-cancelled {
-            background-color: rgba(255, 126, 103, 0.18);
-            color: #9b1c1c;
+            background-color: #fee2e2;
+            color: #991b1b;
         }
         
         /* 导航组件样式 */
@@ -158,7 +152,7 @@
     </style>
 </head>
 
-<body class="campus-shell">
+<body class="bg-gray-50">
     <div id="app">
         <!-- 统一导航栏 -->
         <nav class="navbar bg-white shadow-sm border-b border-gray-200">
@@ -291,28 +285,6 @@
             </div>
         </nav>
 
-        <!-- 校园风历史页 Hero -->
-        <section class="hero-campus py-10">
-            <div class="container mx-auto px-4">
-                <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 items-center">
-                    <div class="lg:col-span-2 space-y-3">
-                        <div class="pill w-max">📝 设计历史</div>
-                        <h1 class="text-4xl md:text-5xl font-bold leading-tight">回看你的创意，随时再来一单</h1>
-                        <p class="text-lg opacity-90">状态、时间、搜索一应俱全，空状态有引导，加载有骨架，移动端单列展示。</p>
-                        <div class="flex flex-wrap gap-2">
-                            <span class="campus-tag campus-tag-muted">#草稿</span>
-                            <span class="campus-tag campus-tag-muted">#已下单</span>
-                            <span class="campus-tag campus-tag-muted">#待支付</span>
-                        </div>
-                    </div>
-                    <div class="glass-card p-6 space-y-2">
-                        <p class="text-sm">筛选胶囊 + 搜索框在上方，卡片悬浮有 3D 轻微倾斜，点赞/支付/下载入口清晰。</p>
-                        <p class="text-sm opacity-80">空状态展示插画与“去制作”按钮；列表支持分页。</p>
-                    </div>
-                </div>
-            </div>
-        </section>
-
         <!-- 主要内容 -->
         <main class="container mx-auto px-4 py-8">
             <!-- 页面标题 -->
@@ -328,22 +300,26 @@
                     <div class="flex flex-wrap gap-2">
                         <button 
                             @click="setFilter('all')" 
-                            :class="['filter-tab filter-capsule', currentFilter === 'all' && 'active']">
+                            :class="['filter-tab px-4 py-2 rounded-full text-sm font-medium', 
+                                   currentFilter === 'all' ? 'active' : 'bg-gray-100 text-gray-600 hover:bg-gray-200']">
                             全部 ({{ getTotalCount() }})
                         </button>
                         <button 
                             @click="setFilter('completed')" 
-                            :class="['filter-tab filter-capsule', currentFilter === 'completed' && 'active']">
+                            :class="['filter-tab px-4 py-2 rounded-full text-sm font-medium', 
+                                   currentFilter === 'completed' ? 'active' : 'bg-gray-100 text-gray-600 hover:bg-gray-200']">
                             设计完成 ({{ getCountByStatus('completed') }})
                         </button>
                         <button 
                             @click="setFilter('processing')" 
-                            :class="['filter-tab filter-capsule', currentFilter === 'processing' && 'active']">
+                            :class="['filter-tab px-4 py-2 rounded-full text-sm font-medium', 
+                                   currentFilter === 'processing' ? 'active' : 'bg-gray-100 text-gray-600 hover:bg-gray-200']">
                             已下单 ({{ getCountByStatus('processing') }})
                         </button>
                         <button 
                             @click="setFilter('pending')" 
-                            :class="['filter-tab filter-capsule', currentFilter === 'pending' && 'active']">
+                            :class="['filter-tab px-4 py-2 rounded-full text-sm font-medium', 
+                                   currentFilter === 'pending' ? 'active' : 'bg-gray-100 text-gray-600 hover:bg-gray-200']">
                             待支付 ({{ getCountByStatus('pending') }})
                         </button>
                     </div>
@@ -432,7 +408,7 @@
                 </svg>
                 <h3 class="text-lg font-medium text-gray-900 mb-2">暂无设计历史</h3>
                 <p class="text-gray-600 mb-4">您还没有制作过任何吧唧作品</p>
-                <a href="/design" class="campus-btn campus-btn-primary inline-flex items-center gap-2">
+                <a href="/design" class="inline-flex items-center px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors">
                     <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path>
                     </svg>
@@ -481,8 +457,6 @@
 
     <script src="/static/js/user-state-manager.js"></script>
     <script src="/static/js/navigation.js"></script>
-    <script src="/static/js/campus-interactions.js"></script>
-    <script src="/static/js/campus-social.js"></script>
     <script>
         const { createApp, ref, computed, onMounted } = Vue;
 
