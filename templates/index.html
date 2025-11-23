@@ -10,22 +10,60 @@
     <script src="/static/js/device-manager.js"></script>
     <script src="/static/js/navigation.js"></script>
     <style>
+        :root {
+            --hero-bg: linear-gradient(135deg, #101522 0%, #1a1f33 40%, #2d3b62 100%);
+            --hero-glow: #8bd8ff;
+            --hero-text: #e5f2ff;
+            --hero-text-muted: rgba(229, 242, 255, 0.75);
+            --btn-hero: linear-gradient(135deg, #3c8dff 0%, #45e2c4 100%);
+            --btn-hero-shadow: 0 10px 30px rgba(60, 141, 255, 0.35);
+            --accent-red: #ff5f6d;
+        }
+
         body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            font-family: 'Smiley Sans', 'Sora', -apple-system, 'PingFang SC', 'Microsoft YaHei', sans-serif;
         }
 
         .hero-section {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            position: relative;
+            background: var(--hero-bg);
+            overflow: hidden;
+        }
+
+        .hero-section::before,
+        .hero-section::after {
+            content: '';
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(40px);
+            opacity: 0.6;
+        }
+
+        .hero-section::before {
+            width: 220px;
+            height: 220px;
+            top: 10%;
+            left: 12%;
+            background: radial-gradient(circle, rgba(139, 216, 255, 0.45), transparent 60%);
+        }
+
+        .hero-section::after {
+            width: 280px;
+            height: 280px;
+            bottom: 8%;
+            right: 10%;
+            background: radial-gradient(circle, rgba(69, 226, 196, 0.35), transparent 60%);
         }
 
         .magic-button {
-            background: linear-gradient(135deg, #4ecdc4 0%, #44a08d 100%);
+            background: var(--btn-hero);
             transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: var(--btn-hero-shadow);
         }
 
         .magic-button:hover {
             transform: translateY(-2px) scale(1.05);
-            box-shadow: 0 20px 40px rgba(78, 205, 196, 0.4);
+            box-shadow: 0 20px 40px rgba(60, 141, 255, 0.35);
         }
 
         @keyframes float {
@@ -66,7 +104,7 @@
         }
 
         .filter-btn.active {
-            background: linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%);
+            background: var(--btn-hero);
             color: white;
             transform: scale(1.05);
         }
@@ -111,6 +149,16 @@
             transform: translateX(2px);
             background-color: rgba(59, 130, 246, 0.05);
         }
+
+        /* 导航配色微调 */
+        .navbar a.text-blue-600,
+        .navbar svg.text-blue-600 {
+            color: var(--hero-text);
+        }
+
+        .navbar .nav-link:hover {
+            color: #8bd8ff;
+        }
         
         /* 首页精选案例圆形预览样式 */
         .baji-preview-homepage {
@@ -133,8 +181,8 @@
             align-items: center;
             justify-content: center;
             box-shadow: 
-                0 0 20px rgba(59, 130, 246, 0.1),
-                0 0 40px rgba(59, 130, 246, 0.05);
+                0 0 20px rgba(60, 141, 255, 0.12),
+                0 0 40px rgba(69, 226, 196, 0.08);
             overflow: hidden;
         }
         
