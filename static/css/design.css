@@ -2426,3 +2426,23 @@ body {
     color: black !important;
     box-shadow: 0 0 15px var(--neon-cyan, #22d3ee);
 }
+
+/* === 画廊移动端适配与输入可读性增强 === */
+.search-input {
+  color: #e2e8f0 !important;
+}
+.search-input::placeholder {
+  color: #94a3b8 !important;
+}
+
+@media (max-width: 768px) {
+  .filter-tabs {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+  }
+  .filter-tabs::-webkit-scrollbar { display: none; }
+  .filter-tabs > button { flex: 0 0 auto; }
+  .gallery-header .text-9xl { transform: scale(1.1) translate(-50%, -50%); }
+  .search-box .relative { padding-left: 0.25rem; padding-right: 0.25rem; }
+}
