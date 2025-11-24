@@ -2317,6 +2317,44 @@ body {
   100% { clip: rect(10px, 9999px, 40px, 0); }
 }
 
+/* === 订单状态霓虹徽章 (Inventory Status Badges) === */
+.neon-badge-pending {
+    background: rgba(234, 179, 8, 0.15);
+    color: #fde047;
+    border-color: rgba(234, 179, 8, 0.4);
+    box-shadow: 0 0 10px rgba(234, 179, 8, 0.1);
+}
+.neon-badge-processing {
+    background: rgba(6, 182, 212, 0.15);
+    color: #67e8f9;
+    border-color: rgba(6, 182, 212, 0.4);
+    box-shadow: 0 0 10px rgba(6, 182, 212, 0.2);
+    animation: pulse-slow 2s infinite;
+}
+.neon-badge-completed {
+    background: rgba(34, 197, 94, 0.15);
+    color: #86efac;
+    border-color: rgba(34, 197, 94, 0.4);
+    box-shadow: 0 0 10px rgba(34, 197, 94, 0.2);
+}
+.neon-badge-cancelled {
+    background: rgba(239, 68, 68, 0.15);
+    color: #fca5a5;
+    border-color: rgba(239, 68, 68, 0.4);
+    text-decoration: line-through;
+}
+.neon-badge-printed {
+    background: rgba(168, 85, 247, 0.15);
+    color: #d8b4fe;
+    border-color: rgba(168, 85, 247, 0.4);
+    box-shadow: 0 0 10px rgba(168, 85, 247, 0.2);
+}
+
+@keyframes pulse-slow {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.7; }
+}
+
 /* === 核心制作台专用样式 (Reactor Core) === */
 .baji-outer-ring {
     width: min(85vw, 65vh);
