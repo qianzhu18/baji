@@ -331,42 +331,63 @@
             </div>
         </nav>
 
-        <!-- 页面头部 -->
-        <div class="gallery-header bg-white shadow-sm">
-            <div class="container mx-auto px-4 py-8">
-                <div class="text-center mb-8">
-                    <h1 class="text-4xl font-bold text-gray-800 mb-4">
-                        🎨 作品画廊
-                    </h1>
-                    <p class="text-lg text-gray-600 mb-8">
-                        探索用户创作的精彩吧唧，寻找你的灵感
-                    </p>
+        <!-- 页面头部：全息数据库风格 -->
+        <div class="gallery-header bg-transparent relative">
+            <div class="container mx-auto px-4 py-12 relative z-10">
+                
+                <div class="text-center mb-12 relative">
+                    <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-9xl font-black text-white/5 pointer-events-none select-none tracking-widest scale-150">
+                        ARCHIVE
+                    </div>
+                    
+                    <div class="relative z-10">
+                        <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-purple-500/30 bg-purple-500/10 text-purple-300 text-[10px] font-mono mb-4 tracking-[0.2em]">
+                            <span class="w-1.5 h-1.5 bg-purple-400 rounded-full animate-pulse"></span>
+                            DATABASE_ACCESS
+                        </div>
+                        
+                        <h1 class="text-4xl md:text-6xl font-black text-white mb-4 tracking-tighter drop-shadow-[0_0_15px_rgba(217,70,239,0.3)]">
+                            灵感<span class="text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-cyan-400">·全息库</span>
+                        </h1>
+                        
+                        <p class="text-gray-400 font-mono text-sm md:text-base max-w-xl mx-auto">
+                            [检索结果] 探索 <span class="text-cyan-400">User_Generated_Content</span> 的无限可能。
+                        </p>
+                    </div>
                 </div>
 
-                <!-- 筛选和搜索 -->
-                <div class="gallery-controls">
-                    <div class="filter-tabs flex flex-wrap justify-center gap-4 mb-6">
-                        <button v-for="filter in filters" :key="filter.value"
-                            :class="['filter-tab px-6 py-3 rounded-full font-medium', { active: currentFilter === filter.value }]"
-                            @click="setFilter(filter.value)"
-                            class="bg-white text-gray-600 hover:bg-blue-50 hover:text-blue-600 border border-gray-200 hover:border-blue-300">
-                            <span v-text="filter.label"></span>
-                        </button>
+                <div class="gallery-controls max-w-5xl mx-auto">
+                    
+                    <div class="search-box mb-10 flex justify-center">
+                        <div class="relative w-full max-w-xl group">
+                            <div class="absolute -inset-0.5 bg-gradient-to-r from-cyan-500 to-purple-500 rounded-full opacity-30 group-focus-within:opacity-100 transition duration-500 blur"></div>
+                            
+                            <div class="relative flex items-center bg-[#0f172a] rounded-full p-1">
+                                <div class="pl-4 pr-2 text-gray-500 font-mono select-none">root@baji:~#</div>
+                                <input type="text" 
+                                       placeholder="输入关键词检索数据..." 
+                                       class="search-input w-full bg-transparent text-white px-2 py-3 focus:outline-none font-mono text-sm placeholder-gray-600"
+                                       v-model="searchQuery" 
+                                       @keyup.enter="searchCases">
+                                <button @click="searchCases" class="p-2 rounded-full bg-white/5 hover:bg-cyan-500/20 text-gray-400 hover:text-cyan-300 transition mr-1">
+                                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
+                                </button>
+                            </div>
+                        </div>
                     </div>
 
-                    <div class="search-box flex justify-center">
-                        <div class="relative w-full max-w-md">
-                            <input type="text" placeholder="搜索作品..."
-                                class="search-input w-full px-4 py-3 pr-12 rounded-full border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                                v-model="searchQuery" @input="searchCases">
-                            <button
-                                class="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-blue-600">
-                                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                        d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
-                                </svg>
-                            </button>
-                        </div>
+                    <div class="filter-tabs flex flex-wrap justify-center gap-3">
+                        <button v-for="filter in filters" :key="filter.value"
+                                @click="setFilter(filter.value)" 
+                                class="px-5 py-2 rounded border text-sm font-bold tracking-wide transition-all relative overflow-hidden group"
+                                :class="[
+                                    currentFilter === filter.value 
+                                    ? 'border-cyan-500/50 bg-cyan-500/10 text-cyan-300 shadow-[0_0_15px_rgba(34,211,238,0.2)]' 
+                                    : 'border-white/10 bg-white/5 text-gray-400 hover:border-white/30 hover:text-white hover:bg-white/10'
+                                ]">
+                            <span class="relative z-10" v-text="filter.label"></span>
+                            <div v-if="currentFilter === filter.value" class="absolute inset-0 bg-cyan-400/10 transform -skew-x-12 translate-x-full group-hover:translate-x-0 transition-transform"></div>
+                        </button>
                     </div>
                 </div>
             </div>
@@ -387,7 +408,7 @@
                 <div v-else-if="cases.length > 0"
                     class="cases-grid grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
                     <div v-for="caseData in cases" :key="caseData.id"
-                        class="case-card group bg-white rounded-xl shadow-sm hover:shadow-xl overflow-hidden">
+                        class="holo-card group relative rounded-2xl overflow-hidden transition-all duration-300 hover:-translate-y-2">
 
                         <!-- 案例图片 -->
                         <div class="case-image-container relative overflow-hidden rounded-t-xl"
