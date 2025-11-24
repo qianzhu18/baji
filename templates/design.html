@@ -148,7 +148,7 @@
         </nav>
 
         <!-- 主要内容区域 -->
-        {% raw %}
+        [% raw %]
         <main class="relative w-full h-[calc(100vh-64px)] overflow-hidden flex items-center justify-center">
     
     <div class="absolute inset-0 pointer-events-none z-0 opacity-20" 
@@ -281,7 +281,7 @@
     </div>
 
 </main>
-        {% endraw %}
+        [% endraw %]
         
         <!-- 隐藏的文件输入框 -->
         <input ref="fileInput" type="file" accept="image/*" @change="handleFileSelect" class="hidden">
